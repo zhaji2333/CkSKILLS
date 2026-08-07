@@ -95,6 +95,7 @@
 | 云资产/容器/K8s/运维面板/中间件/CI-CD/依赖 CVE/第三方回调/信息泄露 | `cloud-infra-supply-chain` | 云配置错误、未授权中间件、供应链漏洞、对象存储权限 |
 | 有源码/代码片段/反编译产物 | `source-code-audit` | 输入点→传播链→危险函数 Sink、跨语言危险函数速查 |
 | payload 被拦截、WAF/过滤/403、请求被防御 | `waf-bypass-techniques` | 编码/变形/逻辑/协议层绕过、换入口、组合利用 |
+| LLM 应用/Chatbot/Agent/RAG/AI 助手/Copilot、用户输入进大模型或工具调用 | `ai-llm-agent-security` | 提示词注入、越狱逃逸、System Prompt 泄露、敏感信息泄露、RAG/记忆污染、Agent 工具滥用致 RCE/SSRF、沙箱逃逸、模型供应链 |
 
 ### 4.2 漏洞类型 → 技能映射
 
@@ -116,6 +117,9 @@
 | API 安全 | BOLA、GraphQL、WebSocket、速率限制 | `api-protocol-security` |
 | HTTP 走私/协议层 | 解析差异、请求边界 | `api-protocol-security` |
 | 资源消耗 DoS | 正则灾难、巨型 JSON/XML | `api-protocol-security` |
+| AI/LLM 安全 | 提示词注入、越狱逃逸、System Prompt 泄露、训练数据/敏感信息泄露 | `ai-llm-agent-security` |
+| AI/LLM 安全 | RAG 检索污染、向量库弱点、Agent 记忆污染 | `ai-llm-agent-security` |
+| AI/LLM 安全 | Agent 工具滥用致 RCE/SSRF、过度授权、沙箱逃逸、模型供应链 | `ai-llm-agent-security` |
 | 二进制/内存安全 | 溢出、UAF、格式化字符串 | `source-code-audit` / `mobile-iot-device-security` |
 | 移动端 | Android/iOS/小程序 | `mobile-iot-device-security` |
 | IoT/固件 | 硬编码口令、固件提取 | `mobile-iot-device-security` |
@@ -128,6 +132,7 @@
 | **严重** | SQL 注入（核心库） | 用户表、订单表、支付表等敏感数据 | `injection-vulns` |
 | **严重** | 任意文件读取/写入 | 配置文件、密钥文件、源码泄露 | `file-handling` |
 | **严重** | SSRF 打内网 | 云元数据、Redis、内网服务探测 | `ssrf-internal-network` |
+| **严重** | Agent 工具注入致 RCE/SSRF | 提示词注入驱动代码解释器/Shell/HTTP 工具执行 | `ai-llm-agent-security` |
 | **高危** | 垂直越权 | 普通用户→管理员操作 | `auth-access-control` |
 | **高危** | 支付逻辑漏洞 | 金额篡改、订单状态跳变、重复支付 | `business-logic-race` |
 | **高危** | 敏感信息批量泄露 | 用户数据、订单数据、接口未鉴权 | `api-protocol-security` / `cloud-infra-supply-chain` |
@@ -137,12 +142,18 @@
 | **中危** | 存储型 XSS | 评论、昵称、富文本、客服对话 | `xss-frontend-security` |
 | **中危** | CSRF 关键操作 | 绑定手机、修改密码、资金操作 | `xss-frontend-security` |
 | **中危** | 未授权访问 | 管理后台、API 接口、调试端点 | `api-protocol-security` / `cloud-infra-supply-chain` |
+| **中危** | System Prompt / 敏感信息泄露 | 系统指令、工具清单、训练数据、密钥外泄 | `ai-llm-agent-security` |
+| **中危** | RAG 投毒 / Agent 记忆污染 | 知识库/记忆持久化投毒、跨用户生效 | `ai-llm-agent-security` |
+| **中危** | 提示词注入 / 越狱护栏失效 | 行为改写、间接注入、护栏绕过 | `ai-llm-agent-security` |
 
 ### 4.4 组合场景（多技能联动）
 
 - 信息泄露 → IDOR：`recon-js-analysis` 找接口 → `auth-access-control` 打越权
 - 文件上传 → SSRF/LFI：`file-handling` 拿路径 → `ssrf-internal-network` 打内网
 - 验证码回显 → 密码重置：`auth-access-control` 一条链
+- AI 提示词注入 → 工具 RCE/SSRF：`ai-llm-agent-security` 注入驱动工具 → `injection-vulns` / `ssrf-internal-network` / `file-handling` 落地危害
+- AI 间接注入 → RAG 投毒 → 跨用户持久化：`ai-llm-agent-security` 单技能全链
+- AI 输出 → 前端 XSS / 下游注入：`ai-llm-agent-security` 操纵输出 → `xss-frontend-security` / `injection-vulns` 二次落地
 - 低危组合提级：完成单点测试后做跨接口关联，涉及多技能时依次调用
 
 ---
@@ -199,6 +210,7 @@
 - [ ] 攻击面不清、找不到接口/密钥？→ `recon-js-analysis`
 - [ ] 有源码可审计？→ `source-code-audit`
 - [ ] payload 被拦？→ `waf-bypass-techniques`
+- [ ] LLM/Chatbot/Agent/RAG/Copilot？用户输入进大模型或工具调用？→ `ai-llm-agent-security`
 
 ---
 
@@ -210,6 +222,7 @@
 - 管理后台：/admin /manager /console /backstage
 - API：/api/v1 /graphql /swagger /actuator
 - 冷门高价值点：客服/工单、邮件通知、二维码/短链、日志/监控、第三方登录、分享/邀请、数据导出（详见 `recon-js-analysis`）
+- AI 入口点：AI 客服/Chatbot、AI 助手/Copilot、文档问答/RAG、AI 写作/编程、AI 搜索、多模态解析、代码解释器、Agent 工具调用（详见 `ai-llm-agent-security`）
 
 ---
 
