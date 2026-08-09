@@ -1,3 +1,5 @@
+
+
 # CK-Skills
 
 > 基于 Claude Code / Codex 的 SRC 漏洞挖掘 Agent 技能体系 —— 将顶尖安全研究员的方法论沉淀为可调度、可复用的 Skill 知识资产。
@@ -58,7 +60,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 
 ### 1. 安装
 
-将本项目 `.agents/` 目录与 `AGENTS.md` 放入你的工作目录,Agent 会自动加载 `AGENTS.md` 作为系统提示词,并根据触发信号加载对应 Skill。
+将 `.agents/` 目录与 `AGENTS.md` 文件置于你的 Claude Code / Codex **工作目录根目录**。Agent 会自动加载 `AGENTS.md` 作为系统提示词，并支持根据触发信号自动加载对应 Skill。
 
 ### 2. 目录结构
 
