@@ -3,11 +3,11 @@
 > 基于 Claude Code / Codex 的 SRC 漏洞挖掘 Agent 技能体系 —— 将顶尖安全研究员的方法论沉淀为可调度、可复用的 Skill 知识资产。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-14-green.svg)](.agents/skills)
+[![Skills](https://img.shields.io/badge/Skills-16-green.svg)](.agents/skills)
 
 ## 📌 项目简介
 
-CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 14 个专项技能知识库(Skills)**,让通用 Agent 在垂直安全领域达到专家级表现。
+CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 16 个专项技能知识库(Skills)**,让通用 Agent 在垂直安全领域达到专家级表现。
 
 针对通用 Agent 在垂直领域的三大痛点:
 
@@ -25,7 +25,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 ├──────────────────────────────────────────────┤
 │  系统级提示词 AGENTS.md                        │  身份 / 约束 / 纪律 / 调度
 ├──────────────────────────────────────────────┤
-│  14 个专项 Skills(知识层)                     │  方法论 / 场景表 / 步骤
+│  16 个专项 Skills(知识层)                     │  方法论 / 场景表 / 步骤
 ├──────────────────────────────────────────────┤
 │  触发路由(场景→技能 / 漏洞类型→技能)         │  专家知识按需加载
 └──────────────────────────────────────────────┘
@@ -39,7 +39,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 
 | 技能 | 覆盖范围 |
 |---|---|
-| `recon-js-analysis` | 资产测绘、webpack / source map 还原、API 与密钥提取 |
+| `recon-js-analysis` | 资产测绘、webpack / source map 还原、API 与密钥提取、URL/IP/域名资产扩展、appid/appkey 凭证上报深挖 |
 | `auth-access-control` | 认证绕过、越权、IDOR、多租户隔离、密码重置、JWT |
 | `injection-vulns` | SQL / NoSQL / 命令 / SSTI / 表达式注入 |
 | `business-logic-race` | 支付逻辑、状态机建模、金额篡改、竞态条件 |
@@ -53,6 +53,8 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 | `source-code-audit` | 输入点 → 传播链 → Sink 静态审计 |
 | `waf-bypass-techniques` | Level 1-7 对抗升级框架 |
 | `ai-llm-agent-security` | 提示词注入、越狱逃逸、System Prompt 泄露、RAG/记忆污染、Agent 工具滥用致 RCE/SSRF、沙箱逃逸、模型供应链 |
+| `windows-reverse-engineering` | Windows PE 逆向、.NET/内核组件、缓冲区溢出、协议逆向、反调试对抗、shellcode 与 PoC 验证 |
+| `android-security-audit` | Android APK 组件安全深度审计、Intent/WebView/Provider/Binder/Deep Link、无 Frida/无 Root 漏洞验证、HyperOS 收录标准报告 |
 
 ## 🚀 快速开始
 
@@ -66,7 +68,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 CK-Skills/
 ├── AGENTS.md                      # 系统级提示词总纲
 ├── .agents/
-│   └── skills/                    # 14 个专项技能
+│   └── skills/                    # 16 个专项技能
 │       ├── recon-js-analysis/
 │       │   └── SKILL.md
 │       ├── auth-access-control/
@@ -82,6 +84,14 @@ CK-Skills/
 目标:https://example.com,已登录普通用户,需要测试越权
 → 自动加载 auth-access-control,按"权限三问"执行
 ```
+
+## 🆕 最近更新
+
+- **新增 `windows-reverse-engineering`**：Windows PE 逆向与二进制漏洞深度挖掘（反汇编/反编译、内存破坏漏洞、协议逆向、反调试对抗、漏洞利用链构造）
+- **新增 `android-security-audit`**：Android APK 组件安全深度审计——JADX 静态分析 + ADB 动态验证，无 Frida/无 Root 漏洞验证，对标小米 HyperOS 漏洞收录标准
+- **扩充信息收集相关 SKILLS**：
+  - `recon-js-analysis` 新增 **URL/IP/域名资产扩展**（webpack/app.js/抓包中提取的地址全部进入资产测绘，APP 来源的提醒关注后台接口域名）与 **appid/appkey 凭证上报深挖**（验证有效性、打后端/云资产）
+  - `android-security-audit` 支持从 APK 反编译产物中提取**后端接口域名与应用凭证**并联动深挖
 
 ## 🎯 设计理念
 

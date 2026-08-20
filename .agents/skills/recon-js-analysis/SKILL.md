@@ -1,6 +1,6 @@
 ---
 name: recon-js-analysis
-description: 当开始新目标、攻击面不清晰、需要资产测绘/信息收集/前端JS分析/接口与敏感信息提取时调用。负责webpack拆解、source map还原、API端点与密钥提取、隐藏子域名与历史资产发现、高价值入口定位。命中场景：找不到接口、需要找密钥/隐藏功能/旧版本接口、JS加密与签名逻辑需要还原。
+description: 当开始新目标、攻击面不清晰、需要资产测绘/信息收集/前端JS分析/接口与敏感信息提取时调用。负责webpack拆解、source map还原、API端点与密钥提取、历史资产发现、高价值入口定位。命中场景：找不到接口、需要找密钥/隐藏功能/旧版本接口、JS加密与签名逻辑需要还原。
 ---
 
 # recon-js-analysis — 资产测绘与前端 JS 深度分析
@@ -11,13 +11,12 @@ description: 当开始新目标、攻击面不清晰、需要资产测绘/信息
 - 需要提取 API 端点、参数结构、鉴权逻辑、隐藏功能
 - 需要还原 webpack chunk / source map / 混淆代码
 - 需要找硬编码密钥、AK/SK、内部域名、测试账号
-- 需要发现隐藏子域名、历史资产、旧版本接口
+- 需要发现、历史资产、旧版本接口
 - 需要确定高价值入口点（用户中心/支付/后台/API）
 
 ## 一、资产测绘与信息收集
 
 ```
-子域名：subfinder / amass / OneForAll / 证书透明度
 端口服务：nmap / masscan / 云资产API
 目录扫描：dirsearch / ffuf / 403绕过
 JS分析：LinkFinder / SecretFinder / API端点提取
@@ -30,7 +29,7 @@ APP逆向：jadx / frida / 抓包分析隐藏接口
 - **Wayback Machine**：翻旧版本页面/JS（可能有已删除的接口和功能）
 - **GitHub/GitLab搜索**：目标域名、内部接口、泄露的密钥/配置
 - **Google Dork**：site:target.com filetype:pdf/xls/doc/sql/log/bak
-- **证书透明度日志**：发现隐藏子域名
+- **证书透明度日志**：发现隐藏的子域名
 - **招聘JD**：推断技术栈（用了什么框架→对应什么已知漏洞）
 - **JS中的注释/TODO**：开发者留下的线索
 - **robots.txt / sitemap.xml**：暴露的隐藏路径
@@ -75,11 +74,30 @@ python Packer-InfoFinder.py -u https://target.com --finder -p http://127.0.0.1:7
 - 前端路由表（React Router / Vue Router / Angular Routes）
 - 角色/权限判断逻辑（哪些功能对哪些角色开放）
 - 硬编码的密钥、AK/SK、内部域名、测试账号
+- **URL / IP / 域名清单**（webpack/app.js/抓包/反编译中所有请求地址）：API 网关、后台/管理端域名、CDN/OSS 存储桶、内网 IP、云服务端点、第三方回调地址——每一条都是**可扩展攻击面**，单独列出并进入资产测绘流程
+- **appid / appkey / AppSecret / 推送密钥等应用凭证**：单独列出，作为重点深挖对象（见 3.3）
 - Feature Flag / Debug开关 / 环境判断（dev/test/prod）
 - WebSocket端点和消息格式
 - 错误处理逻辑（哪些错误会泄露信息）
 
-### 3.3 分析输出格式
+### 3.3 资产扩展与凭证上报（提取后必须做）
+
+**① URL/IP/域名 → 资产扩展（可扩展分析内容）**
+
+- 将提取的每个 URL、IP、域名单独成行，标注来源（`webpack 提取` / `app.js` / `source map` / `APP 抓包` / `APK 反编译`），便于交接与复盘
+- 全部进入资产测绘流程：子域名枚举、端口扫描、目录扫描、指纹识别
+- **APP 中抓取的 URL/IP/域名要提醒用户关注**：很可能是 APP 后台接口或业务接口域名，鉴权往往弱于前端接口，是比前端接口更高价值的测试目标（联动 `android-security-audit` / `mobile-iot-device-security`）
+
+**② appid/appkey 等凭证 → 上报并深入挖掘**
+
+- 提取到 appid/appkey/AppSecret/AK/SK/推送密钥后，**必须上报给用户并单独列出**，作为重点深挖对象，不允许只放在接口清单里带过
+- 深挖方向：
+  - **验证有效性**：用 appid/appkey 直接调用对应后端接口/云服务 API——云厂商 AK/SK 可致云资产接管（联动 `cloud-infra-supply-chain`）
+  - **定位归属**：凭证书透明度日志、代码仓库搜索、目标域名对比，确认凭证对应的域名与服务
+  - **越权面**：appid/appkey 对应的管理接口、统计接口、推送接口是否可越权调用、是否缺少鉴权
+  - **泄漏面**：多渠道验证（历史版本 JS、Wayback、日志、错误信息、GitHub 泄露）
+
+### 3.4 分析输出格式
 
 ```
 [JS分析报告]
@@ -90,7 +108,7 @@ python Packer-InfoFinder.py -u https://target.com --finder -p http://127.0.0.1:7
 可测试点：(按优先级排序)
 ```
 
-### 3.4 测试执行
+### 3.5 测试执行
 
 - 每个接口必须测试全部HTTP方法（GET/POST/PUT/DELETE/PATCH/OPTIONS）
 - 每个参数必须测试：正常值、空值、边界值、类型混淆、数组化、超长、特殊字符
@@ -125,4 +143,6 @@ python Packer-InfoFinder.py -u https://target.com --finder -p http://127.0.0.1:7
 - 参数拼接/注入点 → `injection-vulns`
 - 文件相关功能 → `file-handling`
 - URL可控功能 → `ssrf-internal-network`
+- 提取的 URL/IP/域名清单 → 资产测绘扩展（新子域/新端口/新后台），APP 来源的提醒用户关注后台接口域名
+- 提取的 appid/appkey/AK/SK 等凭证 → **上报用户并深入挖掘**（验证有效性、打云资产/后端接口，联动 `cloud-infra-supply-chain`）
 

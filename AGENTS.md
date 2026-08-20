@@ -89,9 +89,10 @@
 | 上传/下载/导出/导入/预览/解压/打包/编辑器 | `file-handling` | 任意上传 getshell、路径穿越、Zip Slip、二次渲染、CSV/公式注入 |
 | URL 可控的抓取/代理/webhook/回调/图片预览/二维码/短链/文档预览 | `ssrf-internal-network` | SSRF 探测、云元数据、内网资产、DNS 重绑定、协议绕过 |
 | XML 导入、SOAP、Office/Excel 解析、序列化对象、JSON 深合并 | `deserialization-xxe` | 反序列化 RCE、XXE、原型污染、ysoserial/phpggc 利用 |
-| 评论/昵称/富文本/私信/搜索反射、前端 DOM、postMessage、跨域 | `xss-frontend-security` | 反射/存储/DOM XSS、CSRF、CORS、Clickjacking、XSS 绕过 |
+| 评论/昵称/富文本/私信/搜索反射、前端 DOM、postMessage、跨域、**AI 输出/Markdown 渲染无净化（marked→innerHTML）**；**跳转页/开放重定向/target 参数驱动 location 跳转（优先测跳转型 XSS，伪协议升级同源 XSS）** | `xss-frontend-security` | 跳转型 XSS（优先）、反射/存储/DOM XSS、AI/Markdown 渲染型存储 XSS、CSRF、CORS、Clickjacking、XSS 绕过 |
 | REST/GraphQL/gRPC/WebSocket、Swagger、调试端点、HTTP 走私、DoS | `api-protocol-security` | API 全方法测试、BOLA、GraphQL 深度攻击、协议层漏洞 |
 | APK/IPA/小程序/IoT 固件/ADB 调试 | `mobile-iot-device-security` | 逆向分析、WebView/DeepLink、本地存储、抓包突破、固件安全 |
+| APK/预装应用/厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具）、导出组件/Intent/WebView/Provider/Binder/Deep Link 组件安全深挖 | `android-security-audit` | JADX 静态分析 + ADB 动态验证、无 Frida/无 Root 漏洞验证、PoC 构建、HyperOS 收录标准报告 |
 | 云资产/容器/K8s/运维面板/中间件/CI-CD/依赖 CVE/第三方回调/信息泄露 | `cloud-infra-supply-chain` | 云配置错误、未授权中间件、供应链漏洞、对象存储权限 |
 | 有源码/代码片段/反编译产物 | `source-code-audit` | 输入点→传播链→危险函数 Sink、跨语言危险函数速查 |
 | payload 被拦截、WAF/过滤/403、请求被防御 | `waf-bypass-techniques` | 编码/变形/逻辑/协议层绕过、换入口、组合利用 |
@@ -104,7 +105,7 @@
 | 身份认证与会话 | 弱口令、认证绕过、会话固定、JWT | `auth-access-control` |
 | 访问控制与越权 | IDOR、垂直越权、多租户 | `auth-access-control` |
 | 注入类 | SQL/NoSQL/命令/SSTI/表达式 | `injection-vulns` |
-| XSS 与前端 | 反射/存储/DOM XSS、Clickjacking、CORS | `xss-frontend-security` |
+| XSS 与前端 | 反射/存储/DOM XSS、Clickjacking、CORS；**跳转型 XSS（中间跳转页/登录回跳/target 驱动 location，伪协议升级同源 XSS）** | `xss-frontend-security` |
 | CSRF | 关键操作 CSRF | `xss-frontend-security` |
 | 文件与路径 | 上传、穿越、任意读写、LFI/RFI | `file-handling` |
 | SSRF | URL 抓取、云元数据、内网 | `ssrf-internal-network` |
@@ -122,6 +123,7 @@
 | AI/LLM 安全 | Agent 工具滥用致 RCE/SSRF、过度授权、沙箱逃逸、模型供应链 | `ai-llm-agent-security` |
 | 二进制/内存安全 | 溢出、UAF、格式化字符串 | `source-code-audit` / `mobile-iot-device-security` |
 | 移动端 | Android/iOS/小程序 | `mobile-iot-device-security` |
+| Android 组件安全 | 导出组件未授权、Intent 重定向、PendingIntent、WebView/JSBridge、ContentProvider、Binder、Deep Link | `android-security-audit` |
 | IoT/固件 | 硬编码口令、固件提取 | `mobile-iot-device-security` |
 
 ### 4.3 SRC 高价值漏洞优先级（中高危优先）
@@ -138,6 +140,8 @@
 | **高危** | 敏感信息批量泄露 | 用户数据、订单数据、接口未鉴权 | `api-protocol-security` / `cloud-infra-supply-chain` |
 | **高危** | 任意用户密码重置 | 验证码绕过、逻辑缺陷、凭证可控 | `auth-access-control` |
 | **高危** | 短信轰炸（无限制） | 接口无频率限制、验证码可绕过 | `auth-access-control` / `api-protocol-security` |
+| **高危** | 跳转型 XSS | 中间跳转页/登录回跳信任 target 参数 → javascript: 伪协议升级同源 XSS → 会话接管 | `xss-frontend-security` |
+| **高危** | Android 导出组件漏洞 | 预装/系统应用 Intent 重定向、命令注入、任意文件读写、静默安装 | `android-security-audit` |
 | **中危** | 水平越权（IDOR） | 订单、地址、收藏等资源 ID 可控 | `auth-access-control` |
 | **中危** | 存储型 XSS | 评论、昵称、富文本、客服对话 | `xss-frontend-security` |
 | **中危** | CSRF 关键操作 | 绑定手机、修改密码、资金操作 | `xss-frontend-security` |
@@ -154,6 +158,7 @@
 - AI 提示词注入 → 工具 RCE/SSRF：`ai-llm-agent-security` 注入驱动工具 → `injection-vulns` / `ssrf-internal-network` / `file-handling` 落地危害
 - AI 间接注入 → RAG 投毒 → 跨用户持久化：`ai-llm-agent-security` 单技能全链
 - AI 输出 → 前端 XSS / 下游注入：`ai-llm-agent-security` 操纵输出 → `xss-frontend-security` / `injection-vulns` 二次落地
+- AI 编码注入 → 输出通道绕过 WAF → 存储型 XSS → 免登录分享传播：`ai-llm-agent-security` 3.6 编码注入 + `xss-frontend-security` 四 渲染落地，一条链
 - 低危组合提级：完成单点测试后做跨接口关联，涉及多技能时依次调用
 
 ---
