@@ -56,34 +56,42 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 | `windows-reverse-engineering` | Windows PE 逆向、.NET/内核组件、缓冲区溢出、协议逆向、反调试对抗、shellcode 与 PoC 验证 |
 | `android-security-audit` | Android APK 组件安全深度审计、Intent/WebView/Provider/Binder/Deep Link、无 Frida/无 Root 漏洞验证、HyperOS 收录标准报告 |
 
-## 🚀 快速开始
+## 🚀 怎么使用（30 秒上手）
 
-### 1. 安装
+### 方式一：一键安装（推荐）
 
-将本项目 `.agents/` 目录与 `AGENTS.md` 放入你的工作目录,Agent 会自动加载 `AGENTS.md` 作为系统提示词,并根据触发信号加载对应 Skill。
-
-### 2. 目录结构
+把下面这段提示词整段复制，粘贴给你的 Agent（Claude Code / Codex 等，不同框架会自动适配自己的技能加载规范），Agent 会替你完成**下载 → 安装 → 加载 → 自检**：
 
 ```
-CK-Skills/
-├── AGENTS.md                      # 系统级提示词总纲
-├── .agents/
-│   └── skills/                    # 16 个专项技能
-│       ├── recon-js-analysis/
-│       │   └── SKILL.md
-│       ├── auth-access-control/
-│       │   └── SKILL.md
-│       └── ...                    # 其余专项技能
+我将用你进行 SRC 漏洞挖掘。请立即按以下步骤执行：
+
+1. 下载并安装这个SKILLS https://github.com/zhaji2333/CkSKILLS.git 
+2. 加载：确认 AGENTS.md 已作为系统提示词生效、技能路由表可用
+3. 自检：列出已安装的全部专项技能清单，确认各自的触发描述可被识别
+4. 报告：输出「技能库已安装并加载」+ 技能清单，然后等待我提供测试目标
+
+之后我会直接给出目标域名 / APK / 源码，你按 AGENTS.md 路由表自动调用对应技能深度挖掘。
 ```
 
-### 3. 使用
+### 方式二：手动安装
 
-在 Claude Code / Codex 中直接描述测试场景,Agent 会根据触发信号自动加载对应 Skill 并按方法论执行:
+```bash
+git clone https://github.com/zhaji2333/CkSKILLS.git
+# 将 CkSKILLS 中的 AGENTS.md 与 .agents/ 目录放入你的工作目录，重启 Agent 即自动加载
+```
+
+### 使用示例（安装后）
 
 ```
-目标:https://example.com,已登录普通用户,需要测试越权
-→ 自动加载 auth-access-control,按"权限三问"执行
+目标：https://example.com，已登录普通用户，需要测试越权
+→ 自动加载 auth-access-control，按"权限三问"执行
 ```
+
+### 卸载
+
+删除工作目录下的 `AGENTS.md` 与 `.agents/` 目录即可（或按你的 Agent 框架规范移除）。
+
+> ⚠️ 使用前请阅读文末免责声明，仅用于授权安全测试。
 
 ## 🆕 最近更新
 
