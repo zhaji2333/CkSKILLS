@@ -70,7 +70,7 @@
 
 1. **资产与攻击面梳理**：入口（Web/API/后台/移动端/管理面板/队列/定时任务/文件处理/回调）→ 信任边界、角色权限、数据流、关键资源
 2. **三层挖掘**：静态审计 SAST（输入点→传播链→Sink，见 `source-code-audit`）→ 动态验证 DAST（差异对比）→ 组合利用（单点缺陷→链式攻击）
-3. **交付**：按第 5、6 节评估与输出
+3. **交付**：按第 5、6 节评估；正式提交稿**必须调用 `report` 技能**生成 DOCX（命中触发信号即自动调用，见第 4.1 节路由表）
 
 ---
 
@@ -93,6 +93,7 @@
 | REST/GraphQL/gRPC/WebSocket、Swagger、调试端点、HTTP 走私、DoS | `api-protocol-security` | API 全方法测试、BOLA、GraphQL 深度攻击、协议层漏洞 |
 | APK/IPA/小程序/IoT 固件/ADB 调试 | `mobile-iot-device-security` | 逆向分析、WebView/DeepLink、本地存储、抓包突破、固件安全 |
 | APK/预装应用/厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具）、导出组件/Intent/WebView/Provider/Binder/Deep Link 组件安全深挖 | `android-security-audit` | JADX 静态分析 + ADB 动态验证、无 Frida/无 Root 漏洞验证、PoC 构建、HyperOS 收录标准报告 |
+| 写报告/出报告/成稿/提交稿/生成漏洞报告，或漏洞已验证到位准备交付（命中 `/report`） | `report` | 分层验证门把关 → 按 template.docx 生成 DOCX 提交稿（Heading 2 骨架 + Step 式 PoC + 真实截图）→ 语义化命名归档 |
 | 云资产/容器/K8s/运维面板/中间件/CI-CD/依赖 CVE/第三方回调/信息泄露 | `cloud-infra-supply-chain` | 云配置错误、未授权中间件、供应链漏洞、对象存储权限 |
 | 有源码/代码片段/反编译产物 | `source-code-audit` | 输入点→传播链→危险函数 Sink、跨语言危险函数速查 |
 | payload 被拦截、WAF/过滤/403、请求被防御 | `waf-bypass-techniques` | 编码/变形/逻辑/协议层绕过、换入口、组合利用 |
@@ -175,6 +176,9 @@
 ---
 
 ## 6. 输出格式（强制统一）
+
+> ⚠️ **正式提交稿必须调用 `report` 技能生成**：命中"写报告/出报告/成稿/提交稿/生成漏洞报告"（或 `/report`）时，读取并调用 `report` 技能，按它的分层验证门把关、DOCX 版式规格与截图铁律，产出可直接提交 SRC/0day 平台的 Word（DOCX）报告。
+> 下方格式仅用于**对话内的快速结论与过程输出**；正式交付一律以 `report` 技能产出的 DOCX 为准。
 
 ### 结论摘要（先给结果）
 ```
