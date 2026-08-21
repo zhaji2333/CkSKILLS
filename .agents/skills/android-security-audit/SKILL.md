@@ -1,6 +1,6 @@
 ---
 name: android-security-audit
-description: 当目标为 Android APK / 预装应用 / 厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具），或需要组件安全深度挖掘（导出组件/Intent 重定向/WebView/JSBridge/ContentProvider/Binder/Deep Link）、无 Root 无 Frida 环境下的漏洞验证与 PoC 构建、对标厂商 SRC 移动端收录标准写报告时调用。负责 JADX 静态分析 + ADB 动态验证的深度审计。命中场景：预装 App 提权/越权、系统 App 弹窗欺骗、Deep Link 远程触发、WebView 沙箱文件读取、APP 后端域名与 appid/appkey 提取上报深挖。
+description: 当目标为 Android APK / 预装应用 / 厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具），或需要组件安全深度挖掘（导出组件/Intent 重定向/WebView/JSBridge/ContentProvider/Binder/Deep Link）、无 Root 无 Frida 环境下的漏洞验证与 PoC 构建、需要按厂商 SRC 移动端收录标准评估漏洞价值时调用。负责 JADX 静态分析 + ADB 动态验证的深度审计。命中场景：预装 App 提权/越权、系统 App 弹窗欺骗、Deep Link 远程触发、WebView 沙箱文件读取、APP 后端域名与 appid/appkey 提取上报深挖。正式写报告由 report 技能负责。
 ---
 
 # android-security-audit — Android APK 组件安全深度审计
@@ -38,9 +38,8 @@ description: 当目标为 Android APK / 预装应用 / 厂商系统应用（Hype
 | 发现漏洞，要动态验证 | → 二、动态验证 |
 | 构建 PoC App | → 三、PoC 开发规范 |
 | 判断发现值不值得报 | → 四、忽略清单与分流 |
-| 写漏洞报告 | → 五、报告模板 |
-| 查评分标准/守护计划 | → 六、评分标准 |
-| 通用加固清单 | → 八、通用修复建议 |
+| 写漏洞报告（正式 DOCX 提交稿） | → 调用 `report` 技能 |
+| 通用加固清单 | → 六、通用修复建议 |
 
 ## 📚 参考资源
 
@@ -861,173 +860,16 @@ location.href = "jsbridge://readFile?path=/data/data/com.victim/databases/privat
 
 ---
 
-## 五、报告模板
-
-**必须严格对齐官方标准（见 六）**
-
-### 5.1 测试环境
-
-```bash
-adb shell getprop | grep -E "ro.build.fingerprint|ro.build.version.security_patch"
-# 示例输出：
-# ro.build.fingerprint=Xiaomi/cepheus/cepheus:14/UKQ1.230804.001/V15.0.2.0.UFACNXM:user/release-keys
-# ro.build.version.security_patch=2024-03-01
-```
-
-- 机型 / 系统版本（HyperOS/MIUI）/ 安全补丁日期
-- 目标 App 包名 + 版本号（应用商店最新版）
-
-### 5.2 报告结构
-
-1. **漏洞标题**：`[业务等级][漏洞类型] 一句话描述`
-2. **漏洞描述**：漏洞类型 / 危害等级 / 攻击向量（远程/本地）/ 影响范围
-3. **漏洞原理**：JADX 代码截图 + 标记漏洞点 + 解释为何非 Root 攻击者可利用
-4. **复现步骤**（严禁 Frida/需要 Root 的工具）
-   - 远程 PoC："使用浏览器打开 http://..." 或 "发送特定格式短信/邮件..."
-   - 本地 PoC（恶意 App）："安装附件中的 PoC APK，点击按钮..."
-   - 本地 PoC（ADB）："通过 ADB 执行：`adb shell am start -n ...`"
-   - **远程利用评级 > 恶意 App 利用 > ADB 利用**，优先展示远程/恶意 App 方式
-5. **危害证明**：截图证明读取到敏感数据（如 `/data/data` 下文件）或成功执行功能
-6. **修复建议**：`android:exported="false"` / 增加自定义权限保护 `android:permission="..."`
-
-### 5.3 报告示例
-
-```markdown
-## 漏洞报告：Intent 重定向导致未授权访问私有组件
-
-### 测试环境
-- 机型：Xiaomi 15 Pro
-- 系统版本：HyperOS 1.0.5.0.UFACNXM
-- 安全补丁：2024-03-01
-
-### 目标应用
-- 包名：com.xiaomi.securitycenter
-- 版本号：8.2.0（应用商店最新版）
-
-### 漏洞描述
-- 漏洞类型：Intent 重定向（LaunchAnywhere）
-- 危害等级：高危
-- 攻击向量：本地（需安装 PoC App）
-- 影响范围：所有安装该应用的设备
-
-### 漏洞详情
-**调用链**
-DiagnosticActivity.onCreate()
-  → getIntent().getParcelableExtra("target_intent")
-  → startActivity(target_intent)
-
-**代码位置**
-- 文件：com/xiaomi/securitycenter/diagnostic/DiagnosticActivity.java
-- 行号：127
-
-**截图**
-- [JADX 代码截图显示 getParcelableExtra 后直接 startActivity]
-- [PoC 运行截图显示成功启动私有 Activity]
-
-### PoC
-**ADB 验证命令**
-adb shell am start -n com.xiaomi.securitycenter/.diagnostic.DiagnosticActivity \
-  --es target_intent "com.xiaomi.securitycenter/.privacy.PrivacyDataActivity"
-
-**PoC App 源码**：[GitHub 链接]
-**演示视频**：[视频链接]
-
-### 修复建议
-1. 为 DiagnosticActivity 添加签名级权限保护
-2. 校验目标组件是否在白名单内
-3. 使用 Intent.setPackage() 限制目标包名
-```
-
----
-
-## 六、评分标准（小米 HyperOS 收录标准参考）
-
-> 以下为小米 HyperOS 移动端漏洞收录标准（4.3.x）摘要，用于评级与报告对齐；具体奖励以官方最新公告为准。
-
-### 6.1 业务等级划分
-
-- **核心业务**：最新版 HyperOS 预装的米系 APP（定制版输入法、蜻蜓FM 等合作应用除外）、HyperOS 自身的漏洞（不包括第三方组件、安卓原生环境的漏洞）、小米汽车 APP。
-- **一般业务**：单发 APP，非预装但可下载的米系 APP（包括预装的定制版输入法、蜻蜓FM 等与三方合作应用）。
-- **边缘业务**：特别版业务 APP。
-
-### 6.2 漏洞级别与奖励标准（贡献币）
-
-| 漏洞级别 | 漏洞详情（摘要） | 核心/一般/边缘业务 |
-|---|---|---|
-| **严重** | 绕过 Secure Boot 远程永久 DoS（需刷机）；获取 ROOT 权限；特权进程远程任意代码执行；TEE 中任意代码执行；未经授权访问 TEE 保护数据（指纹/闪付卡/人脸等造成财产损失）；远程控制手机；远程静默安装任意应用（用户完全无感知） | 2500~12000 / 500~2000 / 200~500 |
-| **高危** | 远程获取用户敏感信息（照片/通讯录/音频）；远程普通进程任意代码执行；远程访问受保护数据；本地在特权应用/TCB/ICE 中任意代码执行；系统级锁屏绕过；本地永久 DoS；远程读取 APP 沙箱任意数据；无需交互远程开关用户功能；绕过运营商制式限制；绕过设备保护（手机找回）；本地静默安装（用户无感知） | 600~3000 / 300~600 / 60~100 |
-| **中危** | 远程暂时性 DoS（挂起/重启）；接口逻辑漏洞造成欺骗用户/钓鱼；本地读取 APP 沙箱任意数据；APP 级锁屏绕过；本地绕过安全设置修改交互；本地无权限获取用户敏感信息；本地普通应用任意代码执行；本地开关需用户许可的功能；客户端未实施有效证书校验泄露用户身份凭证 | 150~400 / 60~150 / 10~20 |
-| **低危** | 需用户多次（>2 次）交互触发；APP 升级功能劫持；需物理接触且用户配合；获取非用户相关敏感信息；浏览器地址栏欺骗；远程暂时性 DoS（App 崩溃重启）；本地受限进程任意代码执行；影响较小的安全设计/逻辑缺陷 | 30~60 / 10~30 / 1~10 |
-| **忽略** | 见 四、忽略清单 | / |
-
-> 公开漏洞锁定期 3 个月：超过锁定期仍未修复的漏洞和补丁，最终评分一般不高于中危。通过网络劫持造成危害的漏洞一般降级处理。客户端与服务端交互的漏洞符合 WEB 层的按 WEB 层评分。
-
-### 6.3 守护计划专项奖励（高价值项）
-
-| 漏洞类型 | 奖励 |
-|---|---|
-| 远程批量变砖（需刷机恢复） | 20 万 |
-| 远程实现 system 进程任意代码执行 | 20 万 |
-| 利用基带漏洞向 OS 注入并执行恶意代码 | 20 万 |
-| 通过近场通信（NFC 等）自身漏洞执行任意代码 | 20 万 |
-| 远程普通用户进程任意代码执行 | 10 万 |
-| 远程读取 APP 沙箱任意文件 | 10 万 |
-| 绕过权限申请机制自动获取麦克风/摄像头权限 | 10 万 |
-| 系统级锁屏密码绕过（打开手机） | 10 万 |
-| 浏览器沙箱绕过实现任意代码执行 | 10 万 |
-| 远程获取用户个人敏感数据文件（照片/录音/视频） | 10 万 |
-| **挑战项**：原创 0day 任意场景获取小米完整 root 权限（官方 root 工具除外） | **10 万元奖金**（gki 等三方组件引入的漏洞除外） |
-
-- 接受机型：Xiaomi 15 / 15 pro / 15 Ultra 最新稳定版 ROM，浏览器须为应用商店最新版，默认系统设置，不能申请 Accessibility 权限。
-- 仅收录外界未曝光细节与 PoC 的 0day；所有漏洞在所有场景中只判定有效一次，重复使用视为漏洞重复。
-- **最终奖励金额 =（基础奖励 - 重复场景扣减）× 交互条件折算系数 × 影响削弱折算系数 + 挑战项奖金**。
-
-### 6.4 交互条件奖励折算
-
-| 用户交互条件 | 折算系数 | 典型例子 |
-|---|---|---|
-| 无交互 | 1 | 消息推送、远程攻击 |
-| 弱交互 | 0.7 | 诱导用户点击链接（One Click）、钓鱼邮件/短信、网络中间人 |
-| 强交互 | 0.4 | 需要用户点击两次或以上 |
-
-### 6.5 漏洞影响削弱奖励折算
-
-| 影响减弱因素 | 折算系数 | 典型例子 |
-|---|---|---|
-| 无减弱 | 1 | 漏洞成功触发且无额外条件 |
-| 漏洞影响局限 | 0.7-0.5 | 只能静默安装已上架 APP |
-| 利用条件苛刻 | 0.4-0.2 | 需额外配置（手机分身）、非通用漏洞、有限度代码执行 |
-| 利用条件极苛刻 | 0.1 | 需已获得 root 权限、影响范围小 |
-
-### 6.6 名词定义
-
-- **远程**：不安装应用/不接触设备，通过网页浏览、短信彩信、邮件、文件下载、无线网络通信（不包括通信距离 <10cm 的短距通信）等方式。
-- **本地**：需在受害系统安装应用、使用 ADB，或物理接触设备及短距通信。
-- **受限进程**：比普通应用进程受更严格权限约束，或运行在高度受限的 SELinux 域。
-- **普通应用进程**：SELinux `untrusted_app` / `platform_app` 域中的应用，如第三方应用或内置无 system 权限的应用。
-- **特权进程**：SELinux `system_app` 域，或以 system 级别/root 权限运行的进程。
-- **TCB**：Trusted Computing Base，包括内核及等同内核的用户服务（init、vold 等）。
-- **TEE**：Trusted Execution Environment，与 Android 并存的受信计算/存储环境。
-- **ICE**：Independent Computing Environment，拥有独立计算单元/固件/简易 OS，如基带 Modem。
-
-### 6.7 其他说明
-
-- framework 类漏洞需内部验证是否为未知问题，并在最新 ROM 上稳定复现；仅影响低版本 ROM 的漏洞视情况确认或忽略。
-- 报告需提供有效 POC/EXP 与验证视频及漏洞分析；缺乏详细分析或完整 POC 将影响奖励，仅主观表达未证明实际危害的报告不予确认。
-- 下线产品或即将下线产品的安全/隐私漏洞忽略处理；无法稳定复现的漏洞降级；只影响特定机型的漏洞视具体危害评估是否降级。
-
----
-
-## 七、验证要点
+## 五、验证要点
 
 - 每个导出组件（Activity/Service/Receiver/Provider）都要回答：能否被外部触发（exported？有权限保护？有来源校验？）→ 参数可控 → 流向敏感操作（startActivity/exec/文件/数据库/UI 渲染）。
 - **远程优先**：能通过 Deep Link/恶意网页触发的漏洞，评级高于 ADB 触发；验证时优先构造 HTML PoC。
 - **字符串匹配 ≠ 证明执行**：grep 命中后必须沿调用链确认参数可达性与校验缺失，并截图取证。
 - 组件间组合：Deep Link → WebView → JSBridge → 命令执行/文件读取 是多技能组合链（见 AGENTS.md 4.4），不要停在单点。
-- 报告评级对齐 六：忽略清单先过一遍，再按 6.2 定级、6.4/6.5 折算说明标注交互与影响。
+- 报告评级与成稿：漏洞定级与正式 DOCX 报告由 `report` 技能的分层验证门把关，本技能负责把证据链做扎实（截图、调用链、A/B 交叉证明）。
 - 联动 `mobile-iot-device-security`：需要抓包佐证弱加密/HTTP 明文、so 层深度逆向、iOS/小程序/IoT 时切换。
 
-## 八、通用修复建议
+## 六、通用修复建议
 
 - 组件最小暴露：无外部需求一律 `android:exported="false"`；导出的组件加自定义权限保护 `android:permission`（signature 级）。
 - 敏感操作组件：校验 `callingPackage` / `getCallingUid()` 白名单，Intent extras 严格白名单化。
