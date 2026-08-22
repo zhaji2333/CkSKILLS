@@ -91,8 +91,8 @@
 | XML 导入、SOAP、Office/Excel 解析、序列化对象、JSON 深合并 | `deserialization-xxe` | 反序列化 RCE、XXE、原型污染、ysoserial/phpggc 利用 |
 | 评论/昵称/富文本/私信/搜索反射、前端 DOM、postMessage、跨域、**AI 输出/Markdown 渲染无净化（marked→innerHTML）**；**跳转页/开放重定向/target 参数驱动 location 跳转（优先测跳转型 XSS，伪协议升级同源 XSS）** | `xss-frontend-security` | 跳转型 XSS（优先）、反射/存储/DOM XSS、AI/Markdown 渲染型存储 XSS、CSRF、CORS、Clickjacking、XSS 绕过 |
 | REST/GraphQL/gRPC/WebSocket、Swagger、调试端点、HTTP 走私、DoS | `api-protocol-security` | API 全方法测试、BOLA、GraphQL 深度攻击、协议层漏洞 |
-| APK/IPA/小程序/IoT 固件/ADB 调试 | `mobile-iot-device-security` | 逆向分析、WebView/DeepLink、本地存储、抓包突破、固件安全 |
-| APK/预装应用/厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具）、导出组件/Intent/WebView/Provider/Binder/Deep Link 组件安全深挖 | `android-security-audit` | JADX 静态分析 + ADB 动态验证、无 Frida/无 Root 漏洞验证、PoC 构建、HyperOS 收录标准报告 |
+| 微信/支付宝/抖音/百度小程序、微信云开发/云函数、小程序包反编译/接口与密钥提取/登录支付逻辑 | `miniprogram-security` | 包还原 → 代码审计 → 接口与 appid/appsecret 提取 → 登录/支付/越权/渲染/云开发深挖 |
+| APK/预装应用/厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具）、导出组件/Intent/WebView/Provider/Binder/Deep Link 组件安全深挖、**硬编码密钥/appId/appKey 提取后未授权调接口（DEX/SO/H5 追踪签名）** | `android-security-audit` | 密钥追踪→未授权接口（最高优先级）、JADX 静态分析 + ADB 动态验证、无 Frida/无 Root 漏洞验证、PoC 构建、HyperOS 收录标准报告 |
 | 写报告/出报告/成稿/提交稿/生成漏洞报告，或漏洞已验证到位准备交付（命中 `/report`） | `report` | 分层验证门把关 → 按 template.docx 生成 DOCX 提交稿（Heading 2 骨架 + Step 式 PoC + 真实截图）→ 语义化命名归档 |
 | 云资产/容器/K8s/运维面板/中间件/CI-CD/依赖 CVE/第三方回调/信息泄露 | `cloud-infra-supply-chain` | 云配置错误、未授权中间件、供应链漏洞、对象存储权限 |
 | 有源码/代码片段/反编译产物 | `source-code-audit` | 输入点→传播链→危险函数 Sink、跨语言危险函数速查 |
@@ -122,10 +122,9 @@
 | AI/LLM 安全 | 提示词注入、越狱逃逸、System Prompt 泄露、训练数据/敏感信息泄露 | `ai-llm-agent-security` |
 | AI/LLM 安全 | RAG 检索污染、向量库弱点、Agent 记忆污染 | `ai-llm-agent-security` |
 | AI/LLM 安全 | Agent 工具滥用致 RCE/SSRF、过度授权、沙箱逃逸、模型供应链 | `ai-llm-agent-security` |
-| 二进制/内存安全 | 溢出、UAF、格式化字符串 | `source-code-audit` / `mobile-iot-device-security` |
-| 移动端 | Android/iOS/小程序 | `mobile-iot-device-security` |
+| 二进制/内存安全 | 溢出、UAF、格式化字符串 | `source-code-audit` / `android-security-audit`（Native 层） |
+| 小程序 | 微信/支付宝/抖音小程序、云开发 | `miniprogram-security` |
 | Android 组件安全 | 导出组件未授权、Intent 重定向、PendingIntent、WebView/JSBridge、ContentProvider、Binder、Deep Link | `android-security-audit` |
-| IoT/固件 | 硬编码口令、固件提取 | `mobile-iot-device-security` |
 
 ### 4.3 SRC 高价值漏洞优先级（中高危优先）
 

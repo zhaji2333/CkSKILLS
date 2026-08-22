@@ -48,7 +48,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 | `deserialization-xxe` | 反序列化 RCE、XXE、原型污染、利用链构造 |
 | `xss-frontend-security` | XSS、CSRF、CORS、Clickjacking |
 | `api-protocol-security` | BOLA、GraphQL、WebSocket、HTTP 走私 |
-| `mobile-iot-device-security` | Android / iOS 逆向、WebView、固件安全 |
+| `miniprogram-security` | 微信/支付宝/抖音小程序、包反编译、接口与密钥提取、微信登录/支付/越权/渲染/云开发深挖 |
 | `cloud-infra-supply-chain` | 云配置错误、K8s、CI/CD、SBOM、供应链 |
 | `source-code-audit` | 输入点 → 传播链 → Sink 静态审计 |
 | `waf-bypass-techniques` | Level 1-7 对抗升级框架 |
@@ -99,6 +99,7 @@ git clone https://github.com/zhaji2333/CkSKILLS.git
 - **新增 `windows-reverse-engineering`**：Windows PE 逆向与二进制漏洞深度挖掘（反汇编/反编译、内存破坏漏洞、协议逆向、反调试对抗、漏洞利用链构造）
 - **新增 `android-security-audit`**：Android APK 组件安全深度审计——JADX 静态分析 + ADB 动态验证，无 Frida/无 Root 漏洞验证，对标小米 HyperOS 漏洞收录标准
 - **新增 `report`**：写报告验证收口技能——分层验证门把关、按模板生成可提交 SRC/0day 平台的 DOCX 报告（Step 式 PoC + 真实截图）
+- **重构 `miniprogram-security`**：原 `mobile-iot-device-security` 拆分为小程序专项（微信/支付宝/抖音 + 云开发），消除与 `android-security-audit` 的 Android 内容重复
 - **扩充信息收集相关 SKILLS**：
   - `recon-js-analysis` 新增 **URL/IP/域名资产扩展**（webpack/app.js/抓包中提取的地址全部进入资产测绘，APP 来源的提醒关注后台接口域名）与 **appid/appkey 凭证上报深挖**（验证有效性、打后端/云资产）
   - `android-security-audit` 支持从 APK 反编译产物中提取**后端接口域名与应用凭证**并联动深挖
