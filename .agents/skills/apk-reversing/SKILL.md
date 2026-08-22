@@ -138,7 +138,53 @@ cp -r apktool_out/assets assets/
 
 ---
 
-## 五、质量检查（保证"拿全部"）
+## 五、Ghidra + GhidraMCP 环境准备（AI 分析 so 的启动路径）
+
+> 目标：让 Agent 能自主驱动 Ghidra 分析 .so（定位 JNI 导出 → 反编译伪 C → 读算法重写）。**GhidraMCP 操作的是"已导入并分析完的程序"**，所以 .so 必须先导入 Ghidra 并跑完自动分析。
+
+### 5.1 安装与启动
+
+- **Java 21+**（Ghidra 11.x 要求）；macOS：`brew install --cask ghidra` 或官网下载
+- **装 GhidraMCP 插件**：下载 LaurieWired/GhidraMCP 的 Ghidra 扩展 zip → Ghidra `File → Install Extensions` 安装 → 重启 Ghidra
+- **启动 MCP server**：Ghidra 内 `Window → Script Manager` 运行 `ghidra_mcp.py` → 起本地 HTTP MCP server（默认端口 8192，SSE 端点；端口/工具名以仓库 README 为准）
+
+### 5.2 导入 .so（两种方式，任选）
+
+**方式 A（GUI 手动）**：`File → New Project` 建工程 → `File → Import File` 选 `libxxx.so` → Import → 勾选 **Auto Analysis** → 等分析跑完
+
+**方式 B（命令行，Agent 可代劳）**：
+```bash
+# 建工程 + 导入 + 自动分析（一次完成）
+analyzeHeadless /tmp/ghidra_proj proj -import lib/arm64-v8a/libxxx.so -overwrite
+# 之后 GUI `File → Open Project` 打开该工程，GhidraMCP 即挂到已分析程序上
+```
+
+### 5.3 Agent 连接 MCP
+
+```bash
+# Claude Code 示例
+claude mcp add ghidra -sse http://localhost:8192/mcp
+# Codex 等其他框架按各自 MCP 配置方式指向同一端点
+```
+
+### 5.4 AI 驱动分析路径（工具调用序列）
+
+```
+1. list_functions            → 定位 JNI 导出（Java_ 前缀 / JNI_OnLoad）
+2. get_function_by_name <签名函数>
+3. decompile_function        → 拿伪 C → 识别算法（MD5/SHA/AES）与拼接顺序 → Python 重写
+4. get_strings               → 提取硬编码密钥/常量线索
+5. 伪 C 读不动（ollvm/VMP/字符串加密）→ 记录"需动态路径"，回落 android-security-audit 1.3 抓包兜底
+```
+
+### 5.5 注意事项
+
+- 首次自动分析大 .so 需要几分钟，**等跑完再调工具**
+- `arm64-v8a` 原生支持；x86/x86_64 模拟器 so 也可分析
+- 分析对象是从 APK 提取的**具体 .so**（`apk-reversing` 产物 `lib/arm64-v8a/`），不是整个 APK
+- 没有 GhidraMCP 时：Radare2（`izz`/`afl`/`pdf`）做轻量无头侦察作为降级
+
+## 六、质量检查（保证"拿全部"）
 
 - [ ] **入口类真实**：JADX 打开 Application/入口 Activity 是业务代码，非 stub
 - [ ] **特征串可命中**：`grep -rniE "appKey|secret|sign|接口域名" jadx_out/sources/` 有结果
@@ -147,13 +193,13 @@ cp -r apktool_out/assets assets/
 - [ ] **dex 合并**：多分片 dex 已合并，无遗漏
 - [ ] **report.md 已写**：壳类型、脱壳方式、产物清单、未还原项（如实记录，不编造）
 
-## 六、验证要点
+## 七、验证要点
 
 - JADX 打开核心类确认真实代码（截图存证）
 - 交付给 `android-security-audit` 后，其快速开始 Step 2 的 grep 应能直接命中
 - 壳 so 无法静态分析时，如实记录"该模块需动态追踪"，不硬编
 
-## 七、注意与边界
+## 八、注意与边界
 
 - 脱壳/反编译仅用于**授权目标**；在线脱壳上传前确认目标已授权
 - 加固对抗在升级，新壳（VMP/混淆壳）可能需要针对性方案：先跑起来抓 dex 加载点，或结合 `windows-reverse-engineering` 思路分析壳 so
