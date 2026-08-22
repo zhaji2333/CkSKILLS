@@ -72,6 +72,8 @@ jadx -d /tmp/jadx_out --show-bad-code <path/to/target.apk>
 apktool d <path/to/target.apk> -o /tmp/apktool_out
 ```
 
+> ⚠️ APK 有加固壳（JADX 打开是 stub/空壳、入口类是 `com.stub.StubApp` 等）时，**先调 `apk-reversing` 技能脱壳还原真实代码**，拿到 `jadx_out/`/`lib/`/`assets/` 全量产物后再回到本技能挖掘。
+
 ### Step 2：查找高危漏洞（按优先级 grep）
 
 ```bash
@@ -172,13 +174,25 @@ grep -rniE "appKey|appSecret|secret|sign|signature|md5|encrypt|aes|rsa" /tmp/jad
 ```
 → 数据泄露/越权，中高危。
 
-### 1.3 SO 层追踪（静态定位 + 动态降维）
+### 1.3 SO 层追踪（静态优先 → 抓包兜底 → Frida 最后可选）
 
-**静态定位入口**：
-- `System.loadLibrary("xxx")` 确认加载的 so
-- IDA Pro / Ghidra 导出表搜 `Java_包名_类名_方法名`（静态注册）；无则找 `JNI_OnLoad` 并追 `RegisterNatives` 交叉引用（动态注册）
+> **优先顺序**：① **Ghidra + GhidraMCP 纯静态**（无需设备/root，最稳，主路径）→ ② **抓包截明文**（无需 root，模拟器稳定）→ ③ **Frida Hook**（仅静态读不动时的最后手段，且只作取证）。
 
-**动态 Hook 入参出参（降维打击，不硬啃汇编）**：
+**① 静态分析（Ghidra + GhidraMCP，主路径，无需设备）**
+- 定位入口：`System.loadLibrary("xxx")` 确认加载的 so → 导出表搜 `Java_包名_类名_方法名`（静态注册）；无则找 `JNI_OnLoad` 追 `RegisterNatives` 交叉引用（动态注册）
+- 侦察前置：`strings lib.so | grep -iE "key|secret|sign|aes|md5"`（或 Radare2 `izz`/`afl`，轻量无头）
+- **GhidraMCP（AI 直接驱动，推荐）**：MCP 工具 `list_functions` 定位 JNI 导出 → `decompile_function` 拿伪 C → `get_strings` 提取常量
+- 无 MCP 时用 Ghidra 无头模式：`analyzeHeadless <工程> <名> -import lib.so -postScript <脚本>`
+- **AI 读伪 C 重写**：识别标准算法（MD5/SHA/AES）与拼接顺序（如 `md5(appId+appKey+ts)`）→ Python 重写签名，无需读懂全部汇编
+
+**② 抓包兜底（无 root，模拟器稳定）**
+- 模拟器设 adb 代理 + Burp/mitmproxy 装证书（免 root 可做）
+- 正常操作 App → 直接看到**最终 HTTP 请求结构与签名值**
+- 与静态伪 C 对比验证签名逻辑，确定拼接细节
+
+**③ Frida Hook（最后可选，仅静态读不动时）**
+- 触发条件：静态伪 C 因混淆（ollvm 控制流平坦化 / VMP / 字符串加密）读不动，且抓包不足以还原算法时才用
+- Hook 导出函数打印入参出参：
 ```js
 // Frida 脚本：Hook 导出函数，打印入参出参，直接拿明文与签名
 Java.perform(function(){
@@ -189,8 +203,8 @@ Java.perform(function(){
   });
 });
 ```
-
-**底线追踪法（必杀技）**：函数都找不到时，Hook 底层网络库——`libc.so` 的 `send`/`sendto`、SSL 库的 `SSL_write`——在发包前一瞬间从内存截获**最终 HTTP 明文请求**，直接得到完整请求结构。
+- **底线追踪法**：函数都找不到时，Hook 底层网络库——`libc.so` 的 `send`/`sendto`、SSL 库的 `SSL_write`——在发包前一瞬间从内存截获**最终 HTTP 明文请求**，直接得到完整请求结构
+- 模拟器注入崩溃时：优先换回静态分析路径，Frida 不作为必选项
 
 **⚠️ Frida 边界规则（强制）**：
 - ✅ Frida 仅作**密钥/签名逻辑的取证工具**；最终 PoC 用提取的密钥直接构造签名请求（Python/curl），**不依赖 Frida**
