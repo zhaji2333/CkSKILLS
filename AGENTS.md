@@ -84,12 +84,12 @@
 |---|---|---|
 | 新目标、攻击面不清晰、需要找接口/密钥/子域名 | `recon-js-analysis` | 资产测绘、JS/webpack/source map 还原、API 与密钥提取、历史资产 |
 | 参数拼接 SQL、动态排序、JSON 查询、模板渲染、命令执行点 | `injection-vulns` | SQL/NoSQL/命令/SSTI/表达式注入、Fuzz 技巧、注入绕过 |
-| 注册/登录/找回密码/验证码/OAuth/JWT/2FA、IDOR、角色参数可控 | `auth-access-control` | 认证绕过、会话安全、越权/提权、多租户隔离、加密随机性 |
+| 注册/登录/找回密码/验证码/OAuth/JWT/2FA、IDOR、角色参数可控、前后端分离路由守卫/前端鉴权绕过 | `auth-access-control` | 认证绕过、验证码安全、前端鉴权绕过、会话安全、越权/提权、多租户隔离、加密随机性 |
 | 支付/下单/退款/提现/优惠券/积分/审批/库存、并发与重放 | `business-logic-race` | 业务状态机建模、金额篡改、状态跳变、竞态条件 |
 | 上传/下载/导出/导入/预览/解压/打包/编辑器 | `file-handling` | 任意上传 getshell、路径穿越、Zip Slip、二次渲染、CSV/公式注入 |
 | URL 可控的抓取/代理/webhook/回调/图片预览/二维码/短链/文档预览 | `ssrf-internal-network` | SSRF 探测、云元数据、内网资产、DNS 重绑定、协议绕过 |
 | XML 导入、SOAP、Office/Excel 解析、序列化对象、JSON 深合并 | `deserialization-xxe` | 反序列化 RCE、XXE、原型污染、ysoserial/phpggc 利用 |
-| 评论/昵称/富文本/私信/搜索反射、前端 DOM、postMessage、跨域、**AI 输出/Markdown 渲染无净化（marked→innerHTML）**；**跳转页/开放重定向/target 参数驱动 location 跳转（优先测跳转型 XSS，伪协议升级同源 XSS）** | `xss-frontend-security` | 跳转型 XSS（优先）、反射/存储/DOM XSS、AI/Markdown 渲染型存储 XSS、CSRF、CORS、Clickjacking、XSS 绕过 |
+| 评论/昵称/富文本/私信/搜索反射、前端 DOM、postMessage、跨域、**AI 输出/Markdown 渲染无净化（marked→innerHTML）**；**跳转页/开放重定向/target 参数驱动 location 跳转（优先测跳转型 XSS，伪协议升级同源 XSS）** | `xss-frontend-security` | 跳转型 XSS（优先，含 Host 白名单绕过）、反射/存储/DOM XSS、AI/Markdown 渲染型存储 XSS、CSRF、CORS、Clickjacking、XSS 绕过 |
 | REST/GraphQL/gRPC/WebSocket、Swagger、调试端点、HTTP 走私、DoS | `api-protocol-security` | API 全方法测试、BOLA、GraphQL 深度攻击、协议层漏洞 |
 | 微信/支付宝/抖音/百度小程序、微信云开发/云函数、小程序包反编译/接口与密钥提取/登录支付逻辑 | `miniprogram-security` | 包还原 → 代码审计 → 接口与 appid/appsecret 提取 → 登录/支付/越权/渲染/云开发深挖 |
 | 拿到 APK 有加固壳（JADX 打开是 stub/空壳）、需要脱壳还原 dex 与全量反编译产物 | `apk-reversing` | 壳识别 → 脱壳（Frida dump/在线/内存）→ JADX+apktool 全量反编译 → so/H5/assets 提取 → 标准产物交付 android-security-audit |
@@ -104,7 +104,7 @@
 
 | 漏洞大类 | 子类 | 调用技能 |
 |---|---|---|
-| 身份认证与会话 | 弱口令、认证绕过、会话固定、JWT | `auth-access-control` |
+| 身份认证与会话 | 弱口令、认证绕过、验证码安全、会话固定、JWT、路由守卫/前端鉴权绕过 | `auth-access-control` |
 | 访问控制与越权 | IDOR、垂直越权、多租户 | `auth-access-control` |
 | 注入类 | SQL/NoSQL/命令/SSTI/表达式 | `injection-vulns` |
 | XSS 与前端 | 反射/存储/DOM XSS、Clickjacking、CORS；**跳转型 XSS（中间跳转页/登录回跳/target 驱动 location，伪协议升级同源 XSS）** | `xss-frontend-security` |

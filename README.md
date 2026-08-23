@@ -40,13 +40,13 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 | 技能 | 覆盖范围 |
 |---|---|
 | `recon-js-analysis` | 资产测绘、webpack / source map 还原、API 与密钥提取、URL/IP/域名资产扩展、appid/appkey 凭证上报深挖 |
-| `auth-access-control` | 认证绕过、越权、IDOR、多租户隔离、密码重置、JWT |
+| `auth-access-control` | 认证绕过、前端鉴权/路由守卫绕过、验证码安全、越权、IDOR、多租户隔离、密码重置、JWT |
 | `injection-vulns` | SQL / NoSQL / 命令 / SSTI / 表达式注入 |
 | `business-logic-race` | 支付逻辑、状态机建模、金额篡改、竞态条件 |
 | `file-handling` | 文件上传 getshell、路径穿越、Zip Slip、CSV 注入 |
 | `ssrf-internal-network` | SSRF、云元数据、内网探测、DNS 重绑定 |
 | `deserialization-xxe` | 反序列化 RCE、XXE、原型污染、利用链构造 |
-| `xss-frontend-security` | XSS、CSRF、CORS、Clickjacking |
+| `xss-frontend-security` | XSS（含跳转型/开放重定向）、CSRF、CORS、Clickjacking |
 | `api-protocol-security` | BOLA、GraphQL、WebSocket、HTTP 走私 |
 | `miniprogram-security` | 微信/支付宝/抖音小程序、包反编译、接口与密钥提取、微信登录/支付/越权/渲染/云开发深挖 |
 | `cloud-infra-supply-chain` | 云配置错误、K8s、CI/CD、SBOM、供应链 |
