@@ -19,7 +19,7 @@ It targets three failure modes of generic Agents in this domain:
 
 ## Architecture
 
-Four layers, each with a single job:
+Five layers, each with a single job:
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -30,12 +30,15 @@ Four layers, each with a single job:
 │  20 specialist Skills (knowledge layer)      │  Methodology / scenario tables / steps
 ├──────────────────────────────────────────────┤
 │  Trigger routing (scene → skill / vuln type) │  Expert knowledge loaded on demand
+├──────────────────────────────────────────────┤
+│  hunts/<target>/CLUEBOARD.md                 │  Shared blackboard (cross-session memory)
 └──────────────────────────────────────────────┘
 ```
 
 - **AGENTS.md**: six-part charter (identity, constraints, discipline, routing, assessment, output). Defines Agent persona, extended reasoning, ten testing rules, and structured output.
 - **Skill**: Markdown DSL with frontmatter (trigger semantics) plus six elements (when to call, methodology, scenario tables, hunt steps, verification, remediation).
 - **Routing tables**: scene → skill, vulnerability type → skill, priority, and combo scenarios. Mixture-of-experts style: load only the specialist you need.
+- **Clue board**: one Markdown ledger per target. Specialist skills read and write the same file. A lightweight blackboard: skills are knowledge sources, the board is the blackboard, `AGENTS.md` routing is control — not a multi-agent scramble.
 
 > Note: skill bodies and `AGENTS.md` are written in Chinese because the primary report targets (Chinese SRCs, CNVD/CNNVD, EDUSRC) require Chinese deliverables. The methodology itself is language-agnostic. Use this README and the skill `description` frontmatter to know **when** to load each skill; the Agent still follows the Chinese playbooks for execution and report wording.
 
@@ -117,6 +120,7 @@ Delete `AGENTS.md` and `.agents/` from the working tree (or follow your Agent fr
 ## Design principles
 
 - **Do not send packets until the JS is understood**: recon first, then requests
+- **Clue board as blackboard**: persist hypotheses, hosts, paths, keys, and negative evidence. Read first, write back in the same turn. After compaction or a new session, trust the board — do not restart from the homepage JS (`hunt-clueboard`)
 - **Coverage self-check**: done / not done / variants / related surfaces
 - **Failure escalation**: levels 1–7; do not conclude “no bug” before level 4
 - **Business modeling**: state machine + role matrix + illegal paths + consistency checks + concurrency

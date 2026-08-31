@@ -7,6 +7,8 @@ description: 当开始挖新目标、换会话/压缩后续挖、用户说线索
 
 薄过程 skill，对标 `report`：`report` 收口成稿，本 skill **把线索从对话里拿出来落盘**。不挖洞、不替代 `recon-js-analysis` / `unauth-path-key-hunt`。
 
+**定位：低配黑板架构。** 专项 Skill 是知识源（往板上写假设与证据），`CLUEBOARD.md` 是黑板（共享工作记忆），`AGENTS.md` 路由 + 板上「当前焦点」是控制（决定下一步调谁）。仍是单 Agent 顺序调度，不是多知识源并行抢写。
+
 没有板，压缩或换会话后会从主站 JS 重开一局，否定证据（SPA 壳、405、空数组、NXDOMAIN）最先丢。
 
 ## 何时调用
@@ -49,7 +51,7 @@ hunts/<目标短名>/CLUEBOARD.md
 hunts/<目标短名>/raw/          ← 可选，JS 摘录、响应头，禁止完整 PII
 ```
 
-短名用 Host 主干，如 `asp-mi`、`huazhu-vat`。一份目标一块板，不把多系统揉进一个文件。
+短名用 Host 主干，如 `shop-h5`、`api-gw`。一份目标一块板，不把多系统揉进一个文件。
 
 建板：复制本 skill 目录 `CLUEBOARD.template.md` → 填目标短名和开工日。已有板则只读补写，不另起。
 
