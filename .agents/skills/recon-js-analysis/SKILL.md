@@ -138,7 +138,8 @@ python Packer-InfoFinder.py -u https://target.com --finder -p http://127.0.0.1:7
 
 ## 六、输出与交接
 
-完成本技能后，将提取的接口清单、参数结构、鉴权机制、隐藏功能整理为可测试清单，按类型分发给对应专项技能：
+完成本技能后，将提取的接口清单、参数结构、鉴权机制、隐藏功能整理为可测试清单，按类型分发给对应专项技能；**同时按 `hunt-clueboard` 写入 `hunts/<目标>/CLUEBOARD.md`**（Host/路径/钥/否定证据当轮落盘，不只放在对话里）：
+- 零身份、路径不在当前前端、加密当鉴权、迁域/兄弟域漏路径 → `unauth-path-key-hunt`
 - 接口/鉴权问题 → `api-protocol-security` / `auth-access-control`
 - 参数拼接/注入点 → `injection-vulns`
 - 文件相关功能 → `file-handling`

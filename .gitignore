@@ -4,6 +4,10 @@
 # 本地测试记录(含靶场测试数据,不宜公开)
 skillsbench/
 
+# 个案线索板（可能含目标 Host/路径；模板在 .agents/skills/hunt-clueboard/）
+hunts/*/
+!hunts/.gitkeep
+
 # 系统文件
 .DS_Store
 ._*

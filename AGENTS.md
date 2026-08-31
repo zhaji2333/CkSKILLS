@@ -58,7 +58,7 @@
 
 七、**开发者视角**：新功能、内部接口、批量操作、旧API、错误分支、管理后台、第三方回调、导出下载、定时任务优先测
 
-八、**信息收集要脏**：Wayback、GitHub/GitLab、Google Dork、证书透明度、招聘JD、JS注释、robots、source map、APK/IPA、Changelog
+八、**信息收集要脏**：Wayback、GitHub/GitLab、Google Dork、证书透明度、招聘JD、JS注释、robots、source map、APK/IPA、Changelog；**线索当轮写入 `hunts/<目标>/CLUEBOARD.md`**（见 `hunt-clueboard`），不进板本轮收集不算完
 
 九、**对抗意识**：防御在哪层 → 规则是什么 → 边界在哪 → 协议/编码/逻辑差异
 
@@ -68,9 +68,10 @@
 
 ## 3. 标准工作流
 
-1. **资产与攻击面梳理**：入口（Web/API/后台/移动端/管理面板/队列/定时任务/文件处理/回调）→ 信任边界、角色权限、数据流、关键资源
-2. **三层挖掘**：静态审计 SAST（输入点→传播链→Sink，见 `source-code-audit`）→ 动态验证 DAST（差异对比）→ 组合利用（单点缺陷→链式攻击）
-3. **交付**：按第 5、6 节评估；正式提交稿**必须调用 `report` 技能**生成 DOCX（命中触发信号即自动调用，见第 4.1 节路由表）
+1. **线索板**：新目标先 `hunt-clueboard` 建/读 `hunts/<目标>/CLUEBOARD.md`；压缩或换会话后续挖也先读板，禁止从主站 JS 重开一局
+2. **资产与攻击面梳理**：入口（Web/API/后台/移动端/管理面板/队列/定时任务/文件处理/回调）→ 信任边界、角色权限、数据流、关键资源
+3. **三层挖掘**：静态审计 SAST（输入点→传播链→Sink，见 `source-code-audit`）→ 动态验证 DAST（差异对比）→ 组合利用（单点缺陷→链式攻击）
+4. **交付**：按第 5、6 节评估；正式提交稿**必须调用 `report` 技能**生成 DOCX（命中触发信号即自动调用，见第 4.1 节路由表）
 
 ---
 
@@ -82,7 +83,9 @@
 
 | 触发信号 / 场景 | 调用技能 | 深度挖掘内容 |
 |---|---|---|
+| 新目标开工、换会话/压缩后续挖、线索板/写板/读板、跨轮保留 Host/路径/密钥 | `hunt-clueboard` | 为当前系统维护 Markdown 线索板（读→挖→写回）；模板 `CLUEBOARD.template.md` |
 | 新目标、攻击面不清晰、需要找接口/密钥/子域名 | `recon-js-analysis` | 资产测绘、JS/webpack/source map 还原、API 与密钥提取、历史资产 |
+| 未授权但路径不在主站 JS、无业务账号、禁止登录 Network 当发现源、独立 H5/旧域 NXDOMAIN/迁域、兄弟域或同 IP 漏路径、405/`data:[]`、getRsaKey/前端加密当鉴权 | `unauth-path-key-hunt` | 零身份公开面还原路径与密钥、响应指纹分流、加密证伪、迁域复查（JS 拆包仍走 recon） |
 | 参数拼接 SQL、动态排序、JSON 查询、模板渲染、命令执行点 | `injection-vulns` | SQL/NoSQL/命令/SSTI/表达式注入、Fuzz 技巧、注入绕过 |
 | 注册/登录/找回密码/验证码/OAuth/JWT/2FA、IDOR、角色参数可控、前后端分离路由守卫/前端鉴权绕过 | `auth-access-control` | 认证绕过、验证码安全、前端鉴权绕过、会话安全、越权/提权、多租户隔离、加密随机性 |
 | 支付/下单/退款/提现/优惠券/积分/审批/库存、并发与重放 | `business-logic-race` | 业务状态机建模、金额篡改、状态跳变、竞态条件 |
@@ -115,9 +118,12 @@
 | 业务逻辑 | 支付、订单、权益、状态机 | `business-logic-race` |
 | 并发与竞态 | 库存、优惠券、提现 | `business-logic-race` |
 | 信息泄露 | 错误栈、.map、备份、对象存储 | `cloud-infra-supply-chain` |
+| 信息泄露 | 未授权接口批量 PII（路径未知/加密当鉴权/迁域残留） | `unauth-path-key-hunt` |
 | 安全配置与供应链 | 组件 CVE、云/容器、CI-CD | `cloud-infra-supply-chain` |
 | 加密与随机性 | 自研加密、弱哈希、可预测随机数 | `auth-access-control` |
+| 加密与随机性 | 前端 RSA/AES/uuid 被当成鉴权、getRsaKey 公网可取 | `unauth-path-key-hunt` |
 | API 安全 | BOLA、GraphQL、WebSocket、速率限制 | `api-protocol-security` |
+| API 安全 | 未授权且路径未知（独立 H5/兄弟域/旧方法残留） | `unauth-path-key-hunt` |
 | HTTP 走私/协议层 | 解析差异、请求边界 | `api-protocol-security` |
 | 资源消耗 DoS | 正则灾难、巨型 JSON/XML | `api-protocol-security` |
 | AI/LLM 安全 | 提示词注入、越狱逃逸、System Prompt 泄露、训练数据/敏感信息泄露 | `ai-llm-agent-security` |
@@ -138,7 +144,7 @@
 | **严重** | Agent 工具注入致 RCE/SSRF | 提示词注入驱动代码解释器/Shell/HTTP 工具执行 | `ai-llm-agent-security` |
 | **高危** | 垂直越权 | 普通用户→管理员操作 | `auth-access-control` |
 | **高危** | 支付逻辑漏洞 | 金额篡改、订单状态跳变、重复支付 | `business-logic-race` |
-| **高危** | 敏感信息批量泄露 | 用户数据、订单数据、接口未鉴权 | `api-protocol-security` / `cloud-infra-supply-chain` |
+| **高危** | 敏感信息批量泄露 | 用户数据、订单数据、接口未鉴权 | `unauth-path-key-hunt`（路径未知） / `api-protocol-security` / `cloud-infra-supply-chain` |
 | **高危** | 任意用户密码重置 | 验证码绕过、逻辑缺陷、凭证可控 | `auth-access-control` |
 | **高危** | 短信轰炸（无限制） | 接口无频率限制、验证码可绕过 | `auth-access-control` / `api-protocol-security` |
 | **高危** | 跳转型 XSS | 中间跳转页/登录回跳信任 target 参数 → javascript: 伪协议升级同源 XSS → 会话接管 | `xss-frontend-security` |
@@ -146,7 +152,7 @@
 | **中危** | 水平越权（IDOR） | 订单、地址、收藏等资源 ID 可控 | `auth-access-control` |
 | **中危** | 存储型 XSS | 评论、昵称、富文本、客服对话 | `xss-frontend-security` |
 | **中危** | CSRF 关键操作 | 绑定手机、修改密码、资金操作 | `xss-frontend-security` |
-| **中危** | 未授权访问 | 管理后台、API 接口、调试端点 | `api-protocol-security` / `cloud-infra-supply-chain` |
+| **中危** | 未授权访问 | 管理后台、API 接口、调试端点 | `unauth-path-key-hunt`（路径未知） / `api-protocol-security` / `cloud-infra-supply-chain`（路径已知） |
 | **中危** | System Prompt / 敏感信息泄露 | 系统指令、工具清单、训练数据、密钥外泄 | `ai-llm-agent-security` |
 | **中危** | RAG 投毒 / Agent 记忆污染 | 知识库/记忆持久化投毒、跨用户生效 | `ai-llm-agent-security` |
 | **中危** | 提示词注入 / 越狱护栏失效 | 行为改写、间接注入、护栏绕过 | `ai-llm-agent-security` |
@@ -154,6 +160,8 @@
 ### 4.4 组合场景（多技能联动）
 
 - 信息泄露 → IDOR：`recon-js-analysis` 找接口 → `auth-access-control` 打越权
+- 零身份找不到路径 / 加密当鉴权 / 旧 H5 下线：`unauth-path-key-hunt` 还原 Host+方法+钥 → 有 PII 走 `api-protocol-security`，有角色墙走 `auth-access-control`
+- 任何目标跨轮挖掘：`hunt-clueboard` 读/写板 → 挖洞 skill 只补板上的空格
 - 文件上传 → SSRF/LFI：`file-handling` 拿路径 → `ssrf-internal-network` 打内网
 - 验证码回显 → 密码重置：`auth-access-control` 一条链
 - AI 提示词注入 → 工具 RCE/SSRF：`ai-llm-agent-security` 注入驱动工具 → `injection-vulns` / `ssrf-internal-network` / `file-handling` 落地危害
@@ -199,8 +207,9 @@
 ## 7. 默认行为（对话策略）
 
 - **给代码**：优先审计定位输入点与危险调用链（`source-code-audit`）
-- **给流量包/日志**：提炼攻击路径与关键指标（`api-protocol-security` / `recon-js-analysis`）
+- **给流量包/日志**：提炼攻击路径与关键指标（`api-protocol-security` / `recon-js-analysis`），并写入线索板
 - **只描述现象**：建立攻击面假设，按第 4 节路由表调用技能给 curl 验证步骤
+- **新目标 / 继续挖**：先 `hunt-clueboard` 读板或建板，再挖
 - **要结果/flag**：先给结果，再给推导与复盘
 - **要求深度思考**：输出完整推理链、分支假设、排除过程与结论
 
@@ -208,7 +217,7 @@
 
 ## 8. 快速排查清单（30秒定位方向）
 
-- [ ] 未鉴权敏感接口？→ `api-protocol-security`
+- [ ] 未鉴权敏感接口？路径已知 → `api-protocol-security`；路径不在主站/无账号/加密当鉴权/迁域 → `unauth-path-key-hunt`
 - [ ] 对象级校验缺失（IDOR）？→ `auth-access-control`
 - [ ] 拼接查询/命令/模板渲染？→ `injection-vulns`
 - [ ] 上传/下载/导入/解析功能？→ `file-handling`
@@ -216,7 +225,9 @@
 - [ ] token/JWT 校验缺陷？→ `auth-access-control`
 - [ ] 并发/重放致资金或状态异常？→ `business-logic-race`
 - [ ] 配置泄露/调试接口/错误栈？→ `cloud-infra-supply-chain` / `api-protocol-security`
+- [ ] 新目标/继续挖/线索要跨轮留？→ `hunt-clueboard`
 - [ ] 攻击面不清、找不到接口/密钥？→ `recon-js-analysis`
+- [ ] 路径不在当前前端、兄弟域/同 IP、405/`data:[]`、getRsaKey？→ `unauth-path-key-hunt`
 - [ ] 有源码可审计？→ `source-code-audit`
 - [ ] payload 被拦？→ `waf-bypass-techniques`
 - [ ] LLM/Chatbot/Agent/RAG/Copilot？用户输入进大模型或工具调用？→ `ai-llm-agent-security`
@@ -231,6 +242,7 @@
 - 管理后台：/admin /manager /console /backstage
 - API：/api/v1 /graphql /swagger /actuator
 - 冷门高价值点：客服/工单、邮件通知、二维码/短链、日志/监控、第三方登录、分享/邀请、数据导出（详见 `recon-js-analysis`）
+- 独立 H5 / 旧域下线 / 兄弟域漏路径 / 前端加密当鉴权（详见 `unauth-path-key-hunt`）
 - AI 入口点：AI 客服/Chatbot、AI 助手/Copilot、文档问答/RAG、AI 写作/编程、AI 搜索、多模态解析、代码解释器、Agent 工具调用（详见 `ai-llm-agent-security`）
 
 ---

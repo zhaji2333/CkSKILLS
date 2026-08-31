@@ -3,11 +3,11 @@
 > 基于 Claude Code / Codex 的 SRC 漏洞挖掘 Agent 技能体系 —— 将顶尖安全研究员的方法论沉淀为可调度、可复用的 Skill 知识资产。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-18-green.svg)](.agents/skills)
+[![Skills](https://img.shields.io/badge/Skills-20-green.svg)](.agents/skills)
 
 ## 📌 项目简介
 
-CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 18 个专项技能知识库(Skills)**,让通用 Agent 在垂直安全领域达到专家级表现。
+CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 20 个专项技能知识库(Skills)**,让通用 Agent 在垂直安全领域达到专家级表现。
 
 针对通用 Agent 在垂直领域的三大痛点:
 
@@ -25,7 +25,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 ├──────────────────────────────────────────────┤
 │  系统级提示词 AGENTS.md                        │  身份 / 约束 / 纪律 / 调度
 ├──────────────────────────────────────────────┤
-│  18 个专项 Skills(知识层)                     │  方法论 / 场景表 / 步骤
+│  20 个专项 Skills(知识层)                     │  方法论 / 场景表 / 步骤
 ├──────────────────────────────────────────────┤
 │  触发路由(场景→技能 / 漏洞类型→技能)         │  专家知识按需加载
 └──────────────────────────────────────────────┘
@@ -40,6 +40,8 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 | 技能 | 覆盖范围 |
 |---|---|
 | `recon-js-analysis` | 资产测绘、webpack / source map 还原、API 与密钥提取、URL/IP/域名资产扩展、appid/appkey 凭证上报深挖 |
+| `unauth-path-key-hunt` | 零身份公开面还原路径与密钥：响应指纹分流、加密证伪（RSA/JSEncrypt 不是鉴权）、迁域/兄弟域复查 |
+| `hunt-clueboard` | 当前目标 Markdown 线索板（跨轮工作记忆：读→挖→写回），不替代挖洞 skill |
 | `auth-access-control` | 认证绕过、前端鉴权/路由守卫绕过、验证码安全、越权、IDOR、多租户隔离、密码重置、JWT |
 | `injection-vulns` | SQL / NoSQL / 命令 / SSTI / 表达式注入 |
 | `business-logic-race` | 支付逻辑、状态机建模、金额篡改、竞态条件 |

@@ -11,6 +11,7 @@ description: 当目标存在REST/GraphQL/gRPC/WebSocket接口、Swagger/OpenAPI�
 - 接口文档暴露（Swagger/OpenAPI/api-docs）
 - 调试端点（/actuator /debug /console /metrics）
 - 旧版本接口（/api/v1 未下线）、内部接口外泄
+- **路径已知**的未授权 API / 网关（路径未知、无账号、独立 H5/迁域残留 → 先 `unauth-path-key-hunt`）
 - 微服务网关、反向代理
 - HTTP 解析差异（走私）、缓存投毒
 - 资源消耗类攻击（深层查询、巨型请求）
