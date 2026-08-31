@@ -5,6 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Skills](https://img.shields.io/badge/Skills-20-green.svg)](.agents/skills)
 
+**语言：** **中文** · [English](README_EN.md)
+
 ## 📌 项目简介
 
 CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 20 个专项技能知识库(Skills)**,让通用 Agent 在垂直安全领域达到专家级表现。
@@ -99,6 +101,9 @@ git clone https://github.com/zhaji2333/CkSKILLS.git
 
 ## 🆕 最近更新
 
+- **新增 `unauth-path-key-hunt`**：零身份公开面还原路径与密钥（响应指纹、加密证伪、迁域/兄弟域复查）
+- **新增 `hunt-clueboard`**：当前目标 Markdown 线索板（跨轮工作记忆：读→挖→写回）
+- **新增英文 README**：[`README_EN.md`](README_EN.md)
 - **新增 `windows-reverse-engineering`**：Windows PE 逆向与二进制漏洞深度挖掘（反汇编/反编译、内存破坏漏洞、协议逆向、反调试对抗、漏洞利用链构造）
 - **新增 `android-security-audit`**：Android APK 组件安全深度审计——JADX 静态分析 + ADB 动态验证，无 Frida/无 Root 漏洞验证，对标小米 HyperOS 漏洞收录标准
 - **新增 `report`**：写报告验证收口技能——分层验证门把关、按模板生成可提交 SRC/0day 平台的 DOCX 报告（Step 式 PoC + 真实截图）
