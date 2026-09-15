@@ -1,6 +1,6 @@
 ---
 name: asc-fast-hunt
-description: 当需要在不对 APK 全量反编译的前提下秒级定位硬编码密钥/签名函数/隐藏接口/调试后门，或 APK 过大（>100MB）JADX 全量反编译过慢、内存吃紧，或脱壳产物（裸 dex）需要快速检索，或只想先读一下 Manifest 组件面/权限清单时调用。负责基于 Droid ASC 的零预处理快速定位（findrefs 全局交叉引用搜索 + getclass 按需反编译 + Manifest 秒读），是 android-security-audit「密钥追踪→未授权接口」链的快速前置引擎，也是 apk-reversing 全量还原前的 triage 快筛。命中场景：大包快速 triage、搜 appkey/secret/sign/Authorization/RSA、按类名秒看实现逻辑、追字符串/方法/字段引用链、脱壳 dex 快速检索、Dex 分片全局搜索。加固壳识别与脱壳见 apk-reversing；组件安全深挖与漏洞验证见 android-security-audit；正式报告见 report。
+description: 当需要在不对 APK 全量反编译的前提下秒级定位硬编码密钥/签名函数/隐藏接口/调试后门，或 APK 过大（>100MB）JADX 全量反编译过慢、内存吃紧，或脱壳产物（裸 dex）需要快速检索，或只想先读一下 Manifest 组件面/权限清单时调用。负责基于 Droid ASC 的零预处理快速定位（findrefs 全局交叉引用搜索 + getclass 按需反编译 + Manifest 秒读），是 android-security-audit「密钥追踪→未授权接口」链的快速前置引擎，也是 apk-reversing 全量还原前的 triage 快筛。命中场景：大包快速 triage、搜 appkey/secret/sign/Authorization/RSA、按类名秒看实现逻辑、追字符串/方法/字段引用链、脱壳 dex 快速检索、Dex 分片全局搜索。注意本技能**不能替代 JADX**：它无资源层（res/ 全解不出）、DAD 输出类型不可信、无法搜共现模式，因此精读/数据流推理/资源审计/报告取证仍须走 apk-reversing 全量产物。加固壳识别与脱壳见 apk-reversing；组件安全深挖与漏洞验证见 android-security-audit；正式报告见 report。
 ---
 
 # asc-fast-hunt — APK 零预处理快速定位（Droid ASC）
@@ -88,22 +88,43 @@ classes3.dex | LA8/m$a;->b | matched=(appkey)
 ```
 
 - **搜的是"引用点"不是"定义"**：`findrefs method onCreate` 返回的是**调用了 onCreate 的位置**。看某个方法/字段**自身的实现**要配合 `getclass`。
+- **命中按"调用方方法"去重聚合**：同一方法内多次调用同名 API 只输出一行，多个命中合并显示在 `matched=(a; b; c)` 里。所以本技能命中数**少于** `grep` 的行计数（实测同一 4.4MB 包：`exec` 39 vs 95、`startActivity` 18 vs 23、`getStringExtra` 4 vs 9）——**不是漏检，是聚合**；`grep` 这边还会同时匹配方法定义、JADX 注释与子串，噪音更大。两者数字不可直接对比。
 - `string` / `type` 是**模糊匹配**（substring）；`method` / `field` 的 `--class` 默认精确匹配，加 `--fuzzy-class` 才模糊（如 `--class miui --fuzzy-class` 匹配所有 miui 命名空间）。
 - 一个关键词常命中几十~几百行，**用 `-o` 存盘后 grep/分页通读**，不要一次性打印刷屏。
 - 搜索**跨全部 dex 分片**（classes.dex / classes2.dex / …），无需先合并。
 
-| 命令 | 输出 | 耗时（实测） |
-|---|---|---|
-| `asc_manifest`（68MB 包） | 可读 XML 全量权限/组件 | ~0.3s |
-| `findrefs string/type`（68MB） | 命中行列表 | ~0.32s |
-| `findrefs string`（175MB） | 命中行列表 | ~0.33s |
-| `getclass`（单类） | DAD 风格 Java | ~0.12s |
+| 命令 | 输出 | 耗时（实测） | 峰值内存 |
+|---|---|---|---|
+| `asc_manifest`（68MB 包） | 可读 XML 全量权限/组件 | ~0.3s | ~110MB |
+| `findrefs string/type`（68MB） | 命中行列表 | ~0.32s | ~108MB |
+| `findrefs string`（175MB） | 命中行列表 | ~0.33s | — |
+| `getclass`（单类） | DAD 风格 Java | ~0.12s | — |
+| **对照**：JADX 全量反编译（68MB） | 17613 类 → 12677 java + 1629 res XML | **39.2s** | **6.96GB** |
+| **对照**：JADX 全量反编译（4.4MB） | 2753 类 | 5.87s | — |
+
+> 同一 68MB 包上的对照实测：本技能 **0.34s / 108MB** vs JADX 全量 **39.2s / 6.96GB** —— 快约 **115 倍**、省约 **66 倍**内存。
 
 ### 2.3 输出质量边界（决定何时必须转全量反编译）
 
 `getclass` 后端是 Androguard DAD：**寄存器级变量名（v0_2、p9）、无类型推断、控制流较朴素**。够做的事：读方法逻辑、看字符串常量、识别加密调用（`MessageDigest.getInstance("MD5")`、`Cipher.getInstance("AES/...")`）、看调用关系与参数来源。
 
-不够做的事：精读复杂混淆逻辑、跨类数据流追踪、函数调用图、写报告级源码引用。**当需要这些时，转 `apk-reversing` 全量反编译用 JADX 读。**
+**⚠️ 类型不可信（实测，最危险的边界）**：DAD 会给出**错误类型**。同一个类、同一个方法，两个工具的输出：
+
+```java
+// JADX 1.5.5（正确）
+ByteBuffer outputBuffer = this.f2295b.getOutputBuffer(i3);
+
+// ASC / DAD（错误：该方法真实返回 ByteBuffer，却被声明成 String）
+String v0_1 = this.b.getOutputBuffer(p6);
+```
+
+因此本技能的输出**不可用于数据流/污染推理**（"这个参数可不可控、会不会流到危险点"），**也不适合作为报告取证截图**。它只用于快速读懂大致逻辑、认出加密调用与字符串常量——一旦要做可达性推理或写报告，必须换 JADX 产物。
+
+**资源层为零**：本技能只有 Manifest 解析（借 androguard），`res/` 下的 `file_paths.xml`（FileProvider 路径暴露）、`network_security_config.xml`、`strings.xml`（硬编码密钥高发地）、layout（UI 注入点）**一律看不到**——同一 4.4MB 包 JADX 解出 **1629 个 res/ XML**。组件审计、Provider 审计必须走 `apk-reversing` 的 apktool/JADX 产物。
+
+**做不到的搜索形态**：`findrefs` 查的是 DEX 引用表，**无法表达"同一行两个 API 共现"的模式**——`android-security-audit` Step 2 里的 `grep -rE "startActivity.*getParcelable"`（Intent 重定向）、`grep -rE "setTitle.*getIntent"`（弹窗欺骗）这类模式，本技能只能逐个 API 分别查再自己交叉。也没有项目级通读视图。
+
+不够做的事：精读复杂混淆逻辑、跨类数据流追踪、函数调用图、写报告级源码引用、资源层分析、共现模式搜索。**当需要这些时，转 `apk-reversing` 全量反编译用 JADX 读。**
 
 ---
 
@@ -186,6 +207,8 @@ $ASC/asc getclass $APK LA8/m\$a\; -o /tmp/A8_m_a.java
 3. **常量来源**：密钥是硬编码字符串常量、还是从 `Build`/`SharedPreferences`/`native` 取（后者要转 SO 层追踪）
 4. **参数来源**：是否为外部可控（Intent extra / Deep Link 参数 / 网络响应）
 
+> ⚠️ 第 4 点要克制：DAD 会给出错误类型（见 2.3），**别拿这里的类型声明确认"这个值是什么、从哪来"**。此步只建立"疑似外部可控"的假设，确认可达性与数据流必须用 JADX 产物复核。
+
 ⚠️ **shell 转义**：Dalvik 类名含 `$`（内部类）时必须转义或加引号——`LA8/m\$a\;` 或 `'LA8/m$a;'`。
 
 ### Step 4：追引用链（找调用方与数据流）
@@ -225,13 +248,23 @@ $ASC/asc findrefs $APK type com.x.net.ApiService
 | 大包想知道有没有硬编码密钥/接口 | **本技能** `findrefs` | 秒级，零预处理 |
 | 只想看组件面/权限/scheme | **本技能** `asc_manifest` | 0.3s 出全量 XML |
 | 已知类名，想看实现 | **本技能** `getclass` | 0.1s，够读逻辑 |
+| **小包（<20MB）任何环节** | **直接 JADX 全量** | 4.4MB 包 JADX 仅 5.87s，本技能省不下时间，白折腾 |
 | 加固壳（stub/壳 so） | `apk-reversing` | 真代码不在 DEX，本技能搜不到 |
 | 脱壳后的 dex 要检索 | **本技能**（打包成 zip 后） | 见"坑"第 2 条 |
-| 混淆严重、需跨类数据流/调用图 | `apk-reversing` 全量反编译 + JADX | DAD 质量不足以支撑 |
+| 混淆严重、需跨类数据流/调用图 | `apk-reversing` 全量反编译 + JADX | DAD 类型不可信，推理会歪 |
+| **要查 res/（file_paths.xml、network_security_config、strings.xml）** | `apk-reversing` apktool/JADX | 本技能资源层为零 |
+| **共现模式搜索**（`startActivity.*getParcelable` 等） | JADX 产物 + `grep -rE` | 引用表查询无法表达 |
+| **报告取证截图** | `apk-reversing` JADX 产物 | DAD 输出寄存器级 + 类型错误，不能当证据 |
 | 组件安全深挖 + 动态验证 + PoC | `android-security-audit` | 本技能只定位不验证 |
 | 漏洞定级与 DOCX 成稿 | `report` | — |
 
-**成本对比**：本技能全流程（Manifest + 5 组关键词 + 读 10 个类）通常 **1 分钟内**完成；同等工作量走"全量反编译 + grep"在大包上要 **10~40 分钟 + 数 GB 内存**。所以标准姿势是：**先用本技能 triage，确认值得深挖再付全量反编译的成本。**
+**成本对比（同一 68MB 包实测）**：本技能 `findrefs` **0.34s / 108MB**；JADX 全量反编译 **39.2s / 6.96GB**（17613 个类）——快约 **115 倍**、省约 **66 倍**内存。本技能全流程（Manifest + 5 组关键词 + 读 10 个类）通常 **1 分钟内**跑完。
+
+**但这不是"替代 JADX"**：本技能回答**"在哪里"**，JADX 回答**"是什么、怎么流、能不能用"**。实用阈值——
+
+- **小包（<20MB）**：直接 JADX 全量，快筛没有收益（4.4MB 只要 5.87s）
+- **大包（>100MB）**：先本技能秒级定位，命中后再让 JADX 只精读相关部分——68MB 就要 39s + 7GB，175MB 级极易 OOM
+- **任何需要资源层/数据流/报告取证的环节**：无论包大小都回 `apk-reversing` 全量产物
 
 ---
 
@@ -256,7 +289,9 @@ $ASC/asc findrefs $APK type com.x.net.ApiService
 
 ## 六、证据纪律（防幻觉，强制）
 
-- **命中 ≠ 漏洞**：`findrefs` 返回的字符串命中只是**入口线索**，必须 `getclass` 读到真实代码、确认调用链与参数可达性，才能说"这是密钥/这是签名函数"。
+- **命中 ≠ 漏洞**：`findrefs` 返回的字符串命中只是**入口线索**，必须 `getclass` 读到真实代码，才能说"这是密钥/这是签名函数"。
+- **⚠️ `getclass` 只能确认"逻辑与常量"，不能确认"类型与可达性"**：DAD 输出有类型错误（见 2.3 的 `ByteBuffer`→`String` 实证）。所以用本技能读加密调用、字符串常量、分支逻辑是可靠的；**一旦要推理"这个参数可不可控、会不会流到危险点"，必须换 JADX 产物**，不要拿 DAD 的类型下结论。
+- **输出不可直接作报告证据**：报告里的代码截图与行号引用一律取自 `apk-reversing` 的 JADX 产物；本技能的行只用于线索板上的"定位记录"。
 - **不编造类名、方法名、dex 名**：报告与线索板里写的每个 `dex | 类->方法` 都必须来自实际命令输出，禁止推测补全。
 - **否定证据同样要写**：搜过什么关键词、没命中，是判断"密钥是否动态下发"的关键依据，必须如实入板。
 - **区分静态位置与可执行性**：类里存在 MD5 调用 ≠ 该路径被调用；要沿 Step 4 的引用链确认可达，或交棒 `android-security-audit` 动态验证。
