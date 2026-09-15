@@ -95,6 +95,7 @@
 | 评论/昵称/富文本/私信/搜索反射、前端 DOM、postMessage、跨域、**AI 输出/Markdown 渲染无净化（marked→innerHTML）**；**跳转页/开放重定向/target 参数驱动 location 跳转（优先测跳转型 XSS，伪协议升级同源 XSS）** | `xss-frontend-security` | 跳转型 XSS（优先，含 Host 白名单绕过）、反射/存储/DOM XSS、AI/Markdown 渲染型存储 XSS、CSRF、CORS、Clickjacking、XSS 绕过 |
 | REST/GraphQL/gRPC/WebSocket、Swagger、调试端点、HTTP 走私、DoS | `api-protocol-security` | API 全方法测试、BOLA、GraphQL 深度攻击、协议层漏洞 |
 | 微信/支付宝/抖音/百度小程序、微信云开发/云函数、小程序包反编译/接口与密钥提取/登录支付逻辑 | `miniprogram-security` | 包还原 → 代码审计 → 接口与 appid/appsecret 提取 → 登录/支付/越权/渲染/云开发深挖 |
+| 拿到 APK 想秒级定位硬编码密钥/签名函数/隐藏接口/调试后门、APK 过大（>100MB）不愿等 JADX 全量反编译、脱壳裸 dex 需快速检索、只想先读 Manifest 组件面/权限清单 | `asc-fast-hunt` | Droid ASC 零预处理快筛：`findrefs` 全局交叉引用（string/type/method/field）+ `getclass` 按需反编译 + Manifest 秒读；产出定位结论与引用链，交棒 android-security-audit 验证 |
 | 拿到 APK 有加固壳（JADX 打开是 stub/空壳）、需要脱壳还原 dex 与全量反编译产物 | `apk-reversing` | 壳识别 → 脱壳（Frida dump/在线/内存）→ JADX+apktool 全量反编译 → so/H5/assets 提取 → 标准产物交付 android-security-audit |
 | APK/预装应用/厂商系统应用（HyperOS/MIUI/工程模式/OTA/诊断工具）、导出组件/Intent/WebView/Provider/Binder/Deep Link 组件安全深挖、**硬编码密钥/appId/appKey 提取后未授权调接口（DEX/SO/H5 追踪签名）** | `android-security-audit` | 密钥追踪→未授权接口（最高优先级）、JADX 静态分析 + ADB 动态验证、无 Frida/无 Root 漏洞验证、PoC 构建、HyperOS 收录标准报告 |
 | 写报告/出报告/成稿/提交稿/生成漏洞报告，或漏洞已验证到位准备交付（命中 `/report`） | `report` | 分层验证门把关 → 按 template.docx 生成 DOCX 提交稿（Heading 2 骨架 + Step 式 PoC + 真实截图）→ 语义化命名归档 |
@@ -132,6 +133,7 @@
 | 二进制/内存安全 | 溢出、UAF、格式化字符串 | `source-code-audit` / `android-security-audit`（Native 层） |
 | 小程序 | 微信/支付宝/抖音小程序、云开发 | `miniprogram-security` |
 | Android 组件安全 | 导出组件未授权、Intent 重定向、PendingIntent、WebView/JSBridge、ContentProvider、Binder、Deep Link | `android-security-audit` |
+| Android 快速定位 | APK 大包秒级搜密钥/签名/隐藏接口、脱壳 dex 检索、Manifest 秒读组件面 | `asc-fast-hunt` |
 
 ### 4.3 SRC 高价值漏洞优先级（中高危优先）
 
@@ -169,6 +171,7 @@
 - AI 输出 → 前端 XSS / 下游注入：`ai-llm-agent-security` 操纵输出 → `xss-frontend-security` / `injection-vulns` 二次落地
 - AI 编码注入 → 输出通道绕过 WAF → 存储型 XSS → 免登录分享传播：`ai-llm-agent-security` 3.6 编码注入 + `xss-frontend-security` 四 渲染落地，一条链
 - 低危组合提级：完成单点测试后做跨接口关联，涉及多技能时依次调用
+- APK 秒级定位 → 按需脱壳 → 深挖成洞：`asc-fast-hunt` 快筛（Manifest 组件面 + 密钥/签名/接口关键词矩阵）→ 有壳转 `apk-reversing` 脱壳 → `android-security-audit` 密钥追踪/组件深挖 → `report` 成稿（无壳小包可直接 `apk-reversing` 全量反编译，跳过快筛）
 
 ---
 
@@ -231,6 +234,7 @@
 - [ ] 有源码可审计？→ `source-code-audit`
 - [ ] payload 被拦？→ `waf-bypass-techniques`
 - [ ] LLM/Chatbot/Agent/RAG/Copilot？用户输入进大模型或工具调用？→ `ai-llm-agent-security`
+- [ ] 拿到 APK 要秒级搜密钥/签名/隐藏接口/Manifest 组件面、大包不想等 JADX？→ `asc-fast-hunt`
 
 ---
 
@@ -244,6 +248,7 @@
 - 冷门高价值点：客服/工单、邮件通知、二维码/短链、日志/监控、第三方登录、分享/邀请、数据导出（详见 `recon-js-analysis`）
 - 独立 H5 / 旧域下线 / 兄弟域漏路径 / 前端加密当鉴权（详见 `unauth-path-key-hunt`）
 - AI 入口点：AI 客服/Chatbot、AI 助手/Copilot、文档问答/RAG、AI 写作/编程、AI 搜索、多模态解析、代码解释器、Agent 工具调用（详见 `ai-llm-agent-security`）
+- APK 入口点：硬编码密钥/签名函数/隐藏调试后门/组件面清单，大包秒级快筛（详见 `asc-fast-hunt`）
 
 ---
 

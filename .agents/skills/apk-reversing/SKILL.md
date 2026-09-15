@@ -8,6 +8,8 @@ description: 当需要获取目标 APK、识别加固壳类型、脱壳还原 de
 > **定位**：这是 `android-security-audit` 的**上游准备技能**——把 APK 变成"可挖的全量源码"，交付标准目录后 `android-security-audit` 直接开挖（密钥追踪/组件安全）。本技能只负责还原，**不挖洞**；漏洞挖掘见 `android-security-audit`。
 >
 > 只有 APK 有加固壳时才必须完整走本技能；无壳 APK 直接 JADX 反编译即可开工。
+>
+> **快筛前置（省时）**：无壳大包（>100MB）可先用 `asc-fast-hunt` 秒级快筛（Manifest 组件面 + 密钥/签名/接口定位），确认值得深挖再付全量反编译成本；已知有壳则直接走本技能——壳包的 DEX 里只有 stub，用 ASC 搜不出东西属正常现象，不要误判为"没有密钥"。
 
 ## 何时调用（触发条件）
 
@@ -16,6 +18,7 @@ description: 当需要获取目标 APK、识别加固壳类型、脱壳还原 de
 - `lib/` 下只有壳 so（libshella、libjiagu、libSecShell 等）
 - 需要提取 so、H5/assets、资源、签名等全量产物
 - 为 `android-security-audit` 准备标准输入（`jadx_out/` + `apktool_out/` + `lib/` + `assets/`）
+- 无壳但包很大（>100MB），想先快筛再决定是否值得全量还原 → 先走 `asc-fast-hunt`（秒级定位密钥/接口）
 
 ## 标准产物（交付标准）
 
@@ -210,6 +213,7 @@ claude mcp add ghidra -sse http://localhost:8192/mcp
 ## 联动
 
 - 下游挖洞：产物直接交给 `android-security-audit`（密钥追踪→未授权接口 / 组件安全）
+- 快筛前置：`asc-fast-hunt`（大包秒级定位密钥/签名/接口，决定是否值得全量还原；脱壳后的 dex 打包成 zip 也能回它检索）
 - H5 内嵌小程序：`miniprogram-security`
 - 提取的密钥/域名上报深挖：`recon-js-analysis`
 - 正式报告：`report`

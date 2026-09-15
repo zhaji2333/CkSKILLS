@@ -73,6 +73,8 @@ apktool d <path/to/target.apk> -o /tmp/apktool_out
 ```
 
 > ⚠️ APK 有加固壳（JADX 打开是 stub/空壳、入口类是 `com.stub.StubApp` 等）时，**先调 `apk-reversing` 技能脱壳还原真实代码**，拿到 `jadx_out/`/`lib/`/`assets/` 全量产物后再回到本技能挖掘。
+>
+> 💡 **大包先快筛**：APK > 100MB 时不必先等 JADX 全量反编译——先调 `asc-fast-hunt` 秒级定位密钥/签名/接口并读 Manifest 组件面，确认值得深挖后再付全量成本（无壳小包直接走本 Step 即可）。
 
 ### Step 2：查找高危漏洞（按优先级 grep）
 
@@ -157,6 +159,7 @@ adb shell am start -n com.victim/.VulnActivity \
 ```bash
 grep -rniE "appKey|appSecret|secret|sign|signature|md5|encrypt|aes|rsa" /tmp/jadx_out/sources/
 ```
+> ⚡ **还没反编译？** 大包可直接用 `asc-fast-hunt` 的 `findrefs string` 秒级搜同一组特征串（无需全量反编译），命中后 `getclass` 读签名类实现；确需精读混淆逻辑或跨类数据流时，再回全量产物。
 - 命中后**追调用链**：找到签名函数（`sign = md5(appId + appKey + ts)` 之类），确认参数来源（uid、时间戳、固定盐）
 - **Python 重写**拼接与加密逻辑，离线可算任意请求签名
 - 常见形态：appId/appKey 是 IM/云服务凭证（网易云信/融云等）→ 可伪造签名调该服务接口
