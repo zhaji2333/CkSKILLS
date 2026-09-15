@@ -5,8 +5,16 @@
 skillsbench/
 
 # 个案线索板（可能含目标 Host/路径；模板在 .agents/skills/hunt-clueboard/）
-hunts/*/
+hunts/*
 !hunts/.gitkeep
+
+# 技能工作产物目录（report 报告草稿 / apk-reversing 反编译产物 / 本地测试包，含目标数据不入库）
+reports/
+reversing/
+vclient_wss_test/
+
+# Agent 临时粘贴文件
+.agents/tmp_paste.txt
 
 # 系统文件
 .DS_Store
