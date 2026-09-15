@@ -63,6 +63,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 | `windows-reverse-engineering` | Windows PE 逆向、.NET/内核组件、缓冲区溢出、协议逆向、反调试对抗、shellcode 与 PoC 验证 |
 | `android-security-audit` | Android APK 组件安全深度审计、Intent/WebView/Provider/Binder/Deep Link、无 Frida/无 Root 漏洞验证、HyperOS 收录标准报告 |
 | `apk-reversing` | APK 壳识别、脱壳还原 dex、JADX/apktool 全量反编译、so/H5/assets 提取，产出 android-security-audit 可直接开挖的源码产物 |
+| `asc-fast-hunt` | APK 零预处理快速定位（基于 Droid ASC）：秒级全局交叉引用搜索（字符串/类型/方法/字段）、按需反编译单类、Manifest 秒读——大包不必等全量反编译即可定位密钥/签名/隐藏接口 |
 | `report` | 漏洞报告成稿收口——分层验证门把关、DOCX 提交稿（模板 + Step 式 PoC + 真实截图）、语义化命名归档 |
 
 ## 🚀 怎么使用（30 秒上手）
@@ -104,6 +105,7 @@ git clone https://github.com/zhaji2333/CkSKILLS.git
 
 ## 🆕 最近更新
 
+- **新增 `asc-fast-hunt`**：APK 零预处理快速定位（基于 [Droid ASC](https://github.com/MG1937/ASC)，Black Hat Europe Arsenal 工具）——秒级全局交叉引用搜索 + 按需反编译单类 + Manifest 秒读，大包不必等 JADX 全量反编译即可定位硬编码密钥/签名函数/隐藏接口；与 `apk-reversing`（脱壳还原）、`android-security-audit`（深挖验证）构成三段式 Android 链路
 - **新增 `unauth-path-key-hunt`**：零身份公开面还原路径与密钥（响应指纹、加密证伪、迁域/兄弟域复查）
 - **新增 `hunt-clueboard`**：当前目标 Markdown 线索板（跨轮工作记忆：读→挖→写回）
 - **新增英文 README**：[`README_EN.md`](README_EN.md)

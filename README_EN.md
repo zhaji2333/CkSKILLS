@@ -65,6 +65,7 @@ Five layers, each with a single job:
 | `windows-reverse-engineering` | Windows PE reversing, .NET/kernel, memory corruption, protocol reversing, anti-debug, exploit-chain and PoC work |
 | `android-security-audit` | Android APK component audit, Intent / WebView / Provider / Binder / Deep Link, no-Frida / no-Root verification, HyperOS-style intake reports |
 | `apk-reversing` | Packer ID, unpacking, JADX/apktool full decompile, so/H5/assets extract — input for `android-security-audit` |
+| `asc-fast-hunt` | Zero-preprocessing APK triage built on [Droid ASC](https://github.com/MG1937/ASC): sub-second global cross-reference search (string/type/method/field), on-demand single-class decompile, instant Manifest read — locate hardcoded keys / signature functions / hidden APIs on large APKs without a full decompile |
 | `report` | Submission close-out: verification gates, DOCX report (template + step-style PoC + real screenshots), semantic filenames |
 
 ## Quick start (30 seconds)
@@ -106,6 +107,7 @@ Delete `AGENTS.md` and `.agents/` from the working tree (or follow your Agent fr
 
 ## Recent updates
 
+- **Added `asc-fast-hunt`**: zero-preprocessing APK triage built on [Droid ASC](https://github.com/MG1937/ASC) (Black Hat Europe Arsenal) — sub-second global cross-reference search, on-demand single-class decompile, instant Manifest read, so large APKs no longer need a full JADX pass before hunting hardcoded keys / signature functions / hidden APIs; forms a three-stage Android chain with `apk-reversing` (unpack) and `android-security-audit` (deep hunt)
 - **Added `unauth-path-key-hunt`**: zero-identity recovery of hidden API paths and keys (fingerprints, crypto-as-transport, migration retest)
 - **Added `hunt-clueboard`**: per-target Markdown clue board so recon survives session compaction
 - **Added `windows-reverse-engineering`**: Windows PE reversing and binary vulnerability hunting
