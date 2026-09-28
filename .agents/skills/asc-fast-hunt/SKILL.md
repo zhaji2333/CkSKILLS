@@ -11,10 +11,10 @@ description: 当需要在不对 APK 全量反编译的前提下秒级定位硬�
 
 ## 出处声明（必须保留）
 
-- 工具仓库：**https://github.com/MG1937/ASC**（Droid ASC，Black Hat Europe Arsenal 议题）
-- 本 SKILL 只是对该工具的**封装与工作流编排**，工具算法与实现版权归原作者所有，未做任何代码修改
-- 原仓库**无 LICENSE 文件**（默认保留所有权利）：仅限本机自用与授权测试，**不得对外分发、不得打包发布、不得声称自有**
-- 本机已装位置：`/Users/apple/Desktop/武器库/5.逆向/ASC/`（与 jadx、ida-mcp-server 并列）；如需重建见本文「环境安装与自检」
+- 工具仓库：**https://github.com/MG1937/ASC**（Droid ASC，Black Hat Europe Arsenal 议题；PyPI 包名 `droidasc`）
+- 许可：**Apache License 2.0**（上游仓库附带 LICENSE）。本技能在 `tools/ASC` 内置了**未修改的上游源码副本**（含原 LICENSE 与 README），版本锚定上游 main `8a805bd`，分发与再利用遵循 Apache-2.0
+- 本 SKILL 是对该工具的**封装与工作流编排**，工具算法与实现版权归原作者所有；除动态路径解析与自举脚本外，未对工具代码做任何修改
+- 工具更新方式见「五、边界与坑」第 9 条
 
 ## 何时调用（触发条件）
 
@@ -29,53 +29,58 @@ description: 当需要在不对 APK 全量反编译的前提下秒级定位硬�
 
 ---
 
-## 一、环境安装与自检
+## 一、环境自举与自检（动态路径，任何机器开箱即用）
 
-**硬门槛：Python ≥ 3.11**（工具用了原子分组正则 `(?>(?:...))`，3.9/3.10 会直接报 `unknown extension ?>`）。唯一第三方依赖 `androguard`（本机实测 4.1.4）。
+工具随本技能**源码分发**：`<本技能目录>/tools/ASC`（Apache-2.0 源码副本），配套 `tools/bootstrap.sh` 幂等自举脚本。**全流程不写死任何绝对路径**——`SKILL_DIR` 一律取自技能注册路径（本 SKILL.md 的 `file:` 字段），换机器、换 clone 位置都无需改动。
+
+**硬门槛：Python ≥ 3.11**（工具用了原子分组正则 `(?>(?:...))`，3.9/3.10 会直接报 `unknown extension ?>`，bootstrap.sh 已内置该检查）。第三方依赖（androguard）由 pip 自动解决，隔离在 `tools/env/` venv 内（已 gitignore，不入库）。
 
 ```bash
-# 已装好（本机）：直接自检
-ASC=/Users/apple/Desktop/武器库/5.逆向/ASC
-$ASC/asc 2>&1 | head -5                    # 打印用法 = 环境正常
-$ASC/asc_manifest <任意.apk> | head -3     # Manifest 解析 = androguard 正常
+# ① 解析动态路径（SKILL_DIR = 本 SKILL.md 所在目录，从技能注册路径取，勿硬编码）
+SKILL_DIR="<本 SKILL.md 所在目录>"
+TOOLS="$SKILL_DIR/tools"
 
-# 从零重建（换机/环境损坏时）
-git clone --depth 1 https://github.com/MG1937/ASC $ASC
-cd $ASC && python3.11 -m venv .venv && ./.venv/bin/pip install androguard==4.1.4 loguru
+# ② 自举（幂等：已有 env 直接跳过；无 venv 则建，优先装 vendored 源码，PyPI 兜底）
+"$TOOLS/bootstrap.sh"
+DROIDASC="$TOOLS/env/bin/droidasc"
 ```
 
 **自检三连**（开工前 10 秒确认）：
 
 ```bash
-$ASC/asc findrefs <target.apk> string token | head -3      # 有无命中都要无报错
-$ASC/asc_manifest <target.apk> | grep -c "uses-permission" # 权限条数 > 0 即解析成功
+"$DROIDASC" --help | head -3                              # 打印用法 = 环境正常
+"$DROIDASC" getmanifest <apk> | grep -c "uses-permission" # 权限条数 > 0 即解析成功
+"$DROIDASC" findrefs <apk> string token | head -3         # 有无命中都要无报错
 ```
+
+> 兜底链：vendored 源码（`tools/ASC`）→ 开发者本机布局（`$PWD/tools/ASC`）→ PyPI（`pip install droidasc`）。任何一条走通即可用。
 
 ---
 
 ## 二、工具速查
 
-### 2.1 四个核心命令
+### 2.1 四个核心命令（droidasc CLI）
 
 ```bash
-ASC=/Users/apple/Desktop/武器库/5.逆向/ASC
-
-# ① Manifest 秒读（组件面/权限/scheme 清单，零反编译）
-$ASC/asc_manifest <apk>                                  # 约 0.3s
-$ASC/asc_manifest <apk> | grep -B2 -A6 'exported="true"' # 导出组件
-$ASC/asc_manifest <apk> | grep 'android:scheme'          # Deep Link scheme
+# ① Manifest 秒读（组件面/权限/scheme 清单，零反编译，直接打印 XML）
+"$DROIDASC" getmanifest <apk>                                  # 约 0.3s
+"$DROIDASC" getmanifest <apk> | grep -B2 -A6 'exported="true"' # 导出组件
+"$DROIDASC" getmanifest <apk> | grep 'android:scheme'          # Deep Link scheme
 
 # ② 全局交叉引用搜索（findrefs，四个维度）
-$ASC/asc findrefs <apk> string <关键词>                   # 模糊搜字符串使用点
-$ASC/asc findrefs <apk> type com.x.Y                     # 模糊搜类型引用点
-$ASC/asc findrefs <apk> method <方法名> [--class <类>] [--fuzzy-class]
-$ASC/asc findrefs <apk> field <字段名> [--class <类>] [--fuzzy-class]
-$ASC/asc findrefs <apk> string appkey -o refs.txt        # 输出存盘（便于通读）
-$ASC/asc findrefs --debug <apk> string token             # 耗时统计（--debug 必须在子命令前）
+"$DROIDASC" findrefs <apk> string <关键词>                      # 模糊搜字符串使用点
+"$DROIDASC" findrefs <apk> type com.x.Y                        # 模糊搜类型引用点
+"$DROIDASC" findrefs <apk> method <方法名> [--class <类>] [--fuzzy-class]
+"$DROIDASC" findrefs <apk> field <字段名> [--class <类>] [--fuzzy-class]
+"$DROIDASC" findrefs <apk> string appkey -o refs.txt           # 输出存盘（便于通读）
+"$DROIDASC" findrefs --debug <apk> string token                # 耗时统计（--debug 写在子命令后）
 
 # ③ 按需反编译单个类（getclass）
-$ASC/asc getclass <apk> Lcom/x/Y; -o Y.java              # Dalvik 格式
-$ASC/asc getclass <apk> com.x.Y -o Y.java                # 点分格式（自动转换）
+"$DROIDASC" getclass <apk> Lcom/x/Y; -o Y.java                 # Dalvik 格式
+"$DROIDASC" getclass <apk> com.x.Y -o Y.java                   # 点分格式（自动转换）
+
+# ④ 类清单速览（listclass）
+"$DROIDASC" listclass <apk> --prefix com.x -o classes.txt      # 按 DEX 定义序列出全部类
 ```
 
 ### 2.2 输出格式与语义（Agent 必读）
@@ -95,7 +100,7 @@ classes3.dex | LA8/m$a;->b | matched=(appkey)
 
 | 命令 | 输出 | 耗时（实测） | 峰值内存 |
 |---|---|---|---|
-| `asc_manifest`（68MB 包） | 可读 XML 全量权限/组件 | ~0.3s | ~110MB |
+| `getmanifest`（68MB 包） | 可读 XML 全量权限/组件 | ~0.3s | ~110MB |
 | `findrefs string/type`（68MB） | 命中行列表 | ~0.32s | ~108MB |
 | `findrefs string`（175MB） | 命中行列表 | ~0.33s | — |
 | `getclass`（单类） | DAD 风格 Java | ~0.12s | — |
@@ -120,7 +125,7 @@ String v0_1 = this.b.getOutputBuffer(p6);
 
 因此本技能的输出**不可用于数据流/污染推理**（"这个参数可不可控、会不会流到危险点"），**也不适合作为报告取证截图**。它只用于快速读懂大致逻辑、认出加密调用与字符串常量——一旦要做可达性推理或写报告，必须换 JADX 产物。
 
-**资源层为零**：本技能只有 Manifest 解析（借 androguard），`res/` 下的 `file_paths.xml`（FileProvider 路径暴露）、`network_security_config.xml`、`strings.xml`（硬编码密钥高发地）、layout（UI 注入点）**一律看不到**——同一 4.4MB 包 JADX 解出 **1629 个 res/ XML**。组件审计、Provider 审计必须走 `apk-reversing` 的 apktool/JADX 产物。
+**资源层为零**：本技能只有 Manifest 解析，`res/` 下的 `file_paths.xml`（FileProvider 路径暴露）、`network_security_config.xml`、`strings.xml`（硬编码密钥高发地）、layout（UI 注入点）**一律看不到**——同一 4.4MB 包 JADX 解出 **1629 个 res/ XML**。组件审计、Provider 审计必须走 `apk-reversing` 的 apktool/JADX 产物。
 
 **做不到的搜索形态**：`findrefs` 查的是 DEX 引用表，**无法表达"同一行两个 API 共现"的模式**——`android-security-audit` Step 2 里的 `grep -rE "startActivity.*getParcelable"`（Intent 重定向）、`grep -rE "setTitle.*getIntent"`（弹窗欺骗）这类模式，本技能只能逐个 API 分别查再自己交叉。也没有项目级通读视图。
 
@@ -135,8 +140,8 @@ String v0_1 = this.b.getOutputBuffer(p6);
 ```bash
 # 看 lib/ 壳特征 so 与入口类
 unzip -l <apk> | grep -iE "libshella|libjiagu|libSecShell|libexec|libtprt|com/stub"
-$ASC/asc_manifest <apk> | grep -oE 'android:name="[A-Za-z0-9._]*Application[A-Za-z0-9._]*"'
-$ASC/asc getclass <apk> <上一步的入口类> | head -30     # 是 stub 包装类 = 有壳
+"$DROIDASC" getmanifest <apk> | grep -oE 'android:name="[A-Za-z0-9._]*Application[A-Za-z0-9._]*"'
+"$DROIDASC" getclass <apk> <上一步的入口类> | head -30     # 是 stub 包装类 = 有壳
 ```
 
 - **判定**：`lib/` 有壳 so、或入口类是 stub（`com.stub.StubApp` 等）、或 getclass 读到的 Application 是空壳 → **有壳，转 `apk-reversing` 脱壳**，脱壳产物再回到本技能快筛
@@ -145,7 +150,7 @@ $ASC/asc getclass <apk> <上一步的入口类> | head -30     # 是 stub 包装
 ### Step 1：Manifest 秒读（攻击面清单）
 
 ```bash
-$ASC/asc_manifest <apk> > /tmp/manifest.xml
+"$DROIDASC" getmanifest <apk> > /tmp/manifest.xml
 grep -B3 -A8 'exported="true"' /tmp/manifest.xml                     # 导出组件
 grep -oE 'android:scheme="[^"]+"' /tmp/manifest.xml | sort -u        # Deep Link scheme
 grep -oE 'android:name="android.permission.[^"]+"' /tmp/manifest.xml | sort -u  # 权限面
@@ -159,32 +164,32 @@ grep -iE 'android:process|sharedUserId|allowBackup|debuggable' /tmp/manifest.xml
 按组批量搜索，每组存盘通读：
 
 ```bash
-ASC=/Users/apple/Desktop/武器库/5.逆向/ASC
+DROIDASC="$TOOLS/env/bin/droidasc"
 APK=<target.apk>
 
 # A 组｜凭证与密钥（最高价值）
 for kw in appkey appKey app_secret appSecret secret_key access_key api_key ak_sk client_secret; do
-  echo "### $kw"; $ASC/asc findrefs $APK string $kw
+  echo "### $kw"; "$DROIDASC" findrefs "$APK" string "$kw"
 done
 
 # B 组｜签名与加密
 for kw in sign signature signKey md5 sha1 sha256 hmac RSA AES PUBLIC.CRYPTO_PUBLIC; do
-  echo "### $kw"; $ASC/asc findrefs $APK string $kw
+  echo "### $kw"; "$DROIDASC" findrefs "$APK" string "$kw"
 done
 
 # C 组｜网络与接口（拿出接口域名/路径）
 for kw in https:// http:// /api/ /v1/ /v2/ Authorization Bearer Cookie userToken; do
-  echo "### $kw"; $ASC/asc findrefs $APK string $kw -o /tmp/refs_$(echo $kw|tr -d '/:.').txt
+  echo "### $kw"; "$DROIDASC" findrefs "$APK" string "$kw" -o /tmp/refs_$(echo $kw|tr -d '/:.').txt
 done
 
 # D 组｜后门与调试（隐藏功能）
 for kw in debug test internal backdoor admin bypass __dev__ mock; do
-  echo "### $kw"; $ASC/asc findrefs $APK string $kw
+  echo "### $kw"; "$DROIDASC" findrefs "$APK" string "$kw"
 done
 
 # E 组｜云服务与第三方（appid/key 泄露高发区）
 for kw in appId appid AK SK push_key map_key accessKeyId endpoint bucket; do
-  echo "### $kw"; $ASC/asc findrefs $APK string $kw
+  echo "### $kw"; "$DROIDASC" findrefs "$APK" string "$kw"
 done
 ```
 
@@ -198,7 +203,7 @@ done
 
 ```bash
 # 对 Step 2 命中的类逐个读（一个类约 0.1s，可放心多读）
-$ASC/asc getclass $APK LA8/m\$a\; -o /tmp/A8_m_a.java
+"$DROIDASC" getclass "$APK" LA8/m\$a\; -o /tmp/A8_m_a.java
 ```
 
 读的时候盯四件事：
@@ -215,13 +220,13 @@ $ASC/asc getclass $APK LA8/m\$a\; -o /tmp/A8_m_a.java
 
 ```bash
 # 谁调用了这个签名方法 → 定位业务接口调用点
-$ASC/asc findrefs $APK method <方法名> --class <类> --fuzzy-class
+"$DROIDASC" findrefs "$APK" method <方法名> --class <类> --fuzzy-class
 
 # 谁使用了这个密钥字段 → 定位全部加密场景
-$ASC/asc findrefs $APK field <字段名>
+"$DROIDASC" findrefs "$APK" field <字段名>
 
 # 哪些地方引用了这个类（如 Retrofit 接口定义）→ 定位完整 API 面
-$ASC/asc findrefs $APK type com.x.net.ApiService
+"$DROIDASC" findrefs "$APK" type com.x.net.ApiService
 ```
 
 沿"密钥常量 → 签名方法 → 业务接口调用"三跳走完，就能拼出**完整攻击链**。每一跳都记录 `dex | 类->方法`，这是后续复现与报告的证据。
@@ -246,7 +251,7 @@ $ASC/asc findrefs $APK type com.x.net.ApiService
 | 场景 | 用什么 | 原因 |
 |---|---|---|
 | 大包想知道有没有硬编码密钥/接口 | **本技能** `findrefs` | 秒级，零预处理 |
-| 只想看组件面/权限/scheme | **本技能** `asc_manifest` | 0.3s 出全量 XML |
+| 只想看组件面/权限/scheme | **本技能** `getmanifest` | 0.3s 出全量 XML |
 | 已知类名，想看实现 | **本技能** `getclass` | 0.1s，够读逻辑 |
 | **小包（<20MB）任何环节** | **直接 JADX 全量** | 4.4MB 包 JADX 仅 5.87s，本技能省不下时间，白折腾 |
 | 加固壳（stub/壳 so） | `apk-reversing` | 真代码不在 DEX，本技能搜不到 |
@@ -270,20 +275,20 @@ $ASC/asc findrefs $APK type com.x.net.ApiService
 
 ## 五、边界与坑（实测记录）
 
-1. **Python ≥ 3.11 硬门槛**：报 `unknown extension ?>` 就是 Python 版本不够（原子分组正则），换 3.11+ 重建 venv。
+1. **Python ≥ 3.11 硬门槛**：报 `unknown extension ?>` 就是 Python 版本不够（原子分组正则），换 3.11+（bootstrap.sh 已内置版本检查）。
 2. **裸 `.dex` 不能直接喂**：报 `EOCD not found`（只认 zip/APK 容器）。脱壳产物（frida-dexdump 出的 dex）先打包：
    ```bash
    cd <dex目录> && zip -q dumped.zip classes*.dex && cp dumped.zip dumped.zip.apk
-   $ASC/asc findrefs dumped.zip.apk string appkey
+   "$DROIDASC" findrefs dumped.zip.apk string appkey
    ```
 3. **split APK / XAPK**：工具按 zip 内的 `.dex` 条目扫描，`split_config.*.apk` 这类分片需先用 apkeditor 合并，或用 base.apk（业务 dex 通常在 base）。
 4. **加固壳包搜不到东西是正常现象**：DEX 里只有壳的 stub 类，命中无意义 → 转 `apk-reversing` 脱壳，不要误判为"没有密钥"。
-5. **`--debug` 位置**：属于 findrefs 层，必须写在子命令前（`findrefs --debug <apk> string kw`），写在末尾会报 `unrecognized arguments`。
+5. **`--debug` 位置**：是 `findrefs`/`getmanifest` 的选项，写在子命令名之后即可（`droidasc findrefs --debug <apk> string kw`，实测正常输出耗时统计）。
 6. **`$` 转义**：Dalvik 内部类名 `LA8/m$a;` 在 shell 里要转义或用单引号包裹。
 7. **findrefs 搜引用点非定义**（见 2.2），别把它当"方法列表"用。
 8. **别猜类名**：R8 会重命名/裁剪类，猜 `com.x.y.R` 这类名字大概率报 `Class ... not found in APK.`（报错本身是正常信号）。正确姿势永远是 **findrefs 反查命中类名 → 再 getclass**；类名不存在即说明该类被裁剪（常是资源类/构建期类）。
-9. **无 LICENSE，不可分发**：详见「出处声明」。工具更新用 `cd $ASC && git pull`（本机保留 .git）。
-10. **GUI 用不上**：工具自带 tkinter GUI，Agent 工作流一律走 CLI，不要启动 GUI。
+9. **许可与更新**：上游为 Apache License 2.0，vendored 副本 `tools/ASC` 内保留原 LICENSE 且未做代码修改，可随本仓库分发。更新方式：从上游仓库拉取后覆盖 `tools/ASC`（保留其 LICENSE），或直接 `"$TOOLS/env/bin/pip" install --upgrade droidasc` 走 PyPI 更新运行环境。
+10. **GUI 用不上**：工具自带 tkinter GUI（`droidasc <apk> --gui`），Agent 工作流一律走 CLI，不要启动 GUI。
 
 ---
 
@@ -301,7 +306,7 @@ $ASC/asc findrefs $APK type com.x.net.ApiService
 
 ## 七、验证要点
 
-- [ ] 自检三连通过（`asc` 打印用法、`asc_manifest` 出权限条数、`findrefs` 无报错）
+- [ ] 自检三连通过（`--help` 打印用法、`getmanifest` 出权限条数、`findrefs` 无报错）
 - [ ] 壳预检已做：无壳 or 已脱壳（有壳时确认已转 `apk-reversing`，不硬编结论）
 - [ ] 关键词矩阵 A~E 五组**全部跑过**，未命中的组也在线索板记录
 - [ ] 每个"发现"都有 `getclass` 读到的代码佐证（方法名 + 关键调用行）
