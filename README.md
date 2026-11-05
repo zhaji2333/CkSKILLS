@@ -82,4 +82,4 @@ Claude Code 若只认 `.claude/skills/`，建软链：`mkdir -p .claude && ln -s
 | rules 总/单篇 | 28.1KB / 1.2–3.2KB（rules/40 例外 7.4KB） |
 | SKILL.md | 1.5–3.3KB（全 ≤4KB） |
 | 引用/体积 | 已人工核对：无死链、无超限块、无竞赛/评分语境 |
-| 多 agent 合板 | `tools/clueboard_sync_check.py`（miui-flash 实测 PASS） |
+| 多 agent 合板 | `tools/clueboard_sync_check.py`（示例任务实测 PASS） |
