@@ -1,20 +1,12 @@
-# 个人隐私文件(不入库)
-简历.md
-
-# 本地测试记录(含靶场测试数据,不宜公开)
-skillsbench/
-
-# 个案线索板（可能含目标 Host/路径；模板在 .agents/skills/hunt-clueboard/）
+# 单目标工作区（目标 Host / 路径 / 凭证属本地记忆，不入公开库）
 hunts/*
 !hunts/.gitkeep
 
-# 技能工作产物目录（report 报告草稿 / apk-reversing 反编译产物 / 本地测试包，含目标数据不入库）
-reports/
-reversing/
-vclient_wss_test/
-
-# Agent 临时粘贴文件
-.agents/tmp_paste.txt
+# 运行产物 / 临时文件
+__pycache__/
+*.pyc
+*.log
+*.tmp
 
 # 系统文件
 .DS_Store
@@ -24,7 +16,6 @@ vclient_wss_test/
 .Spotlight-V100
 .Trashes
 Thumbs.db
-ehthumbs.db
 desktop.ini
 
 # 编辑器 / IDE
@@ -36,6 +27,8 @@ desktop.ini
 *.swo
 *~
 
-# 日志与临时文件
-*.log
-*.tmp
+# Agent 临时粘贴文件
+.agents/tmp_paste.txt
+
+# Claude Code 本地技能链接
+.claude/

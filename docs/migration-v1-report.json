@@ -1,0 +1,1218 @@
+{
+ "modules": [
+  {
+   "pack": "web-injection",
+   "file": "injection-vulns-01-一、漏洞类型全景.md",
+   "from": "injection-vulns / 一、漏洞类型全景",
+   "chars": 352
+  },
+  {
+   "pack": "web-injection",
+   "file": "injection-vulns-02-二、常见场景清单-搜索-查询类.md",
+   "from": "injection-vulns / 二、常见场景清单（搜索/查询类）",
+   "chars": 324
+  },
+  {
+   "pack": "web-injection",
+   "file": "injection-vulns-03-三、接口-Fuzz-技巧-参数污染与类型混淆.md",
+   "from": "injection-vulns / 三、接口 Fuzz 技巧（参数污染与类型混淆）",
+   "chars": 422
+  },
+  {
+   "pack": "web-injection",
+   "file": "injection-vulns-04-四、SQL-注入绕过技术.md",
+   "from": "injection-vulns / 四、SQL 注入绕过技术",
+   "chars": 182
+  },
+  {
+   "pack": "web-injection",
+   "file": "injection-vulns-05-五、命令注入绕过技术.md",
+   "from": "injection-vulns / 五、命令注入绕过技术",
+   "chars": 181
+  },
+  {
+   "pack": "web-injection",
+   "file": "injection-vulns-06-六、验证要点.md",
+   "from": "injection-vulns / 六、验证要点",
+   "chars": 407
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-01-一、身份认证与会话安全.md",
+   "from": "auth-access-control / 一、身份认证与会话安全",
+   "chars": 336
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-02-二、前端鉴权绕过-路由守卫绕过.md",
+   "from": "auth-access-control / 二、前端鉴权绕过 / 路由守卫绕过",
+   "chars": 1319
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-03-三、验证码安全专项.md",
+   "from": "auth-access-control / 三、验证码安全专项",
+   "chars": 886
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-04-四、JWT-Token-专项.md",
+   "from": "auth-access-control / 四、JWT/Token 专项",
+   "chars": 219
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-05-五、访问控制与越权.md",
+   "from": "auth-access-control / 五、访问控制与越权",
+   "chars": 336
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-06-六、用户认证类场景表-全景.md",
+   "from": "auth-access-control / 六、用户认证类场景表（全景）",
+   "chars": 531
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-07-七、权限控制类场景表-全景.md",
+   "from": "auth-access-control / 七、权限控制类场景表（全景）",
+   "chars": 429
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-08-八、加密与随机性弱点-M类.md",
+   "from": "auth-access-control / 八、加密与随机性弱点（M类）",
+   "chars": 257
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-09-九、挖掘步骤.md",
+   "from": "auth-access-control / 九、挖掘步骤",
+   "chars": 453
+  },
+  {
+   "pack": "web-auth-access",
+   "file": "auth-access-control-10-十、验证要点.md",
+   "from": "auth-access-control / 十、验证要点",
+   "chars": 188
+  },
+  {
+   "pack": "web-file-path",
+   "file": "file-handling-01-一、文件操作类场景表-全景.md",
+   "from": "file-handling / 一、文件操作类场景表（全景）",
+   "chars": 585
+  },
+  {
+   "pack": "web-file-path",
+   "file": "file-handling-02-二、漏洞类型全景.md",
+   "from": "file-handling / 二、漏洞类型全景",
+   "chars": 268
+  },
+  {
+   "pack": "web-file-path",
+   "file": "file-handling-03-三、文件上传绕过技术.md",
+   "from": "file-handling / 三、文件上传绕过技术",
+   "chars": 360
+  },
+  {
+   "pack": "web-file-path",
+   "file": "file-handling-04-四、路径穿越与任意文件读写.md",
+   "from": "file-handling / 四、路径穿越与任意文件读写",
+   "chars": 341
+  },
+  {
+   "pack": "web-file-path",
+   "file": "file-handling-05-五、文件处理引擎攻击.md",
+   "from": "file-handling / 五、文件处理引擎攻击",
+   "chars": 395
+  },
+  {
+   "pack": "web-file-path",
+   "file": "file-handling-06-六、特殊功能类扩展.md",
+   "from": "file-handling / 六、特殊功能类扩展",
+   "chars": 261
+  },
+  {
+   "pack": "web-file-path",
+   "file": "file-handling-07-七、验证要点.md",
+   "from": "file-handling / 七、验证要点",
+   "chars": 264
+  },
+  {
+   "pack": "web-ssrf-render",
+   "file": "ssrf-internal-network-01-一、SSRF-场景清单.md",
+   "from": "ssrf-internal-network / 一、SSRF 场景清单",
+   "chars": 782
+  },
+  {
+   "pack": "web-ssrf-render",
+   "file": "ssrf-internal-network-02-二、云元数据-打内网核心.md",
+   "from": "ssrf-internal-network / 二、云元数据（打内网核心）",
+   "chars": 348
+  },
+  {
+   "pack": "web-ssrf-render",
+   "file": "ssrf-internal-network-03-三、服务端无头浏览器渲染专项-截图-快照-HTML→PDF-链接预览.md",
+   "from": "ssrf-internal-network / 三、服务端无头浏览器渲染专项（截图 / 快照 / HTML→PDF / 链接预览）",
+   "chars": 3071
+  },
+  {
+   "pack": "web-ssrf-render",
+   "file": "ssrf-internal-network-04-四、内网探测思路.md",
+   "from": "ssrf-internal-network / 四、内网探测思路",
+   "chars": 504
+  },
+  {
+   "pack": "web-ssrf-render",
+   "file": "ssrf-internal-network-05-五、绕过技术.md",
+   "from": "ssrf-internal-network / 五、绕过技术",
+   "chars": 282
+  },
+  {
+   "pack": "web-ssrf-render",
+   "file": "ssrf-internal-network-06-六、验证要点.md",
+   "from": "ssrf-internal-network / 六、验证要点",
+   "chars": 332
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-01-一、漏洞类型全景.md",
+   "from": "xss-frontend-security / 一、漏洞类型全景",
+   "chars": 464
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-02-二、内容-社交类场景表-存储型重点.md",
+   "from": "xss-frontend-security / 二、内容/社交类场景表（存储型重点）",
+   "chars": 478
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-03-三、跳转型-XSS-专项-🔴-优先测试.md",
+   "from": "xss-frontend-security / 三、跳转型 XSS 专项（🔴 优先测试）",
+   "chars": 3481
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-04-四、AI-Markdown-渲染型存储-XSS-专项.md",
+   "from": "xss-frontend-security / 四、AI / Markdown 渲染型存储 XSS 专项",
+   "chars": 2238
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-05-五、XSS-绕过技术.md",
+   "from": "xss-frontend-security / 五、XSS 绕过技术",
+   "chars": 393
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-06-六、CSRF-专项.md",
+   "from": "xss-frontend-security / 六、CSRF 专项",
+   "chars": 265
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-07-七、CORS-错误配置专项.md",
+   "from": "xss-frontend-security / 七、CORS 错误配置专项",
+   "chars": 1282
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-08-八、Clickjacking-专项.md",
+   "from": "xss-frontend-security / 八、Clickjacking 专项",
+   "chars": 174
+  },
+  {
+   "pack": "web-xss-frontend",
+   "file": "xss-frontend-security-09-九、验证要点.md",
+   "from": "xss-frontend-security / 九、验证要点",
+   "chars": 505
+  },
+  {
+   "pack": "web-api-protocol",
+   "file": "api-protocol-security-01-一、API-接口类场景表-全景.md",
+   "from": "api-protocol-security / 一、API/接口类场景表（全景）",
+   "chars": 511
+  },
+  {
+   "pack": "web-api-protocol",
+   "file": "api-protocol-security-02-二、REST-API-测试要点.md",
+   "from": "api-protocol-security / 二、REST API 测试要点",
+   "chars": 335
+  },
+  {
+   "pack": "web-api-protocol",
+   "file": "api-protocol-security-03-三、GraphQL-专项.md",
+   "from": "api-protocol-security / 三、GraphQL 专项",
+   "chars": 243
+  },
+  {
+   "pack": "web-api-protocol",
+   "file": "api-protocol-security-04-四、WebSocket-专项.md",
+   "from": "api-protocol-security / 四、WebSocket 专项",
+   "chars": 168
+  },
+  {
+   "pack": "web-api-protocol",
+   "file": "api-protocol-security-05-五、HTTP-走私-协议层-O类.md",
+   "from": "api-protocol-security / 五、HTTP 走私 / 协议层（O类）",
+   "chars": 222
+  },
+  {
+   "pack": "web-api-protocol",
+   "file": "api-protocol-security-06-六、资源消耗-DoS-P类.md",
+   "from": "api-protocol-security / 六、资源消耗 DoS（P类）",
+   "chars": 165
+  },
+  {
+   "pack": "web-api-protocol",
+   "file": "api-protocol-security-07-七、验证要点.md",
+   "from": "api-protocol-security / 七、验证要点",
+   "chars": 210
+  },
+  {
+   "pack": "web-logic-race",
+   "file": "business-logic-race-01-一、业务逻辑建模-先理解再测试.md",
+   "from": "business-logic-race / 一、业务逻辑建模（先理解再测试）",
+   "chars": 422
+  },
+  {
+   "pack": "web-logic-race",
+   "file": "business-logic-race-02-二、支付-资金类场景表-全景.md",
+   "from": "business-logic-race / 二、支付/资金类场景表（全景）",
+   "chars": 432
+  },
+  {
+   "pack": "web-logic-race",
+   "file": "business-logic-race-03-三、业务逻辑漏洞攻击套路.md",
+   "from": "business-logic-race / 三、业务逻辑漏洞攻击套路",
+   "chars": 280
+  },
+  {
+   "pack": "web-logic-race",
+   "file": "business-logic-race-04-四、并发与竞态专项.md",
+   "from": "business-logic-race / 四、并发与竞态专项",
+   "chars": 380
+  },
+  {
+   "pack": "web-logic-race",
+   "file": "business-logic-race-05-五、验证要点.md",
+   "from": "business-logic-race / 五、验证要点",
+   "chars": 215
+  },
+  {
+   "pack": "web-deser-xxe",
+   "file": "deserialization-xxe-01-一、漏洞类型全景.md",
+   "from": "deserialization-xxe / 一、漏洞类型全景",
+   "chars": 236
+  },
+  {
+   "pack": "web-deser-xxe",
+   "file": "deserialization-xxe-02-二、反序列化专项.md",
+   "from": "deserialization-xxe / 二、反序列化专项",
+   "chars": 642
+  },
+  {
+   "pack": "web-deser-xxe",
+   "file": "deserialization-xxe-03-三、XXE-专项.md",
+   "from": "deserialization-xxe / 三、XXE 专项",
+   "chars": 518
+  },
+  {
+   "pack": "web-deser-xxe",
+   "file": "deserialization-xxe-04-四、原型污染专项-Node-js.md",
+   "from": "deserialization-xxe / 四、原型污染专项（Node.js）",
+   "chars": 378
+  },
+  {
+   "pack": "web-deser-xxe",
+   "file": "deserialization-xxe-05-五、验证要点.md",
+   "from": "deserialization-xxe / 五、验证要点",
+   "chars": 223
+  },
+  {
+   "pack": "web-recon",
+   "file": "recon-js-analysis-01-一、资产测绘与信息收集.md",
+   "from": "recon-js-analysis / 一、资产测绘与信息收集",
+   "chars": 215
+  },
+  {
+   "pack": "web-recon",
+   "file": "recon-js-analysis-02-二、信息收集要-脏-历史与周边.md",
+   "from": "recon-js-analysis / 二、信息收集要\"脏\"（历史与周边）",
+   "chars": 463
+  },
+  {
+   "pack": "web-recon",
+   "file": "recon-js-analysis-03-三、JS-分析方法论-必须吃透再动手.md",
+   "from": "recon-js-analysis / 三、JS 分析方法论（必须吃透再动手）",
+   "chars": 2336
+  },
+  {
+   "pack": "web-recon",
+   "file": "recon-js-analysis-04-四、高价值入口点定位.md",
+   "from": "recon-js-analysis / 四、高价值入口点定位",
+   "chars": 239
+  },
+  {
+   "pack": "web-recon",
+   "file": "recon-js-analysis-05-五、冷门但高价值的漏洞点-攻击面速查.md",
+   "from": "recon-js-analysis / 五、冷门但高价值的漏洞点（攻击面速查）",
+   "chars": 545
+  },
+  {
+   "pack": "web-recon",
+   "file": "recon-js-analysis-06-六、输出与交接.md",
+   "from": "recon-js-analysis / 六、输出与交接",
+   "chars": 603
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-01-与其它技能分工.md",
+   "from": "unauth-path-key-hunt / 与其它技能分工",
+   "chars": 577
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-02-铁律.md",
+   "from": "unauth-path-key-hunt / 铁律",
+   "chars": 239
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-03-P0-零身份约束.md",
+   "from": "unauth-path-key-hunt / P0 零身份约束",
+   "chars": 265
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-04-P1-入口地图.md",
+   "from": "unauth-path-key-hunt / P1 入口地图",
+   "chars": 444
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-05-P2-响应指纹-禁止-L-跟着-302-再看-body.md",
+   "from": "unauth-path-key-hunt / P2 响应指纹（禁止 `-L` 跟着 302 再看 body）",
+   "chars": 794
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-06-P3-路径发现五源-并行.md",
+   "from": "unauth-path-key-hunt / P3 路径发现五源（并行）",
+   "chars": 671
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-07-P4-密钥还原与鉴权证伪.md",
+   "from": "unauth-path-key-hunt / P4 密钥还原与鉴权证伪",
+   "chars": 729
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-08-P5-字段对齐-空结果最易误判.md",
+   "from": "unauth-path-key-hunt / P5 字段对齐（空结果最易误判）",
+   "chars": 493
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-09-P6-迁域复查.md",
+   "from": "unauth-path-key-hunt / P6 迁域复查",
+   "chars": 263
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-10-P7-失败升级.md",
+   "from": "unauth-path-key-hunt / P7 失败升级",
+   "chars": 317
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-11-P8-危害落地与输出.md",
+   "from": "unauth-path-key-hunt / P8 危害落地与输出",
+   "chars": 311
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-12-通用决策句.md",
+   "from": "unauth-path-key-hunt / 通用决策句",
+   "chars": 334
+  },
+  {
+   "pack": "web-recon",
+   "file": "unauth-path-key-hunt-13-修复-未授权接口.md",
+   "from": "unauth-path-key-hunt / 修复（未授权接口）",
+   "chars": 226
+  },
+  {
+   "pack": "web-waf-bypass",
+   "file": "waf-bypass-techniques-01-一、对抗意识框架-先定位再绕过.md",
+   "from": "waf-bypass-techniques / 一、对抗意识框架（先定位再绕过）",
+   "chars": 297
+  },
+  {
+   "pack": "web-waf-bypass",
+   "file": "waf-bypass-techniques-02-二、失败升级路径-Level-1-7.md",
+   "from": "waf-bypass-techniques / 二、失败升级路径（Level 1-7）",
+   "chars": 469
+  },
+  {
+   "pack": "web-waf-bypass",
+   "file": "waf-bypass-techniques-03-三、通用绕过技术库.md",
+   "from": "waf-bypass-techniques / 三、通用绕过技术库",
+   "chars": 521
+  },
+  {
+   "pack": "web-waf-bypass",
+   "file": "waf-bypass-techniques-04-四、分类绕过速查.md",
+   "from": "waf-bypass-techniques / 四、分类绕过速查",
+   "chars": 656
+  },
+  {
+   "pack": "web-waf-bypass",
+   "file": "waf-bypass-techniques-05-五、403-绕过专项.md",
+   "from": "waf-bypass-techniques / 五、403 绕过专项",
+   "chars": 300
+  },
+  {
+   "pack": "web-waf-bypass",
+   "file": "waf-bypass-techniques-06-六、验证要点.md",
+   "from": "waf-bypass-techniques / 六、验证要点",
+   "chars": 210
+  },
+  {
+   "pack": "web-waf-bypass",
+   "file": "waf-bypass-techniques-07-七、注意事项.md",
+   "from": "waf-bypass-techniques / 七、注意事项",
+   "chars": 145
+  },
+  {
+   "pack": "cloud-infra",
+   "file": "cloud-infra-supply-chain-01-一、运维-管理类场景表-全景.md",
+   "from": "cloud-infra-supply-chain / 一、运维/管理类场景表（全景）",
+   "chars": 540
+  },
+  {
+   "pack": "cloud-infra",
+   "file": "cloud-infra-supply-chain-02-二、第三方集成类场景表-全景.md",
+   "from": "cloud-infra-supply-chain / 二、第三方集成类场景表（全景）",
+   "chars": 477
+  },
+  {
+   "pack": "cloud-infra",
+   "file": "cloud-infra-supply-chain-03-三、云环境专项-14-4.md",
+   "from": "cloud-infra-supply-chain / 三、云环境专项（14.4）",
+   "chars": 1588
+  },
+  {
+   "pack": "cloud-infra",
+   "file": "cloud-infra-supply-chain-04-四、信息泄露专项-K类.md",
+   "from": "cloud-infra-supply-chain / 四、信息泄露专项（K类）",
+   "chars": 206
+  },
+  {
+   "pack": "cloud-infra",
+   "file": "cloud-infra-supply-chain-05-五、供应链安全-L类.md",
+   "from": "cloud-infra-supply-chain / 五、供应链安全（L类）",
+   "chars": 478
+  },
+  {
+   "pack": "cloud-infra",
+   "file": "cloud-infra-supply-chain-06-六、新兴技术类-延伸.md",
+   "from": "cloud-infra-supply-chain / 六、新兴技术类（延伸）",
+   "chars": 289
+  },
+  {
+   "pack": "cloud-infra",
+   "file": "cloud-infra-supply-chain-07-七、验证要点.md",
+   "from": "cloud-infra-supply-chain / 七、验证要点",
+   "chars": 282
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-01-〇、云端-Agent-分工-有执行环境时必转.md",
+   "from": "ai-llm-agent-security / 〇、云端 Agent 分工（有执行环境时必转）",
+   "chars": 492
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-02-一、攻击面与信任边界建模-先建模再动手.md",
+   "from": "ai-llm-agent-security / 一、攻击面与信任边界建模（先建模再动手）",
+   "chars": 940
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-03-二、OWASP-LLM-Top-10-2025-全景速查.md",
+   "from": "ai-llm-agent-security / 二、OWASP LLM Top 10 (2025) 全景速查",
+   "chars": 518
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-04-三、提示词注入-Prompt-Injection-——-LLM01.md",
+   "from": "ai-llm-agent-security / 三、提示词注入（Prompt Injection）—— LLM01",
+   "chars": 4543
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-05-四、越狱与护栏绕过-Jailbreak-逃逸-——-LLM01-衍生.md",
+   "from": "ai-llm-agent-security / 四、越狱与护栏绕过（Jailbreak / 逃逸）—— LLM01 衍生",
+   "chars": 1016
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-06-五、System-Prompt-泄露与敏感信息泄露-——-LLM07-LLM02.md",
+   "from": "ai-llm-agent-security / 五、System Prompt 泄露与敏感信息泄露 —— LLM07 / LLM02",
+   "chars": 1489
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-07-六、RAG-检索污染与向量库弱点-——-LLM08-LLM04.md",
+   "from": "ai-llm-agent-security / 六、RAG 检索污染与向量库弱点 —— LLM08 / LLM04",
+   "chars": 579
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-08-产品说明.md",
+   "from": "ai-llm-agent-security / 产品说明",
+   "chars": 845
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-09-七、Agent-记忆污染-——-LLM04-LLM01-衍生.md",
+   "from": "ai-llm-agent-security / 七、Agent 记忆污染 —— LLM04 / LLM01 衍生",
+   "chars": 768
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-10-八、Agent-工具滥用与过度授权-——-LLM06-最高危.md",
+   "from": "ai-llm-agent-security / 八、Agent 工具滥用与过度授权 —— LLM06（最高危）",
+   "chars": 2547
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-11-九、沙箱与云端运行时-——-转专精.md",
+   "from": "ai-llm-agent-security / 九、沙箱与云端运行时 —— 转专精",
+   "chars": 309
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-12-十、模型供应链与插件安全-——-LLM03.md",
+   "from": "ai-llm-agent-security / 十、模型供应链与插件安全 —— LLM03",
+   "chars": 475
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-13-十一、对抗与绕过技术库-输入过滤层.md",
+   "from": "ai-llm-agent-security / 十一、对抗与绕过技术库（输入过滤层）",
+   "chars": 870
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-14-十二、验证与影响评估.md",
+   "from": "ai-llm-agent-security / 十二、验证与影响评估",
+   "chars": 857
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-15-十五、与其他技能联动.md",
+   "from": "ai-llm-agent-security / 十五、与其他技能联动",
+   "chars": 597
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-16-十六、开工-5-分钟分诊-没有工具-=-没有-Agent-运行时洞.md",
+   "from": "ai-llm-agent-security / 十六、开工 5 分钟分诊（没有工具 = 没有 Agent 运行时洞）",
+   "chars": 512
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-17-十八、归类判据-「AI-相关」≠「Agent-漏洞」.md",
+   "from": "ai-llm-agent-security / 十八、归类判据：「AI 相关」≠「Agent 漏洞」",
+   "chars": 1167
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-18-二十、Agent-后端接口扫描.md",
+   "from": "ai-llm-agent-security / 二十、Agent 后端接口扫描",
+   "chars": 263
+  },
+  {
+   "pack": "ai-agent",
+   "file": "ai-llm-agent-security-19-二十二、接口发现陷阱.md",
+   "from": "ai-llm-agent-security / 二十二、接口发现陷阱",
+   "chars": 1060
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-01-一、要打穿的面-按性价比-不是按酷.md",
+   "from": "agent-sandbox-takeover / 一、要打穿的面（按性价比，不是按酷）",
+   "chars": 246
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-02-二、进站决策树.md",
+   "from": "agent-sandbox-takeover / 二、进站决策树",
+   "chars": 515
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-03-三、默认第一轮-让-Agent-自己测绘.md",
+   "from": "agent-sandbox-takeover / 三、默认第一轮：让 Agent 自己测绘",
+   "chars": 661
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-04-三-1-拉壳-通道-不是洞.md",
+   "from": "agent-sandbox-takeover / 三.1 拉壳（通道，不是洞）",
+   "chars": 1149
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-05-四、六问测绘-人工接管时的固定动作.md",
+   "from": "agent-sandbox-takeover / 四、六问测绘（人工接管时的固定动作）",
+   "chars": 3276
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-06-五、回环被抬到-0-0-0-0.md",
+   "from": "agent-sandbox-takeover / 五、回环被抬到 0.0.0.0",
+   "chars": 300
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-07-六、七类反复出现的失误-对空列.md",
+   "from": "agent-sandbox-takeover / 六、七类反复出现的失误（对空列）",
+   "chars": 586
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-08-七、逃逸判定树.md",
+   "from": "agent-sandbox-takeover / 七、逃逸判定树",
+   "chars": 389
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-09-八、七大危害面-认-→-打-→-算成-→-假点.md",
+   "from": "agent-sandbox-takeover / 八、七大危害面（认 → 打 → 算成 → 假点）",
+   "chars": 3032
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-10-九、SRC-证据闸-落不落只认-format.md",
+   "from": "agent-sandbox-takeover / 九、SRC 证据闸（落不落只认 format）",
+   "chars": 456
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-sandbox-takeover-11-十、联动.md",
+   "from": "agent-sandbox-takeover / 十、联动",
+   "chars": 446
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-01-一、三层-只有一层会拒绝.md",
+   "from": "agent-execution-channel-hijack / 一、三层（只有一层会拒绝）",
+   "chars": 524
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-02-二、路径-B-五步.md",
+   "from": "agent-execution-channel-hijack / 二、路径 B 五步",
+   "chars": 821
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-03-三、HTTP-跨租户-必须三态-+-对照.md",
+   "from": "agent-execution-channel-hijack / 三、HTTP 跨租户（必须三态 + 对照）",
+   "chars": 1124
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-04-四、网关-控制面-HTTP-L1-L2.md",
+   "from": "agent-execution-channel-hijack / 四、网关 / 控制面 HTTP（L1/L2）",
+   "chars": 455
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-05-五、「拒绝了但执行了」.md",
+   "from": "agent-execution-channel-hijack / 五、「拒绝了但执行了」",
+   "chars": 314
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-06-六、客户端连云端网关.md",
+   "from": "agent-execution-channel-hijack / 六、客户端连云端网关",
+   "chars": 285
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-07-七、判定表.md",
+   "from": "agent-execution-channel-hijack / 七、判定表",
+   "chars": 387
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-execution-channel-hijack-08-八、联动.md",
+   "from": "agent-execution-channel-hijack / 八、联动",
+   "chars": 255
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-01-一、先分清-遥控器-vs-注入.md",
+   "from": "agent-prompt-injection-bypass / 一、先分清：遥控器 vs 注入",
+   "chars": 496
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-02-二、铁律.md",
+   "from": "agent-prompt-injection-bypass / 二、铁律",
+   "chars": 245
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-03-三、第一枪-未拒绝时.md",
+   "from": "agent-prompt-injection-bypass / 三、第一枪（未拒绝时）",
+   "chars": 509
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-04-四、护栏六层-已拒绝时.md",
+   "from": "agent-prompt-injection-bypass / 四、护栏六层（已拒绝时）",
+   "chars": 681
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-05-五、L2-改叙事-不改攻击目标.md",
+   "from": "agent-prompt-injection-bypass / 五、L2：改叙事，不改攻击目标",
+   "chars": 386
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-06-六、L4-换实现-不换话术.md",
+   "from": "agent-prompt-injection-bypass / 六、L4：换实现，不换话术",
+   "chars": 469
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-07-七、L1-编码-+-间接注入.md",
+   "from": "agent-prompt-injection-bypass / 七、L1 编码 + 间接注入",
+   "chars": 458
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-08-八、失败升级.md",
+   "from": "agent-prompt-injection-bypass / 八、失败升级",
+   "chars": 311
+  },
+  {
+   "pack": "ai-agent",
+   "file": "agent-prompt-injection-bypass-09-九、联动.md",
+   "from": "agent-prompt-injection-bypass / 九、联动",
+   "chars": 301
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-01-一、漏洞类型全景.md",
+   "from": "windows-reverse-engineering / 一、漏洞类型全景",
+   "chars": 443
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-02-二、工具链.md",
+   "from": "windows-reverse-engineering / 二、工具链",
+   "chars": 804
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-03-三、静态分析要点.md",
+   "from": "windows-reverse-engineering / 三、静态分析要点",
+   "chars": 1246
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-04-四、动态分析要点.md",
+   "from": "windows-reverse-engineering / 四、动态分析要点",
+   "chars": 735
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-05-五、缓冲区溢出专项挖掘.md",
+   "from": "windows-reverse-engineering / 五、缓冲区溢出专项挖掘",
+   "chars": 781
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-06-六、远程命令执行专项.md",
+   "from": "windows-reverse-engineering / 六、远程命令执行专项",
+   "chars": 698
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-07-七、权限提升专项.md",
+   "from": "windows-reverse-engineering / 七、权限提升专项",
+   "chars": 1034
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-08-八、信息泄露专项.md",
+   "from": "windows-reverse-engineering / 八、信息泄露专项",
+   "chars": 429
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-09-九、拒绝服务专项.md",
+   "from": "windows-reverse-engineering / 九、拒绝服务专项",
+   "chars": 229
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-10-十、反调试-反虚拟机对抗.md",
+   "from": "windows-reverse-engineering / 十、反调试 / 反虚拟机对抗",
+   "chars": 734
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-11-十一、漏洞利用构造.md",
+   "from": "windows-reverse-engineering / 十一、漏洞利用构造",
+   "chars": 605
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-12-十二、模糊测试.md",
+   "from": "windows-reverse-engineering / 十二、模糊测试",
+   "chars": 252
+  },
+  {
+   "pack": "binary-re",
+   "file": "windows-reverse-engineering-13-十三、验证要点.md",
+   "from": "windows-reverse-engineering / 十三、验证要点",
+   "chars": 300
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-01-⚠️-核心原则.md",
+   "from": "android-security-audit / ⚠️ 核心原则",
+   "chars": 873
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-02-快速导航.md",
+   "from": "android-security-audit / 快速导航",
+   "chars": 404
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-03-📚-参考资源.md",
+   "from": "android-security-audit / 📚 参考资源",
+   "chars": 858
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-04-快速开始-5-分钟产出第一个漏洞.md",
+   "from": "android-security-audit / 快速开始（5 分钟产出第一个漏洞）",
+   "chars": 2288
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-05-🔴-一、密钥追踪-→-未授权接口专项-最高优先级.md",
+   "from": "android-security-audit / 🔴 一、密钥追踪 → 未授权接口专项（最高优先级）",
+   "chars": 4606
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-06-二、静态分析.md",
+   "from": "android-security-audit / 二、静态分析",
+   "chars": 13989
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-07-三、Native-内存安全深挖-IDA-9-5-无头-+-MCP.md",
+   "from": "android-security-audit / 三、Native/内存安全深挖（IDA 9.5 无头 + MCP）",
+   "chars": 5184
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-08-四、动态验证.md",
+   "from": "android-security-audit / 四、动态验证",
+   "chars": 1111
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-09-五、PoC-开发规范.md",
+   "from": "android-security-audit / 五、PoC 开发规范",
+   "chars": 3077
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-10-六、忽略清单与分流规则.md",
+   "from": "android-security-audit / 六、忽略清单与分流规则",
+   "chars": 1212
+  },
+  {
+   "pack": "mobile-app",
+   "file": "android-security-audit-11-七、验证要点.md",
+   "from": "android-security-audit / 七、验证要点",
+   "chars": 833
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-01-标准产物-交付标准.md",
+   "from": "apk-reversing / 标准产物（交付标准）",
+   "chars": 613
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-02-一、APK-获取.md",
+   "from": "apk-reversing / 一、APK 获取",
+   "chars": 347
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-03-二、壳识别-先识别再脱壳.md",
+   "from": "apk-reversing / 二、壳识别（先识别再脱壳）",
+   "chars": 879
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-04-三、脱壳-核心.md",
+   "from": "apk-reversing / 三、脱壳（核心）",
+   "chars": 727
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-05-四、反编译与产物还原.md",
+   "from": "apk-reversing / 四、反编译与产物还原",
+   "chars": 664
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-06-五、IDA-9-5-无头-+-MCP-环境准备-AI-分析-so-的启动路径.md",
+   "from": "apk-reversing / 五、IDA 9.5 无头 + MCP 环境准备（AI 分析 so 的启动路径）",
+   "chars": 3615
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-07-六、质量检查-保证-拿全部.md",
+   "from": "apk-reversing / 六、质量检查（保证\"拿全部\"）",
+   "chars": 411
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-08-七、验证要点.md",
+   "from": "apk-reversing / 七、验证要点",
+   "chars": 182
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-09-八、注意与边界.md",
+   "from": "apk-reversing / 八、注意与边界",
+   "chars": 279
+  },
+  {
+   "pack": "mobile-app",
+   "file": "apk-reversing-10-联动.md",
+   "from": "apk-reversing / 联动",
+   "chars": 405
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-01-出处声明-必须保留.md",
+   "from": "asc-fast-hunt / 出处声明（必须保留）",
+   "chars": 625
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-02-一、环境安装与自检.md",
+   "from": "asc-fast-hunt / 一、环境安装与自检",
+   "chars": 1181
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-03-二、工具速查.md",
+   "from": "asc-fast-hunt / 二、工具速查",
+   "chars": 5427
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-04-三、标准工作流-快筛循环.md",
+   "from": "asc-fast-hunt / 三、标准工作流（快筛循环）",
+   "chars": 3902
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-05-四、分工矩阵-什么时候用哪个.md",
+   "from": "asc-fast-hunt / 四、分工矩阵（什么时候用哪个）",
+   "chars": 2009
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-06-五、边界与坑-实测记录.md",
+   "from": "asc-fast-hunt / 五、边界与坑（实测记录）",
+   "chars": 2036
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-07-六、证据纪律-防幻觉-强制.md",
+   "from": "asc-fast-hunt / 六、证据纪律（防幻觉，强制）",
+   "chars": 733
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-08-七、验证要点.md",
+   "from": "asc-fast-hunt / 七、验证要点",
+   "chars": 443
+  },
+  {
+   "pack": "mobile-app",
+   "file": "asc-fast-hunt-09-联动.md",
+   "from": "asc-fast-hunt / 联动",
+   "chars": 624
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-01-快速开始-5-分钟出第一个接口-凭证.md",
+   "from": "miniprogram-security / 快速开始（5 分钟出第一个接口/凭证）",
+   "chars": 347
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-02-一、包获取与反编译.md",
+   "from": "miniprogram-security / 一、包获取与反编译",
+   "chars": 713
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-03-二、静态审计重点-代码层面.md",
+   "from": "miniprogram-security / 二、静态审计重点（代码层面）",
+   "chars": 782
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-04-三、场景表-漏洞全景.md",
+   "from": "miniprogram-security / 三、场景表（漏洞全景）",
+   "chars": 791
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-05-四、微信登录链专项-最经典-先测.md",
+   "from": "miniprogram-security / 四、微信登录链专项（最经典，先测）",
+   "chars": 673
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-06-五、支付逻辑专项.md",
+   "from": "miniprogram-security / 五、支付逻辑专项",
+   "chars": 342
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-07-六、云开发-云函数专项.md",
+   "from": "miniprogram-security / 六、云开发/云函数专项",
+   "chars": 358
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-08-七、前端渲染-XSS-专项-web-view-rich-text.md",
+   "from": "miniprogram-security / 七、前端渲染 XSS 专项（web-view / rich-text）",
+   "chars": 603
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-09-八、分享-跳转专项.md",
+   "from": "miniprogram-security / 八、分享/跳转专项",
+   "chars": 207
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-10-九、验证要点.md",
+   "from": "miniprogram-security / 九、验证要点",
+   "chars": 372
+  },
+  {
+   "pack": "mobile-app",
+   "file": "miniprogram-security-11-联动.md",
+   "from": "miniprogram-security / 联动",
+   "chars": 322
+  },
+  {
+   "pack": "source-audit",
+   "file": "source-code-audit-01-一、静态审计方法-SAST.md",
+   "from": "source-code-audit / 一、静态审计方法（SAST）",
+   "chars": 338
+  },
+  {
+   "pack": "source-audit",
+   "file": "source-code-audit-02-二、危险函数速查-按语言.md",
+   "from": "source-code-audit / 二、危险函数速查（按语言）",
+   "chars": 707
+  },
+  {
+   "pack": "source-audit",
+   "file": "source-code-audit-03-三、鉴权审计要点.md",
+   "from": "source-code-audit / 三、鉴权审计要点",
+   "chars": 179
+  },
+  {
+   "pack": "source-audit",
+   "file": "source-code-audit-04-四、结合其他技能.md",
+   "from": "source-code-audit / 四、结合其他技能",
+   "chars": 238
+  }
+ ],
+ "copied": [
+  "ssrf-internal-network/references/render-probe.html -> web-ssrf-render/knowledge/references/",
+  "ssrf-internal-network/references/README.md -> web-ssrf-render/knowledge/references/",
+  "android-security-audit/references/IDA95-native-audit.md -> mobile-app/knowledge/references/",
+  "android-security-audit/resources/Android基础安全测试.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android网络通讯.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android加密API.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android代码质量和构建设置.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android篡改和逆向工程.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android平台概览.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android平台API.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android反逆向防御.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android数据存储.md -> mobile-app/knowledge/resources/",
+  "android-security-audit/resources/Android本地认证.md -> mobile-app/knowledge/resources/"
+ ],
+ "skipped": [
+  "injection-vulns / 何时调用（触发条件）",
+  "injection-vulns / 七、修复建议",
+  "injection-vulns / 八、输出与报告要点",
+  "auth-access-control / 何时调用（触发条件）",
+  "auth-access-control / 十一、修复建议",
+  "file-handling / 何时调用（触发条件）",
+  "file-handling / 八、修复建议",
+  "ssrf-internal-network / 何时调用（触发条件）",
+  "ssrf-internal-network / 七、修复建议",
+  "xss-frontend-security / 何时调用（触发条件）",
+  "xss-frontend-security / 十、修复建议",
+  "api-protocol-security / 何时调用（触发条件）",
+  "api-protocol-security / 八、修复建议",
+  "business-logic-race / 何时调用（触发条件）",
+  "business-logic-race / 六、修复建议",
+  "deserialization-xxe / 何时调用（触发条件）",
+  "deserialization-xxe / 六、修复建议",
+  "recon-js-analysis / 何时调用（触发条件）",
+  "unauth-path-key-hunt / 何时调用",
+  "waf-bypass-techniques / 何时调用（触发条件）",
+  "cloud-infra-supply-chain / 何时调用（触发条件）",
+  "cloud-infra-supply-chain / 八、修复建议",
+  "ai-llm-agent-security / 何时调用",
+  "ai-llm-agent-security / 十三、修复建议",
+  "ai-llm-agent-security / 十四、输出与报告要点",
+  "agent-sandbox-takeover / 何时调用",
+  "agent-execution-channel-hijack / 何时调用",
+  "agent-prompt-injection-bypass / 何时调用",
+  "windows-reverse-engineering / 何时调用（触发条件）",
+  "windows-reverse-engineering / 十四、修复建议",
+  "windows-reverse-engineering / 十五、输出与报告要点",
+  "android-security-audit / 何时调用（触发条件）",
+  "android-security-audit / 八、通用修复建议",
+  "apk-reversing / 何时调用（触发条件）",
+  "asc-fast-hunt / 何时调用（触发条件）",
+  "miniprogram-security / 何时调用（触发条件）",
+  "miniprogram-security / 十、修复建议",
+  "source-code-audit / 何时调用（触发条件）",
+  "source-code-audit / 五、输出与报告要点"
+ ]
+}
