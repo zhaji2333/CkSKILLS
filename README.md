@@ -1,6 +1,6 @@
 # CkSKILLS_v2
 
-> **分支说明**：本分支为 **CkSKILLS v2**（薄常驻层 + 11 篇纪律 + 16 技能包 + 线索板跨轮记忆 + 多 Agent 回灌，适配 DeepSeek Harness）。v1 分享版见 [main 分支](https://github.com/zhaji2333/CkSKILLS)。
+> **分支说明**：本分支为 CkSKILLS v2，适用于 **DeepSeek Harness**。
 
 
 **面向真实授权安全评估的技能库**（SRC 挖洞 / 红队评估 / 白盒代码审计 / 应急响应）。
