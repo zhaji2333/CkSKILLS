@@ -7,6 +7,8 @@
 
 **语言：** **中文** · [English](README_EN.md)
 
+> 🚀 **v2 已上线**：[CkSKILLS v2 分支](https://github.com/zhaji2333/CkSKILLS/tree/v2) 已发布 —— 薄常驻层（4.8KB）+ 11 篇纪律 + 16 个技能包 + 线索板跨轮记忆 + 多 Agent 回灌，**适配 DeepSeek Harness（DSH）**。main 分支继续保留 v1 分享版。
+
 ## 📌 项目简介
 
 CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 20 个专项技能知识库(Skills)**,让通用 Agent 在垂直安全领域达到专家级表现。
