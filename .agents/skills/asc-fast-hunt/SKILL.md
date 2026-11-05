@@ -14,7 +14,7 @@ description: 当需要在不对 APK 全量反编译的前提下秒级定位硬�
 - 工具仓库：**https://github.com/MG1937/ASC**（Droid ASC，Black Hat Europe Arsenal 议题）
 - 本 SKILL 只是对该工具的**封装与工作流编排**，工具算法与实现版权归原作者所有，未做任何代码修改
 - 原仓库**无 LICENSE 文件**（默认保留所有权利）：仅限本机自用与授权测试，**不得对外分发、不得打包发布、不得声称自有**
-- 本机已装位置：`/Users/apple/Desktop/武器库/5.逆向/ASC/`（与 jadx、ida-mcp-server 并列）；如需重建见本文「环境安装与自检」
+- 本机已装位置：`<ASC 安装目录>`（与 jadx、ida-mcp-server 并列）；如需重建见本文「环境安装与自检」
 
 ## 何时调用（触发条件）
 
@@ -35,7 +35,7 @@ description: 当需要在不对 APK 全量反编译的前提下秒级定位硬�
 
 ```bash
 # 已装好（本机）：直接自检
-ASC=/Users/apple/Desktop/武器库/5.逆向/ASC
+ASC=<ASC 安装目录>
 $ASC/asc 2>&1 | head -5                    # 打印用法 = 环境正常
 $ASC/asc_manifest <任意.apk> | head -3     # Manifest 解析 = androguard 正常
 
@@ -58,7 +58,7 @@ $ASC/asc_manifest <target.apk> | grep -c "uses-permission" # 权限条数 > 0 �
 ### 2.1 四个核心命令
 
 ```bash
-ASC=/Users/apple/Desktop/武器库/5.逆向/ASC
+ASC=<ASC 安装目录>
 
 # ① Manifest 秒读（组件面/权限/scheme 清单，零反编译）
 $ASC/asc_manifest <apk>                                  # 约 0.3s
@@ -159,7 +159,7 @@ grep -iE 'android:process|sharedUserId|allowBackup|debuggable' /tmp/manifest.xml
 按组批量搜索，每组存盘通读：
 
 ```bash
-ASC=/Users/apple/Desktop/武器库/5.逆向/ASC
+ASC=<ASC 安装目录>
 APK=<target.apk>
 
 # A 组｜凭证与密钥（最高价值）

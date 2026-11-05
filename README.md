@@ -7,7 +7,7 @@
 
 **语言：** **中文** · [English](README_EN.md)
 
-> 🚀 **v2 已上线**：[CkSKILLS v2 分支](https://github.com/zhaji2333/CkSKILLS/tree/v2) 已发布 —— 薄常驻层（4.8KB）+ 11 篇纪律 + 16 个技能包 + 线索板跨轮记忆 + 多 Agent 回灌，**适配 DeepSeek Harness（DSH）**。main 分支继续保留 v1 分享版。
+> 🚀 **v2 已上线**：全新 [CkSKILLS v2 分支](https://github.com/zhaji2333/CkSKILLS/tree/v2) 已发布，适用于 **DeepSeek Harness**。
 
 ## 📌 项目简介
 
