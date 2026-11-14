@@ -1,11 +1,12 @@
-# CkSKILLS_v2
-
-> **分支说明**：本分支为 CkSKILLS v2，适用于 **DeepSeek Harness**。
-
+# CkSKILLS
 
 **面向真实授权安全评估的技能库**（SRC 挖洞 / 红队评估 / 白盒代码审计 / 应急响应）。
 
 > **定位红线**：所有示例/话术/交付物均为真实业务语境（影响、证据、报告）。
+
+> 📦 **版本说明**：当前 `main` 分支为 **v2**（薄常驻层 + 16 技能包，适用于 **DeepSeek Harness**）；旧版 [**v1 分支**](https://github.com/zhaji2333/CkSKILLS/tree/v1) 保留，技能覆盖更全，面向 Claude Code / Codex 的传统工作流。
+
+> 🚢 **顺带安利**：[**Flotilla**](https://github.com/zhaji2333/Flotilla) —— **Super Agent 架构的自主渗透测试平台**，多图 + 多智能体在授权范围内自主完成侦察、验证与证据收集。
 
 ## 结构
 
