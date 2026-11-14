@@ -7,7 +7,7 @@
 
 **语言：** **中文** · [English](README_EN.md)
 
-> 🚀 **v2 已上线**：全新 [CkSKILLS v2 分支](https://github.com/zhaji2333/CkSKILLS/tree/v2) 已发布，适用于 **DeepSeek Harness**。
+> 📦 **本分支为旧版 v1**（保留）：v2 已是默认主分支，适用于 **DeepSeek Harness**。[前往 main →](https://github.com/zhaji2333/CkSKILLS)
 
 > 🚢 **顺带安利**：[**Flotilla**](https://github.com/zhaji2333/Flotilla) —— **Super Agent 架构的自主渗透测试平台**，多图 + 多智能体在授权范围内自主完成侦察、验证与证据收集。
 

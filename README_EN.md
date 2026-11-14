@@ -7,7 +7,7 @@
 
 **Languages:** [中文](README.md) · **English**
 
-> 🚀 **v2 is live**: the new [CkSKILLS v2 branch](https://github.com/zhaji2333/CkSKILLS/tree/v2) is now available and works with **DeepSeek Harness**.
+> 📦 **This branch is legacy v1** (kept for reference): v2 is now the default branch and works with **DeepSeek Harness**. [Go to main →](https://github.com/zhaji2333/CkSKILLS)
 
 > 🚢 **Also worth a look**: [**Flotilla**](https://github.com/zhaji2333/Flotilla) — an **autonomous penetration-testing platform built on Super Agent architecture**, with multi-graph + multi-agent autonomy across recon, validation, and evidence collection.
 
