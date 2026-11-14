@@ -9,6 +9,8 @@
 
 > 🚀 **v2 is live**: the new [CkSKILLS v2 branch](https://github.com/zhaji2333/CkSKILLS/tree/v2) is now available and works with **DeepSeek Harness**.
 
+> 🚢 **Also worth a look**: [**Flotilla**](https://github.com/zhaji2333/Flotilla) — an **autonomous penetration-testing platform built on Super Agent architecture**, with multi-graph + multi-agent autonomy across recon, validation, and evidence collection.
+
 ## Overview
 
 CK-Skills is an **Agent prompt-engineering and skill knowledge system** for SRC (bug bounty / vulnerability reward) hunting. It runs on general Agent frameworks such as Claude Code and Codex. Together, the system prompt (`AGENTS.md`) and **20 specialist skills** raise a general-purpose Agent to expert-level performance in offensive security.

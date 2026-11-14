@@ -9,6 +9,8 @@
 
 > 🚀 **v2 已上线**：全新 [CkSKILLS v2 分支](https://github.com/zhaji2333/CkSKILLS/tree/v2) 已发布，适用于 **DeepSeek Harness**。
 
+> 🚢 **顺带安利**：[**Flotilla**](https://github.com/zhaji2333/Flotilla) —— **Super Agent 架构的自主渗透测试平台**，多图 + 多智能体在授权范围内自主完成侦察、验证与证据收集。
+
 ## 📌 项目简介
 
 CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 20 个专项技能知识库(Skills)**,让通用 Agent 在垂直安全领域达到专家级表现。
