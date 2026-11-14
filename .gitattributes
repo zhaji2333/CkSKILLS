@@ -1,0 +1,6 @@
+# GitHub / Linguist 语言统计
+# 本仓库主体是 Markdown 知识块；Markdown 属 prose 类型，默认不计入语言占比，这里显式计入
+*.md linguist-detectable
+
+# 技能库中的单文件参考页（探针页）按文档处理，不计入语言占比
+.agents/skills/web-ssrf-render/knowledge/references/render-probe.html linguist-documentation
