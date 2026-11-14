@@ -12,7 +12,8 @@
 >
 > 本 README 以 v1 的完整介绍为底稿；v2 的分层结构、16 个技能包与多 Agent 机制见文末《CkSKILLS v2》章节。
 
-> 🚢 **顺带安利**：[**Flotilla**](https://github.com/zhaji2333/Flotilla) —— **Super Agent 架构的自主渗透测试平台**，多图 + 多智能体在授权范围内自主完成侦察、验证与证据收集。
+> [!TIP]
+> 🚢 **强烈推荐：[Flotilla](https://github.com/zhaji2333/Flotilla) —— Super Agent 架构的自主渗透测试平台**，多图 + 多智能体在授权范围内自主完成侦察、验证与证据收集。
 
 ## 📌 项目简介
 
