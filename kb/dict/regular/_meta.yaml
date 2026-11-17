@@ -1,0 +1,14 @@
+category: regular
+description: 通用基础数据字典，含字母、数字、地址、关键词等规则化数据
+tags: regular,基础数据,regular-data,通用,辅助字典
+files:
+- name: eicar.txt
+  lines: 1
+  description: EICAR防病毒测试文件标准字符串
+  usage: 测试杀毒软件是否正常工作
+  tags: eicar,antivirus,防病毒测试,安全检测
+- name: readme.md
+  lines: 44
+  description: 规则化数据字典的说明文档
+  usage: 了解各基础数据字典的生成规则
+  tags: documentation,说明文档,readme

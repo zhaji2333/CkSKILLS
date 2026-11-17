@@ -1,0 +1,20 @@
+category: web
+subcategory: directory
+description: ASP语言相关的Web目录扫描字典
+tags: asp,classic-asp,directory,目录扫描,iis,windows
+files:
+- name: asp-directory.txt
+  lines: 60721
+  description: ASP网站目录路径大字典
+  usage: ASP网站全面目录扫描
+  tags: asp-dir,大字典,目录扫描,全面
+- name: asp.txt
+  lines: 70848
+  description: ASP文件路径大字典（含.asp后缀）
+  usage: ASP网站文件路径枚举
+  tags: asp-file,大字典,文件扫描,asp路径
+- name: top100-asp.txt
+  lines: 87
+  description: 最常见的100个ASP页面路径
+  usage: ASP网站快速扫描
+  tags: top100,快速扫描,常见asp页面

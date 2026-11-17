@@ -1,0 +1,19 @@
+category: cors
+description: "CORS跨域资源共享错误配置利用payload集合，包含PoC页面和Origin绕过技巧"
+tags: "cors,cross-origin,跨域,CORS misconfiguration,同源策略,origin绕过,凭据窃取"
+files:
+- name: cors.html
+  lines: 25
+  description: "CORS漏洞PoC利用页面，通过XMLHttpRequest带凭据跨域读取目标API响应数据"
+  usage: "验证CORS配置漏洞时，替换目标URL后在浏览器打开此HTML，观察是否能跨域获取敏感数据"
+  tags: "poc,XMLHttpRequest,withCredentials,跨域读取,漏洞验证"
+- name: cors.md
+  lines: 17
+  description: "CORS漏洞检测参考文档，包含curl检测命令和各类Origin绕过变体（null/子域/前缀等）"
+  usage: "作为CORS漏洞测试的速查手册，参考各种Origin头变体构造绕过请求"
+  tags: "reference,curl,origin bypass,参考文档,检测方法,绕过技巧"
+- name: cors2.html
+  lines: 26
+  description: "CORS漏洞PoC利用页面（提取SID版），通过alert弹出跨域响应内容"
+  usage: "验证CORS漏洞是否可窃取会话ID等敏感信息时使用"
+  tags: "poc,session,SID,XMLHttpRequest,会话窃取,漏洞验证"

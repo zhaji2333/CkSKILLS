@@ -1,0 +1,10 @@
+category: web
+subcategory: service
+description: Jira项目管理系统敏感路径字典
+tags: jira,atlassian,project-management,项目管理,信息泄露
+files:
+- name: jira.txt
+  lines: 22
+  description: Jira敏感接口和信息泄露路径
+  usage: Jira未授权访问和信息泄露探测
+  tags: jira-path,敏感路径,未授权,信息泄露

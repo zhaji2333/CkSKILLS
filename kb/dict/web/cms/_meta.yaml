@@ -1,0 +1,15 @@
+category: web
+subcategory: cms
+description: CMS内容管理系统路径和控制器字典
+tags: cms,内容管理,框架路径,漏洞利用
+files:
+- name: thinkphp-controller.txt
+  lines: 58
+  description: ThinkPHP框架控制器和类名集合
+  usage: ThinkPHP RCE漏洞利用时的控制器枚举
+  tags: thinkphp,controller,控制器,rce利用
+- name: wordpress.txt
+  lines: 190
+  description: WordPress核心文件和管理路径集合
+  usage: WordPress站点指纹识别与敏感路径发现
+  tags: wordpress,wp,核心文件,管理路径

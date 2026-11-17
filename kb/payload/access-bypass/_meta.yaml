@@ -1,0 +1,9 @@
+category: access-bypass
+description: "访问控制绕过payload集合，包含通过XFF等HTTP头伪造IP地址绕过403限制的payload"
+tags: "access bypass,access control,访问控制绕过,XFF,X-Forwarded-For,403绕过,IP伪造"
+files:
+- name: xff-403.txt
+  lines: 5
+  description: "通过伪造内网IP地址（127.0.0.1/10.x/172.x/192.168.x）绕过403访问限制的XFF头值"
+  usage: "遇到403禁止访问时，配合X-Forwarded-For等请求头逐个尝试这些IP地址绕过访问控制"
+  tags: "xff,X-Forwarded-For,403 bypass,内网IP,访问绕过,IP spoofing"

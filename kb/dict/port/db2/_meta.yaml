@@ -1,0 +1,15 @@
+category: port
+subcategory: db2
+description: IBM DB2数据库默认凭据字典
+tags: db2,ibm,database,数据库,默认口令,服务爆破
+files:
+- name: pass.txt
+  lines: 2
+  description: DB2数据库常见默认密码
+  usage: DB2数据库密码爆破
+  tags: password,密码,db2-pass
+- name: user.txt
+  lines: 4
+  description: DB2数据库常见默认用户名
+  usage: DB2数据库用户名爆破
+  tags: username,用户名,db2-user

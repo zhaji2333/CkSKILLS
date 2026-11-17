@@ -1,0 +1,25 @@
+category: web
+subcategory: middleware
+description: Apache Tomcat应用服务器凭据和路径字典
+tags: tomcat,apache,application-server,应用服务器,默认口令,manager
+files:
+- name: basic.txt
+  lines: 228
+  description: Tomcat Manager的用户名:密码组合对（Basic认证格式）
+  usage: Tomcat Manager控制台Basic认证爆破
+  tags: basic-auth,凭据对,manager,控制台
+- name: pass.txt
+  lines: 38
+  description: Tomcat常见密码
+  usage: Tomcat Manager密码爆破
+  tags: password,密码,tomcat-pass
+- name: tomcat.txt
+  lines: 90
+  description: Tomcat敏感路径和管理接口
+  usage: Tomcat管理接口发现与路径枚举
+  tags: path,路径,管理接口,tomcat-path
+- name: user.txt
+  lines: 6
+  description: Tomcat常见用户名
+  usage: Tomcat Manager用户名爆破
+  tags: username,用户名,tomcat-user

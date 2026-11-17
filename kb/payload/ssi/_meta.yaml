@@ -1,0 +1,9 @@
+category: ssi
+description: "服务端包含注入(SSI)payload集合，包含exec命令执行、echo信息泄露和include文件包含指令"
+tags: "ssi,server-side includes,服务端包含,SSI注入,命令执行,文件包含,信息泄露"
+files:
+- name: payload.txt
+  lines: 79
+  description: "SSI注入payload，涵盖exec命令执行、echo变量泄露、config错误信息、fsize文件探测和include远程包含"
+  usage: "测试支持SSI的Web服务器时，检测是否可通过SSI指令执行命令或读取文件"
+  tags: "exec,echo,include,config,命令执行,变量泄露,文件包含,远程包含"

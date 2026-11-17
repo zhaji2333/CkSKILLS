@@ -1,0 +1,25 @@
+category: port
+subcategory: oracle
+description: Oracle数据库默认凭据和SID字典
+tags: oracle,database,数据库,默认口令,服务爆破,1521
+files:
+- name: pass.txt
+  lines: 511
+  description: Oracle数据库常见密码
+  usage: Oracle数据库密码爆破
+  tags: password,密码,oracle-pass
+- name: sid.txt
+  lines: 575
+  description: Oracle数据库常见SID名称
+  usage: Oracle SID枚举与发现
+  tags: sid,实例名,oracle-sid,枚举
+- name: user-common.txt
+  lines: 10
+  description: Oracle最常见的默认用户名（精简版）
+  usage: Oracle数据库快速用户名验证
+  tags: username,用户名,oracle-user,精简
+- name: user-extended.txt
+  lines: 479
+  description: Oracle数据库用户名大字典
+  usage: Oracle数据库全面用户名枚举
+  tags: username,用户名,oracle-user,大字典

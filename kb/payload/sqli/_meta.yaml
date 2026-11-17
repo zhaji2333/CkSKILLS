@@ -1,0 +1,54 @@
+category: sqli
+description: "SQL注入payload集合，覆盖MySQL/MSSQL/Oracle/LDAP多种数据库的注入向量，以及表名列名字典"
+tags: "sqli,SQL injection,SQL注入,注入"
+files:
+- name: column.txt
+  lines: 1101
+  description: "常见数据库列名/字段名字典，包含username/password/email/id等高频字段"
+  usage: "SQL注入确认后枚举目标数据库的列名，快速定位包含敏感数据的字段"
+  tags: "column,field name,列名,字段枚举,数据库枚举,字典"
+- name: database.txt
+  lines: 21
+  description: "常见数据库名称字典，包含MySQL默认库名和常用业务数据库名"
+  usage: "SQL注入时枚举目标服务器上的数据库名称"
+  tags: "database name,数据库名,库名枚举,MySQL,information_schema"
+- name: payload-blind.txt
+  lines: 41
+  description: "基于时间的SQL盲注payload，使用sleep()函数通过响应延迟判断条件真假"
+  usage: "目标无回显时进行时间盲注测试，通过延迟差异提取数据"
+  tags: "blind,time-based,sleep,时间盲注,延迟注入,无回显,盲注"
+- name: payload-ldap.txt
+  lines: 14
+  description: "LDAP注入payload，包含逻辑运算符和通配符查询构造"
+  usage: "测试LDAP认证和查询接口时检测注入漏洞"
+  tags: "ldap,LDAP injection,LDAP注入,目录服务,认证绕过,通配符"
+- name: payload-mssql.txt
+  lines: 99
+  description: "MSSQL专用注入payload，包含waitfor delay时间盲注、版本探测和错误注入"
+  usage: "针对MSSQL数据库进行SQL注入测试，利用MSSQL特有语法提取信息"
+  tags: "mssql,SQL Server,waitfor,xp_cmdshell,MSSQL注入,时间盲注"
+- name: payload-mysql.txt
+  lines: 109
+  description: "MySQL专用注入payload，包含sleep/benchmark时间盲注和各类闭合变体"
+  usage: "针对MySQL数据库进行SQL注入测试，利用MySQL特有函数和语法"
+  tags: "mysql,sleep,benchmark,MySQL注入,时间盲注,联合查询"
+- name: payload-oracle.txt
+  lines: 55
+  description: "Oracle专用注入payload，包含utl_http/utl_inaddr带外数据提取和系统信息查询"
+  usage: "针对Oracle数据库进行SQL注入测试，利用Oracle特有包和函数"
+  tags: "oracle,utl_http,utl_inaddr,Oracle注入,带外通道,OOB,系统信息"
+- name: payload.txt
+  lines: 344
+  description: "通用SQL注入payload集合，包含各种编码、Unicode字符和逻辑绕过的or/and注入变体"
+  usage: "对任意SQL注入点进行全面Fuzz测试，覆盖多种编码和绕过技巧"
+  tags: "generic,universal,通用注入,编码绕过,Unicode,逻辑注入,综合payload"
+- name: sql-inj.md
+  lines: 442
+  description: "SQL注入技巧参考文档，包含LDAP注入、MySQL/MSSQL/Oracle语法、WAF绕过技巧等"
+  usage: "作为SQL注入测试的综合速查手册，快速查阅各数据库的注入语法和绕过方法"
+  tags: "reference,cheatsheet,参考文档,速查手册,WAF绕过,注入技巧,MySQL,MSSQL,Oracle,LDAP,blind,盲注,联合注入"
+- name: table.txt
+  lines: 513
+  description: "常见数据库表名字典，包含users/accounts/orders等高频业务表名"
+  usage: "SQL注入确认后枚举目标数据库的表名，定位存储用户凭据和敏感数据的表"
+  tags: "table,table name,表名,表名枚举,数据库枚举,字典"

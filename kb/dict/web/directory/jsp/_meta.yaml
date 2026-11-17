@@ -1,0 +1,40 @@
+category: web
+subcategory: directory
+description: JSP/Struts/Java Web相关的目录扫描字典
+tags: java,j2ee,directory,目录扫描
+files:
+- name: action.txt
+  lines: 269
+  description: Struts的.action路径集合
+  usage: Struts框架Action接口枚举
+  tags: struts,action,框架路径,java-web
+- name: do-directory.txt
+  lines: 4004
+  description: .do后缀的目录路径字典
+  usage: Java Web的.do路径目录扫描
+  tags: do-dir,java-web,目录扫描
+- name: do.txt
+  lines: 41954
+  description: .do后缀的文件路径大字典
+  usage: Java Web的.do路径全面扫描
+  tags: do-file,大字典,java-web
+- name: jsp-directory.txt
+  lines: 4218
+  description: JSP网站目录路径字典
+  usage: JSP网站目录扫描
+  tags: jsp,tomcat,jsp-dir,目录扫描,java-web
+- name: jsp.txt
+  lines: 42015
+  description: JSP文件路径大字典
+  usage: JSP网站文件路径全面枚举
+  tags: jsp,tomcat,jsp-file,大字典,全面扫描
+- name: top100-do.txt
+  lines: 88
+  description: 最常见的100个.do路径
+  usage: Java Web .do路径快速扫描
+  tags: top100,do,快速扫描,常见路径
+- name: top100-jsp.txt
+  lines: 88
+  description: 最常见的100个JSP页面路径
+  usage: JSP网站快速扫描
+  tags: jsp,tomcat,top100,快速扫描,常见路径

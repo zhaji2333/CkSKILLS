@@ -1,0 +1,19 @@
+category: network
+description: 网络扫描相关字典，含DNS服务器、排除网段和本地IP变体
+tags: network,网络,扫描,scanning,信息收集
+files:
+- name: dns-servers.txt
+  lines: 10
+  description: 常用公共DNS服务器IP地址（含国内外）
+  usage: DNS查询时指定可靠的DNS服务器
+  tags: dns,dns-server,公共DNS,resolver,域名解析
+- name: exclude.txt
+  lines: 18
+  description: 扫描时应排除的保留IP网段（内网、环回等）
+  usage: 网络扫描时排除非目标网段
+  tags: ip,exclude,排除,reserved,保留网段,内网
+- name: local-ip.txt
+  lines: 55
+  description: 本地回环地址的各种编码和表示变体
+  usage: SSRF漏洞测试中绕过IP过滤
+  tags: localhost,回环地址,ssrf-bypass,ip-bypass

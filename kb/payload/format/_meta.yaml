@@ -1,0 +1,29 @@
+category: format
+description: "数据格式Fuzz payload集合，包含十六进制编码、整数溢出、JSON畸形、空字节和特殊字符串"
+tags: "format,格式化,fuzz,特殊字符,数据格式"
+files:
+- name: hex.txt
+  lines: 262
+  description: "URL编码的十六进制字符集（%00-%FF），覆盖全部256个单字节值"
+  usage: "测试输入过滤和编码处理时，用完整十六进制字符集Fuzz检测哪些字节可绕过过滤"
+  tags: "hex,url encoding,十六进制,URL编码,字节,byte,编码绕过"
+- name: int.txt
+  lines: 12
+  description: "整数边界值payload，包含负数、零、常见溢出值（0x7fffffff/0xffffffff等）"
+  usage: "测试整数型参数时，检测整数溢出、类型转换错误和边界条件漏洞"
+  tags: "integer,overflow,boundary,整数溢出,边界值,类型转换,integer overflow"
+- name: json.txt
+  lines: 89
+  description: "JSON格式畸形payload，包含空值、特殊键名、嵌套结构和反序列化利用字段"
+  usage: "测试JSON解析器和API接口时，用这些畸形JSON检测反序列化漏洞和解析异常"
+  tags: "json,deserialization,反序列化,畸形JSON,解析异常,API fuzz"
+- name: nullbyte.txt
+  lines: 122
+  description: "空字节和格式化字符串payload，包含%00空字节、格式化字符串攻击向量（%s/%x/%n等）和超长空字节序列"
+  usage: "测试空字节截断和格式化字符串漏洞时使用，检测C/C++程序的内存安全问题"
+  tags: "null byte,format string,空字节截断,格式化字符串,内存安全,%00,%n"
+- name: string.txt
+  lines: 903
+  description: "通用特殊字符串Fuzz payload，包含SQL注入、XSS、命令注入、特殊字符和编码变体的综合集合"
+  usage: "对任意文本输入框进行全面Fuzz测试，一次性覆盖多种常见注入攻击向量"
+  tags: "string,comprehensive,fuzz,综合测试,特殊字符,注入检测,通用payload"

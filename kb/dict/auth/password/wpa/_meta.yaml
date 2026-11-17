@@ -1,0 +1,25 @@
+category: auth
+subcategory: password
+description: WPA/WPA2无线网络密码字典，按常见WiFi密码频率排序
+tags: wpa,wifi,wireless,无线密码,WiFi爆破,aircrack,握手包
+files:
+- name: top200000-wpa.txt
+  lines: 203806
+  description: 约20万个最常见的WPA/WiFi密码
+  usage: 大规模WiFi握手包离线破解
+  tags: top200000,大字典,wifi-crack,离线破解
+- name: top447-wpa.txt
+  lines: 447
+  description: 最常见的447个WiFi密码
+  usage: WiFi密码快速猜测验证
+  tags: top447,快速验证,常见WiFi密码
+- name: top4800-wpa.txt
+  lines: 4800
+  description: 最常见的4800个WiFi密码
+  usage: 中等规模WiFi密码爆破
+  tags: top4800,中等规模,WiFi密码
+- name: top62-wpa.txt
+  lines: 62
+  description: 最常见的62个WiFi密码
+  usage: WiFi密码极速初筛
+  tags: top62,极速筛查,WiFi弱口令

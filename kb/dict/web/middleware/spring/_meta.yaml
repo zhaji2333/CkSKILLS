@@ -1,0 +1,10 @@
+category: web
+subcategory: middleware
+description: Spring Boot框架配置属性字典
+tags: spring,springboot,configuration,配置,actuator,java
+files:
+- name: spring-configuration-metadata.txt
+  lines: 1713
+  description: Spring Boot配置属性名集合
+  usage: Spring Boot配置属性枚举、Actuator env端点信息提取
+  tags: config-property,配置属性,metadata,spring-env

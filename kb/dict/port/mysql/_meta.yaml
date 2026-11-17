@@ -1,0 +1,15 @@
+category: port
+subcategory: mysql
+description: MySQL数据库默认凭据字典
+tags: mysql,database,数据库,默认口令,服务爆破,3306
+files:
+- name: pass.txt
+  lines: 233
+  description: MySQL常见密码
+  usage: MySQL数据库密码爆破
+  tags: password,密码,mysql-pass
+- name: user.txt
+  lines: 7
+  description: MySQL常见默认用户名
+  usage: MySQL数据库用户名爆破
+  tags: username,用户名,mysql-user

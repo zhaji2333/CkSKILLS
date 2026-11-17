@@ -1,0 +1,25 @@
+category: web
+subcategory: service
+description: 常见Web服务与运维平台字典集合，含默认凭据与敏感路径
+tags: web,service,服务,运维平台,信息收集
+files:
+- name: druid/
+  lines: 8
+  description: Druid监控平台默认用户名和密码字典
+  usage: Druid监控页面默认口令验证与爆破
+  tags: druid,alibaba,数据库监控,默认口令
+- name: jira/
+  lines: 22
+  description: Jira敏感接口与信息泄露路径字典
+  usage: Jira未授权访问与信息泄露探测
+  tags: jira,atlassian,项目管理,敏感路径,信息泄露
+- name: phpmyadmin/
+  lines: 269
+  description: phpMyAdmin默认用户名和密码字典
+  usage: phpMyAdmin登录界面口令爆破
+  tags: phpmyadmin,mysql,数据库管理,默认口令
+- name: xxljob/
+  lines: 11
+  description: XXL-JOB任务调度平台部署路径字典
+  usage: XXL-JOB管理平台入口发现
+  tags: xxl-job,scheduler,任务调度,路径发现

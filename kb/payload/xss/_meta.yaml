@@ -1,0 +1,39 @@
+category: xss
+description: "XSS跨站脚本攻击payload集合，包含事件属性、HTML标签、JS函数和各类绕过payload"
+tags: "xss,cross-site scripting,跨站脚本,payload"
+files:
+- name: js-event.txt
+  lines: 210
+  description: "JavaScript事件属性名称完整列表（onload/onerror/onfocus等210个事件）"
+  usage: "构造XSS payload时枚举所有可用的事件处理属性，寻找未被过滤的事件触发点"
+  tags: "event,事件属性,onload,onerror,onfocus,事件枚举,属性名,事件"
+- name: js-function.txt
+  lines: 5
+  description: "JavaScript弹窗函数调用变体（self/parent/frames/content/window对象的alert调用）"
+  usage: "绕过alert关键词过滤时，使用不同window对象引用方式调用弹窗函数"
+  tags: "function,alert,弹窗变体,关键词绕过,window对象"
+- name: js-tag-full.txt
+  lines: 157
+  description: "完整闭合的HTML标签列表（带尖括号<tag>格式），涵盖157种标签"
+  usage: "XSS Fuzz测试时枚举所有HTML标签，寻找未被过滤可注入事件属性的标签"
+  tags: "tag,html tag,完整标签,标签枚举,闭合标签,Fuzz,标签,HTML标签"
+- name: js-tag-half.txt
+  lines: 157
+  description: "半闭合HTML标签列表（仅左尖括号<tag格式），涵盖157种标签"
+  usage: "XSS Fuzz测试时使用半闭合标签探测解析器行为和过滤规则"
+  tags: "tag,html tag,半闭合标签,标签枚举,未闭合,解析器测试,标签,HTML标签"
+- name: readme.md
+  lines: 620
+  description: "XSS攻击技巧综合参考文档，涵盖基础payload、各种绕过技巧、编码方式和利用场景"
+  usage: "作为XSS渗透测试的速查手册，快速查阅各种XSS攻击向量和绕过方法"
+  tags: "reference,cheatsheet,参考文档,速查手册,绕过技巧,编码方式,反射型,存储型,DOM,事件,标签"
+- name: xss-payload1.txt
+  lines: 2148
+  description: "XSS综合payload集合，包含各类script/img/svg标签注入、编码绕过和特殊字符变体"
+  usage: "对目标进行XSS自动化Fuzz扫描，覆盖多种标签和编码绕过方式"
+  tags: "comprehensive,fuzz,script,img,encoding,综合payload,自动化扫描,编码变体,反射型,存储型,DOM"
+- name: xss-payload2.txt
+  lines: 8493
+  description: "按HTML标签+事件属性全组合的XSS payload大字典，覆盖各种标签与事件的完整组合"
+  usage: "大规模Fuzz测试，全面覆盖所有标签/事件组合以发现被遗漏的XSS攻击面"
+  tags: "fuzz,tag,event,comprehensive,全组合,标签事件,大字典,完整覆盖,事件,标签"

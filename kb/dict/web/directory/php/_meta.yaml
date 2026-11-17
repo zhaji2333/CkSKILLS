@@ -1,0 +1,20 @@
+category: web
+subcategory: directory
+description: PHP相关的Web目录扫描字典
+tags: php,directory,目录扫描,apache,nginx,lamp,目录爆破,字典,wordlist,fuzz,爆破,brute
+files:
+- name: php-directory.txt
+  lines: 3392
+  description: PHP网站目录路径字典
+  usage: PHP网站目录扫描
+  tags: php-dir,目录扫描,php路径
+- name: php.txt
+  lines: 48095
+  description: PHP文件路径大字典
+  usage: PHP网站文件路径全面枚举
+  tags: php-file,大字典,全面扫描
+- name: top100-php.txt
+  lines: 94
+  description: 最常见的100个PHP页面路径
+  usage: PHP网站快速扫描
+  tags: top100,快速扫描,常见php页面

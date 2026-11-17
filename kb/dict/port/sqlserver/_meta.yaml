@@ -1,0 +1,15 @@
+category: port
+subcategory: sqlserver
+description: SQL Server数据库默认凭据字典
+tags: sqlserver,mssql,database,数据库,默认口令,服务爆破,1433
+files:
+- name: pass.txt
+  lines: 198
+  description: SQL Server常见密码
+  usage: SQL Server数据库密码爆破
+  tags: password,密码,mssql-pass
+- name: user.txt
+  lines: 6
+  description: SQL Server常见默认用户名
+  usage: SQL Server数据库用户名爆破
+  tags: username,用户名,mssql-user,sa

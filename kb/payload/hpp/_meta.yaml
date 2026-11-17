@@ -1,0 +1,9 @@
+category: hpp
+description: "HTTP参数污染payload集合，包含各种参数重复、编码和分隔符变体"
+tags: "hpp,HTTP parameter pollution,HTTP参数污染,参数覆盖,参数注入,parameter tampering"
+files:
+- name: hpp.txt
+  lines: 37
+  description: "HTTP参数污染变体payload，包含参数重复(?id=1&id=2)、编码绕过、数组注入和多种分隔符格式"
+  usage: "测试Web应用对重复参数的处理逻辑时，检测参数优先级差异和过滤绕过"
+  tags: "parameter duplicate,encoding bypass,参数重复,编码绕过,分隔符,优先级差异"

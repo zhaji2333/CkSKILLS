@@ -1,0 +1,15 @@
+category: web
+subcategory: service
+description: phpMyAdmin数据库管理工具默认凭据字典
+tags: phpmyadmin,mysql,database-admin,数据库管理,默认口令
+files:
+- name: pass.txt
+  lines: 267
+  description: phpMyAdmin常见密码
+  usage: phpMyAdmin管理界面密码爆破
+  tags: password,密码,phpmyadmin-pass
+- name: user.txt
+  lines: 2
+  description: phpMyAdmin常见用户名
+  usage: phpMyAdmin管理界面用户名验证
+  tags: username,用户名,phpmyadmin-user,root

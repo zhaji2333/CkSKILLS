@@ -1,0 +1,16 @@
+category: auth
+subcategory: device-default
+description: 政府/政务及政企内网常见安全设备与OA系统的默认口令（出厂初始口令）集合，用于授权范围内的资产默认口令核验与弱口令排查
+tags: auth,default-password,默认口令,弱口令,政务,政府,安全设备,防火墙,VPN,OA,brute-force,credential
+authorization: "仅限获得授权的渗透测试、等级保护测评、资产默认口令排查使用；严禁用于未授权访问，不包含生产凭据、泄露账号或个人信息"
+files:
+- name: security-appliance-default.txt
+  lines: 34
+  description: 防火墙/VPN/安全审计/日志审计等安全设备默认口令（天融信、华为、H3C、启明星辰、深信服、安恒、绿盟、网神、联想网御等）
+  usage: 授权范围内安全设备默认口令快速核验、登录爆破初筛
+  tags: firewall,防火墙,vpn,审计,日志,绿盟,天融信,华为,H3C,启明星辰,深信服,安恒,网神,联想网御,默认口令,default-credential
+- name: oa-system-default.txt
+  lines: 5
+  description: 政务/企业 OA 系统默认口令（致远OA、泛微OA 等）
+  usage: 授权范围内 OA 系统默认口令核验
+  tags: oa,致远,泛微,办公系统,默认口令,default-credential

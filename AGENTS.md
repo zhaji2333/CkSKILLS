@@ -17,7 +17,7 @@
 2. **最小伤害**：读优先、写最小、可回滚；禁登出/禁改删他人数据/禁真资损。→ `rules/20-min-harm.md`
 3. **不空转**：不问"要不要继续"、不空扫凑数、不堆假点；多次失败必须换层。→ `rules/30-no-idle.md`
 4. **证据交付**：每个结论有请求/响应证据；假点不报；报告按 `rules/40-evidence-report.md`（唯一规范：匿名闸/认钥闸/三档定级/标题/复现包/落盘）。
-5. **省上下文**：先读**战法索引**定位，再开技能包，再只读被点名的小块；禁止通读知识库。→ `rules/50-token-economy.md`
+5. **省上下文**：先读**战法索引**定位，再开技能包，再只读被点名的小块；禁止通读知识库。要查 CVE/字典/payload 先查 `kb/` 的 INDEX 与 `rules/55`。→ `rules/50-token-economy.md`
 6. **范围与迭代**：锁面/自由跳按目标类型；**线索板**（`hunts/<目标>/CLUEBOARD.md`）进板再开工、当轮写回。**多 agent**：板只由 Lead 写，子代理开工读板、收工交 `dig/<角色>/SYNC.md` 回灌块。→ `rules/60-scope-iteration.md` + `rules/66-agent-teams.md`
 7. **路由**：题型 → 技能包映射见 `rules/70-routing.md`；不确定时先加载 `ck-router`。
 8. **心法**：漏洞嗅觉 / 开发者视角 / 信息收集要脏 / 跨接口关联五问 / 可利用性六问 → `rules/15-hunting-mindset.md`（详解 `.agents/skills/ck-router/knowledge/挖掘心法详解.md`）。
@@ -40,7 +40,9 @@
  ├─ 二进制/固件/PE/ELF/APK/小程序 ──→ skill(binary-re) / skill(mobile-app)
  ├─ 云/容器/对象存储/运维面板 ──────→ skill(cloud-infra)
  ├─ AI/LLM/Agent/沙箱/代码执行 ─────→ skill(ai-agent)
- └─ Web/API/内网 ────────────────────→ skill(ck-router) → 按战法索引分流到 web-* 包
+ ├─ 内网/域/Kerberos/横向/隧道 ─────→ skill(internal-network)
+ ├─ 要查 CVE/字典/payload ──────────→ skill(kb-security-data) → kb/INDEX
+ └─ Web/API ────────────────────────→ skill(ck-router) → 按战法索引分流到 web-* 包
 ```
 
 ## 4. 加载纪律（常驻层只管这一条）
@@ -59,8 +61,9 @@
 
 | 位置 | 内容 |
 |---|---|
-| `rules/` | 11 条纪律细则（常驻引用，按需读；报告规范为单篇例外；并行回灌见 66） |
-| `tools/` | 校验脚本：`clueboard_sync_check.py`（多 agent 收工必跑，`rules/66`） |
-| `.agents/skills/` | 16 个技能包（短 SKILL.md + `knowledge/` 小块） |
-| `.agents/skills/ck-router/knowledge/` | 战法索引 + 进站决策 + 失败升级 + 挖什么矩阵 + 范围与迭代 + 线索表 + 心法详解 |
+| `rules/` | 12 条纪律细则（常驻引用，按需读；报告规范为单篇例外；并行回灌见 66；kb 数据层见 55） |
+| `tools/` | 校验脚本：`clueboard_sync_check.py`（多 agent 收工必跑，`rules/66`）、`kb_index.py`（kb 索引生成/校验） |
+| `.agents/skills/` | 18 个技能包（短 SKILL.md + `knowledge/` 小块） |
+| `.agents/skills/ck-router/knowledge/` | 战法索引 01–08 + 进站决策 + 失败升级 + 挖什么矩阵 + 范围与迭代 + 线索表 + 心法详解 |
+| `kb/` | 结构化数据层：CVE（664）/ 字典（305）/ 载荷（88），先查 INDEX 再开单条（`rules/55`） |
 | `hunts/<目标>/CLUEBOARD.md` | 单目标线索板（跨轮记忆，来自 `templates/`） |

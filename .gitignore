@@ -32,3 +32,6 @@ desktop.ini
 
 # Claude Code 本地技能链接
 .claude/
+
+# 本地工作助手产物
+.workbuddy/

@@ -15,6 +15,8 @@
 | 新目标/找接口/JS 分析/子域名/未授权路径/密钥还原 | `web-recon` | `web-auth-access` | 01/05 |
 | payload 被拦/403/WAF/过滤器/检测规避 | `web-waf-bypass` | 当前题型包 | 03-注入与协议 |
 | 云资产/对象存储/K8s/运维面板/中间件/CI-CD/供应链 | `cloud-infra` | `web-ssrf-render` | 04-云与内网 |
+| 内网/域/Kerberos/委派/ACL/ADCS/横向/隧道/后渗透 | `internal-network` | `web-auth-access` | 08-内网与域 |
+| 查 CVE/影响版本/PoC、取字典/payload | `kb-security-data` | 当前题型包 | — |
 | LLM/Chatbot/RAG/AI 助手/Agent/代码解释器/沙箱/工具执行 | `ai-agent` | `web-auth-access` | 07-跨域 |
 | PE/ELF/固件/SO/驱动/二进制漏洞/逆向/内存破坏 | `binary-re` | `source-audit` | 07-跨域 |
 | APK/Android/预装应用/小程序/移动端逆向 | `mobile-app` | `binary-re` | 07-跨域 |

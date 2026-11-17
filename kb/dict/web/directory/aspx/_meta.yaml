@@ -1,0 +1,30 @@
+category: web
+subcategory: directory
+description: ASPX和ASHX相关的Web目录扫描字典
+tags: aspx,ashx,dotnet,.net,directory,目录扫描,iis
+files:
+- name: ashx.txt
+  lines: 26263
+  description: ASHX处理程序路径字典
+  usage: .NET网站ASHX处理程序枚举
+  tags: ashx,handler,处理程序,dotnet
+- name: aspx-directory.txt
+  lines: 46191
+  description: ASPX网站目录路径大字典
+  usage: ASPX网站全面目录扫描
+  tags: aspx-dir,大字典,目录扫描,全面
+- name: aspx.txt
+  lines: 26334
+  description: ASPX文件路径字典
+  usage: ASPX网站文件路径枚举
+  tags: aspx-file,文件扫描,aspx路径
+- name: top100-ashx.txt
+  lines: 162
+  description: 最常见的ASHX处理程序路径
+  usage: .NET网站ASHX快速扫描
+  tags: top100,ashx,快速扫描,常见路径
+- name: top100-aspx.txt
+  lines: 96
+  description: 最常见的100个ASPX页面路径
+  usage: ASPX网站快速扫描
+  tags: top100,快速扫描,常见aspx页面

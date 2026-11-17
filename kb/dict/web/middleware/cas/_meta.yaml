@@ -1,0 +1,15 @@
+category: web
+subcategory: middleware
+description: CAS单点登录系统默认凭据字典
+tags: cas,sso,单点登录,apereo,默认口令,认证
+files:
+- name: pass.txt
+  lines: 1
+  description: CAS系统默认密码
+  usage: CAS单点登录系统密码验证
+  tags: password,密码,cas-pass
+- name: user.txt
+  lines: 1
+  description: CAS系统默认用户名
+  usage: CAS单点登录系统用户名验证
+  tags: username,用户名,cas-user

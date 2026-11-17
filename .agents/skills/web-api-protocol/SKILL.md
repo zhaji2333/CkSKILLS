@@ -44,7 +44,7 @@ description: REST/GraphQL/gRPC/WebSocket/网关/HTTP 走私/缓存/请求头专�
 | `knowledge/api-protocol-security-02-二、REST-API-测试要点.md` | REST 测试要点 | 0.6KB |
 | `knowledge/crlf-injection-test.md` | CRLF 注入 | 0.4KB |
 
-其余 26 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
+其余 28 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
 
 ## 相关
 

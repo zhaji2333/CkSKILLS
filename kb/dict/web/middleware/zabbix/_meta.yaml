@@ -1,0 +1,15 @@
+category: web
+subcategory: middleware
+description: Zabbix监控系统默认凭据字典
+tags: zabbix,monitoring,监控,默认口令,运维系统
+files:
+- name: pass.txt
+  lines: 1
+  description: Zabbix默认密码
+  usage: Zabbix监控系统密码验证
+  tags: password,密码,zabbix-pass
+- name: user.txt
+  lines: 3
+  description: Zabbix常见用户名
+  usage: Zabbix监控系统用户名爆破
+  tags: username,用户名,zabbix-user

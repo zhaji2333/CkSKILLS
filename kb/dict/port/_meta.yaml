@@ -1,0 +1,14 @@
+category: port
+description: 各类网络服务端口的默认凭据字典集合，含端口列表
+tags: port,端口,service,服务,credential,凭据,默认口令,服务爆破
+files:
+- name: port-list.md
+  lines: 5939
+  description: 常见端口号与对应服务的详细对照表
+  usage: 端口识别、服务判断参考
+  tags: port-list,端口列表,服务对照,参考文档
+- name: port.txt
+  lines: 2087
+  description: 常用端口号列表
+  usage: 端口扫描目标范围指定
+  tags: port-scan,端口扫描,端口号,nmap

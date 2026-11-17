@@ -1,0 +1,15 @@
+category: port
+subcategory: memcached
+description: Memcached缓存服务默认凭据字典
+tags: memcached,cache,缓存,默认口令,服务爆破
+files:
+- name: pass.txt
+  lines: 33
+  description: Memcached常见密码
+  usage: Memcached认证密码爆破
+  tags: password,密码,memcached-pass
+- name: user.txt
+  lines: 4
+  description: Memcached常见用户名
+  usage: Memcached认证用户名爆破
+  tags: username,用户名,memcached-user

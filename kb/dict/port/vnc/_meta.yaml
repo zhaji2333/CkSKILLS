@@ -1,0 +1,10 @@
+category: port
+subcategory: vnc
+description: VNC远程桌面服务密码字典
+tags: vnc,remote-desktop,远程桌面,默认口令,服务爆破,5900
+files:
+- name: pass.txt
+  lines: 31
+  description: VNC远程桌面常见密码
+  usage: VNC服务密码爆破
+  tags: password,密码,vnc-pass,弱口令

@@ -1,0 +1,15 @@
+category: port
+subcategory: telnet
+description: Telnet远程登录服务默认凭据字典
+tags: telnet,remote-login,远程登录,默认口令,服务爆破,23
+files:
+- name: pass.txt
+  lines: 28
+  description: Telnet服务常见密码
+  usage: Telnet服务密码爆破
+  tags: password,密码,telnet-pass
+- name: user.txt
+  lines: 5
+  description: Telnet服务常见用户名
+  usage: Telnet服务用户名爆破
+  tags: username,用户名,telnet-user

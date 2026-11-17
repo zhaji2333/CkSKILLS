@@ -1,0 +1,10 @@
+category: web
+subcategory: directory
+description: JavaScript文件路径扫描字典
+tags: js,javascript,前端,frontend,directory,文件发现
+files:
+- name: js.txt
+  lines: 266
+  description: 常见JS文件路径集合
+  usage: JS文件发现、前端信息泄露检测
+  tags: javascript,js-file,前端文件,信息泄露

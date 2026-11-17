@@ -1,0 +1,15 @@
+category: port
+subcategory: weblogic
+description: WebLogic应用服务器默认凭据字典
+tags: weblogic,oracle,application-server,应用服务器,默认口令,服务爆破,7001
+files:
+- name: pass.txt
+  lines: 3
+  description: WebLogic常见默认密码
+  usage: WebLogic控制台密码爆破
+  tags: password,密码,weblogic-pass
+- name: user.txt
+  lines: 1
+  description: WebLogic默认用户名
+  usage: WebLogic控制台用户名验证
+  tags: username,用户名,weblogic-user

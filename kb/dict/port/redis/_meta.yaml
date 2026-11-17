@@ -1,0 +1,10 @@
+category: port
+subcategory: redis
+description: Redis缓存数据库密码字典
+tags: redis,cache,缓存,nosql,默认口令,服务爆破,6379
+files:
+- name: pass.txt
+  lines: 38
+  description: Redis常见认证密码
+  usage: Redis未授权/弱口令爆破
+  tags: password,密码,redis-pass,弱口令

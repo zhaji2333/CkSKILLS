@@ -1,0 +1,10 @@
+category: web
+subcategory: errors
+description: Web应用常见错误信息指纹字典
+tags: error,错误信息,fingerprint,指纹识别,信息泄露,报错
+files:
+- name: top100-errors.txt
+  lines: 97
+  description: 最常见的100个Web应用错误信息特征
+  usage: 数据库类型识别、框架指纹识别、报错注入判断
+  tags: error-message,报错特征,数据库识别,框架识别

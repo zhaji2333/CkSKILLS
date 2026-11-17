@@ -1,0 +1,64 @@
+category: web
+description: Web方向字典总集合，按用途细分为目录扫描、API参数、文件上传、备份文件、HTTP头、Webshell、DNS、报错指纹、CMS、中间件与服务等子字典
+tags: web,字典,wordlist,渗透测试,信息收集
+files:
+- name: api-param/
+  lines: 51156
+  description: Web API参数名和参数值Fuzz字典，按漏洞类型分类
+  usage: 接口参数发现与参数级漏洞Fuzz
+  tags: parameter,参数,api,接口,fuzz,参数发现
+- name: cms/
+  lines: 248
+  description: CMS框架路径和控制器字典（WordPress、ThinkPHP）
+  usage: CMS指纹识别与敏感路径探测
+  tags: cms,内容管理,wordpress,thinkphp,框架路径
+- name: ctf/
+  lines: 363
+  description: CTF Web常用payload与源码泄露路径字典
+  usage: CTF Web题目快速解题与payload试错
+  tags: ctf,竞赛,payload,源码泄露,文件包含,命令执行
+- name: directory/
+  lines: 445001
+  description: Web目录和路径扫描字典集合，按语言和用途分类
+  usage: 目录爆破、后台与敏感路径发现
+  tags: directory,目录扫描,路径发现,dirsearch,gobuster,内容发现
+- name: dns/
+  lines: 151749
+  description: 子域名与DNS相关字典，含子域名前缀、OOB平台域名、顶级域名后缀
+  usage: 子域名爆破、DNS枚举、无回显漏洞OOB域名选择
+  tags: dns,子域名,subdomain,枚举,oob
+- name: errors/
+  lines: 97
+  description: 各类Web报错信息指纹集合
+  usage: 报错回显识别与框架指纹辅助判断
+  tags: error,报错,指纹,错误回显
+- name: file-backup/
+  lines: 58673
+  description: 备份文件与敏感文件路径字典，含文件名与目录两类
+  usage: 备份文件与源码泄露探测
+  tags: backup,备份文件,源码泄露,敏感文件,信息泄露
+- name: http/
+  lines: 2750
+  description: HTTP请求头与协议相关字典，含User-Agent、MIME、认证头、HTTP方法等
+  usage: 请求头伪造与WAF绕过测试
+  tags: http,header,请求头,user-agent,mime,绕过
+- name: middleware/
+  lines: 103700
+  description: Web中间件默认凭据和配置字典集合
+  usage: 中间件默认口令验证与配置探测
+  tags: middleware,中间件,默认口令,default-credential
+- name: service/
+  lines: 310
+  description: 常见Web服务与运维平台字典（Druid、Jira、phpMyAdmin、XXL-JOB）
+  usage: 运维平台默认口令与敏感路径探测
+  tags: service,服务,管理平台,信息泄露
+- name: upload/
+  lines: 414
+  description: 文件上传绕过字典，含扩展名变形、Content-Type、.htaccess
+  usage: 上传黑名单绕过与扩展名Fuzz
+  tags: upload,文件上传,绕过,bypass,扩展名
+- name: webshell/
+  lines: 490363
+  description: Webshell路径扫描与连接密码爆破字典
+  usage: Webshell落地路径选择与连接密码爆破
+  tags: webshell,木马,后门,路径扫描,密码爆破

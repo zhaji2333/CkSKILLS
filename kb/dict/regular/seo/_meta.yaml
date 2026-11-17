@@ -1,0 +1,10 @@
+category: regular
+subcategory: seo
+description: SEO相关关键词字典
+tags: seo,搜索引擎,关键词,search-engine,黑产
+files:
+- name: seo-word.txt
+  lines: 21201
+  description: 黑帽SEO/博彩/棋牌等违规关键词集合
+  usage: 网站篡改检测、黑链识别、违规内容排查
+  tags: blackhat-seo,黑帽SEO,博彩关键词,违规检测

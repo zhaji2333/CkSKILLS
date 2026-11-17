@@ -1,0 +1,25 @@
+category: regular
+subcategory: address
+description: 中国行政区划和地址数据字典
+tags: address,地址,行政区划,中国,area-code,城市
+files:
+- name: area-code.txt
+  lines: 4072
+  description: 全国行政区划代码（省/市/区/县）
+  usage: 身份证号码生成、行政区划数据参考
+  tags: area-code,行政区划代码,身份证前缀
+- name: cn-areas.txt
+  lines: 2995
+  description: 中国区/县级行政区名称
+  usage: 地址信息枚举、社工信息收集
+  tags: area,区县,行政区名,county
+- name: cn-cities.txt
+  lines: 342
+  description: 中国城市名称列表
+  usage: 城市信息枚举、社工信息收集
+  tags: city,城市,城市名,municipality
+- name: cn-pcas.json
+  lines: 1
+  description: 中国省市区街道四级联动JSON数据
+  usage: 完整地址数据参考、地址生成
+  tags: pcas,省市区,json,四级联动

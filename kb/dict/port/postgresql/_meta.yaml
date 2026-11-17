@@ -1,0 +1,15 @@
+category: port
+subcategory: postgresql
+description: PostgreSQL数据库默认凭据字典
+tags: postgresql,postgres,database,数据库,默认口令,服务爆破,5432
+files:
+- name: pass.txt
+  lines: 38
+  description: PostgreSQL常见密码
+  usage: PostgreSQL数据库密码爆破
+  tags: password,密码,postgres-pass
+- name: user.txt
+  lines: 3
+  description: PostgreSQL常见默认用户名
+  usage: PostgreSQL数据库用户名爆破
+  tags: username,用户名,postgres-user

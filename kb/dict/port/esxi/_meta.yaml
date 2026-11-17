@@ -1,0 +1,15 @@
+category: port
+subcategory: esxi
+description: VMware ESXi虚拟化平台默认凭据字典
+tags: esxi,vmware,virtualization,虚拟化,默认口令,服务爆破
+files:
+- name: pass.txt
+  lines: 46
+  description: ESXi常见密码
+  usage: ESXi管理平台密码爆破
+  tags: password,密码,esxi-pass
+- name: user.txt
+  lines: 5
+  description: ESXi常见用户名
+  usage: ESXi管理平台用户名爆破
+  tags: username,用户名,esxi-user

@@ -1,0 +1,44 @@
+category: lfi
+description: "本地文件包含与路径遍历payload集合，覆盖Linux/Windows/Java平台的敏感文件路径和遍历技巧"
+tags: "lfi,local file inclusion,本地文件包含,path traversal,路径遍历,目录穿越,文件读取"
+files:
+- name: java-path.txt
+  lines: 8
+  description: "Java Web应用敏感目录路径（WEB-INF/META-INF），用于读取配置和类文件"
+  usage: "测试Java Web应用的LFI漏洞时，尝试读取WEB-INF下的web.xml、class文件和Spring配置"
+  tags: "java,WEB-INF,META-INF,Java Web,敏感目录,配置泄露"
+- name: java-properties.txt
+  lines: 1739
+  description: "Java应用常见配置文件路径大全，包含Spring/MyBatis/Hibernate/数据库等各类框架配置文件"
+  usage: "大规模扫描Java应用可能泄露的配置文件，发现数据库连接信息、密钥等敏感数据"
+  tags: "java,properties,Spring,配置文件,框架配置,敏感信息泄露,大字典"
+- name: linux-path.txt
+  lines: 6
+  description: "Linux Web服务器常见根目录路径（/tmp/www/html等），含路径遍历到Tomcat目录"
+  usage: "确定Web应用在Linux系统上的文件根目录位置，辅助构造精确的LFI路径"
+  tags: "linux,web root,根目录,Tomcat,文件路径定位"
+- name: linux.txt
+  lines: 682
+  description: "Linux系统敏感文件绝对路径大全，覆盖Apache/Nginx/SSH/系统配置/日志等文件"
+  usage: "通过LFI漏洞批量测试Linux服务器上的敏感文件是否可读取"
+  tags: "linux,sensitive files,apache,nginx,ssh,passwd,系统配置,敏感文件,大字典"
+- name: log.txt
+  lines: 47
+  description: "常见Web应用和系统日志文件名字典（access.log/error.log/debug.log等）"
+  usage: "扫描目标服务器是否存在可直接访问的日志文件，获取敏感信息或用于日志注入"
+  tags: "log,access log,error log,日志文件,日志泄露,信息收集"
+- name: properties.txt
+  lines: 203
+  description: "通用Web应用配置文件路径字典（.properties/.xml/.yml），涵盖多种框架"
+  usage: "扫描目标是否存在可读取的配置文件，发现数据库密码、API密钥等敏感信息"
+  tags: "properties,config,xml,yml,配置文件,敏感信息,Actuator,Spring Boot"
+- name: traversal.txt
+  lines: 64
+  description: "路径遍历编码变体集合，包含%5c、%252f双重编码、Unicode编码等各种绕过WAF的遍历序列"
+  usage: "LFI测试中用各种编码变体的../序列绕过路径过滤和WAF规则"
+  tags: "traversal,encoding bypass,双重编码,Unicode,WAF绕过,路径遍历变体"
+- name: windows.txt
+  lines: 206
+  description: "Windows系统敏感文件绝对路径大全，覆盖Apache/IIS/系统配置/日志等文件（C:/路径格式）"
+  usage: "通过LFI漏洞批量测试Windows服务器上的敏感文件是否可读取"
+  tags: "windows,IIS,apache,sensitive files,boot.ini,系统配置,敏感文件,大字典"

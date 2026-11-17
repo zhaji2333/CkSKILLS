@@ -1,0 +1,15 @@
+category: web
+subcategory: directory
+description: 网站二级目录路径字典
+tags: secondary,二级目录,子目录,subdirectory,路径发现
+files:
+- name: secondary-common.txt
+  lines: 718
+  description: 常见二级目录路径精简版
+  usage: 二级目录快速枚举
+  tags: secondary,二级目录,精简版,快速
+- name: secondary-extended.txt
+  lines: 24336
+  description: 二级目录路径大字典
+  usage: 二级目录全面枚举
+  tags: secondary,二级目录,大字典,全面

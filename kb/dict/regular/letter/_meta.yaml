@@ -1,0 +1,50 @@
+category: regular
+subcategory: letter
+description: 字母排列组合字典，含1-4位大小写字母全排列
+tags: letter,字母,alphabet,排列组合,brute-force,枚举
+files:
+- name: lower-1char.txt
+  lines: 26
+  description: 单个小写字母a到z
+  usage: 单字母枚举基础数据
+  tags: single,单字母,lowercase,小写,a-z
+- name: upper-1char.txt
+  lines: 26
+  description: 单个大写字母A到Z
+  usage: 单字母枚举基础数据（大写）
+  tags: single,单字母,uppercase,大写,A-Z
+- name: lower-2char.txt
+  lines: 676
+  description: 两位小写字母全排列（aa到zz）
+  usage: 两位字母组合枚举
+  tags: 2char,两位字母,lowercase,排列组合
+- name: upper-2char.txt
+  lines: 676
+  description: 两位大写字母全排列（AA到ZZ）
+  usage: 两位字母组合枚举（大写）
+  tags: 2char,两位字母,uppercase,排列组合
+- name: lower-3char.txt
+  lines: 17576
+  description: 三位小写字母全排列（aaa到zzz）
+  usage: 三位字母组合枚举
+  tags: 3char,三位字母,lowercase,排列组合
+- name: upper-3char.txt
+  lines: 17576
+  description: 三位大写字母全排列（AAA到ZZZ）
+  usage: 三位字母组合枚举（大写）
+  tags: 3char,三位字母,uppercase,排列组合
+- name: lower-4char.txt
+  lines: 456976
+  description: 四位小写字母全排列（aaaa到zzzz）
+  usage: 四位字母组合枚举
+  tags: 4char,四位字母,lowercase,排列组合
+- name: upper-4char.txt
+  lines: 456976
+  description: 四位大写字母全排列（AAAA到ZZZZ）
+  usage: 四位字母组合枚举（大写）
+  tags: 4char,四位字母,uppercase,排列组合
+- name: misc.txt
+  lines: 67
+  description: 数字和常见短字符串混合集合
+  usage: 简单ID和短字符串枚举
+  tags: misc,混合,数字字母,短字符串

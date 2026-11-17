@@ -1,0 +1,10 @@
+category: port
+subcategory: snmp
+description: SNMP网络管理协议社区字符串字典
+tags: snmp,network,网络管理,community-string,默认口令,服务爆破,161
+files:
+- name: pass.txt
+  lines: 119
+  description: SNMP常见社区字符串（Community String）
+  usage: SNMP社区字符串爆破与信息获取
+  tags: community,社区字符串,snmp-community

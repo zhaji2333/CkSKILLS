@@ -1,0 +1,35 @@
+category: auth
+subcategory: username
+description: 各类用户名字典，含邮箱、手机号、英文名等常见账户名
+tags: username,用户名,account,账户,枚举,enum,登录名
+files:
+- name: cn-email.txt
+  lines: 309
+  description: 中国常见测试邮箱地址格式的用户名（含163/qq/gmail等后缀）
+  usage: 中国目标的测试邮箱账户枚举与登录爆破
+  tags: email,邮箱,中国邮箱,cn-email,chinese,china
+- name: cn-phone.txt
+  lines: 345
+  description: 中国常见测试手机号码格式
+  usage: 以测试手机号为用户名的系统登录爆破
+  tags: phone,手机号,中国手机,mobile
+- name: username-top10000.txt
+  lines: 10415
+  description: 约10000个通用用户名集合
+  usage: 大规模用户名枚举与爆破
+  tags: large,大字典,通用用户名,枚举
+- name: user-mail.txt
+  lines: 59
+  description: 常见的邮件系统管理员用户名
+  usage: 邮件服务器用户名枚举
+  tags: mail,邮件,管理员,mail-admin
+- name: user-us.txt
+  lines: 2092
+  description: 英文常见用户名集合
+  usage: 英文系统/国际化目标的用户名枚举
+  tags: english,英文用户名,us,international
+- name: user-web.txt
+  lines: 113
+  description: Web应用常见用户名及数字ID
+  usage: Web应用用户名枚举与账户爆破
+  tags: web,网站用户名,数字ID,web-app

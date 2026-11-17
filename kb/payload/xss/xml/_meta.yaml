@@ -1,0 +1,15 @@
+category: xss
+subcategory: xml
+description: "XSS XML相关payload集合，利用XML/XSLT/CDATA等特性绕过过滤执行跨站脚本"
+tags: "xss,xml,cross-site scripting,跨站脚本,XML注入"
+files:
+- name: xml.txt
+  lines: 16
+  description: "基于XML特性的XSS payload，包含XPath注入、CDATA绕过、XML实体和DOCTYPE利用"
+  usage: "测试XML解析器或接受XML输入的接口时，检测通过XML特性触发XSS的可能性"
+  tags: "xpath,cdata,entity,DOCTYPE,XML解析,CDATA绕过,实体注入"
+- name: xss.xml
+  lines: 4
+  description: "含JavaScript的恶意XML文件样本，利用XHTML命名空间嵌入script标签"
+  usage: "上传XML文件或测试XML解析时，检测是否可通过命名空间嵌入脚本执行"
+  tags: "xhtml,namespace,script,命名空间,文件上传,脚本嵌入"

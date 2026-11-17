@@ -1,0 +1,9 @@
+category: auth
+description: 认证相关字典集合，包含用户名密码对、凭据组合
+tags: auth,authentication,认证,凭据,credential,登录,用户名密码
+files:
+- name: credential-pair.txt
+  lines: 701
+  description: 常见的用户名:密码组合对（冒号分隔）
+  usage: 批量凭据填充攻击、多服务默认账密快速验证
+  tags: credential-pair,凭据对,用户名密码组合,默认账密

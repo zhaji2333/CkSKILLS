@@ -1,0 +1,25 @@
+category: port
+subcategory: smtp
+description: SMTP邮件发送服务凭据字典
+tags: smtp,email,邮件,默认口令,服务爆破,25,465
+files:
+- name: cn-email-username.txt
+  lines: 1959
+  description: 中国常见邮箱用户名集合
+  usage: 国内邮件服务器用户名枚举
+  tags: cn-email,中国邮箱,用户名,枚举
+- name: pass.txt
+  lines: 27
+  description: SMTP邮件服务常见密码
+  usage: SMTP邮件服务密码爆破
+  tags: password,密码,smtp-pass
+- name: us-email-username.txt
+  lines: 2092
+  description: 英文常见邮箱用户名集合
+  usage: 国外邮件服务器用户名枚举
+  tags: us-email,英文邮箱,用户名,枚举
+- name: user.txt
+  lines: 1502
+  description: SMTP邮件服务通用用户名大字典
+  usage: SMTP邮件服务用户名全面枚举
+  tags: username,用户名,smtp-user,大字典

@@ -1,0 +1,49 @@
+category: upload
+description: "文件上传测试样本集合，包含各种格式的测试文件和任意文件上传 getshell 用的上传表单 PoC 页面"
+tags: "upload,file upload,文件上传,任意文件上传,上传绕过,上传漏洞,文件类型,测试样本"
+files:
+- name: 1.doc
+  lines: 1
+  description: "DOC格式测试文件样本，用于文件上传功能的格式验证测试"
+  usage: "测试文件上传接口对DOC文档类型的处理和过滤逻辑"
+  tags: "doc,word,文档,格式测试,文件样本"
+- name: 1.html
+  lines: 1
+  description: "含XSS payload的HTML测试文件（img onerror触发alert）"
+  usage: "上传HTML文件测试服务器是否允许上传并执行HTML，检测存储型XSS"
+  tags: "html,xss,存储型XSS,img onerror,脚本执行"
+- name: 1.pdf
+  lines: 428
+  description: "PDF格式测试文件样本，用于文件上传功能的格式验证测试"
+  usage: "测试文件上传接口对PDF文件类型的处理和过滤逻辑"
+  tags: "pdf,文档,格式测试,文件样本"
+- name: 1.svg
+  lines: 6
+  description: "含XSS payload的SVG测试文件（内嵌script标签执行alert）"
+  usage: "上传SVG文件测试服务器是否允许上传并解析SVG中的JavaScript代码"
+  tags: "svg,xss,script injection,SVG注入,脚本执行,矢量图"
+- name: 1.txt
+  lines: 1
+  description: "最简纯文本测试文件，内容为单个字符"
+  usage: "作为基准测试文件验证上传功能的基本可用性"
+  tags: "txt,plaintext,纯文本,基准测试"
+- name: 1.xlsx
+  lines: 49
+  description: "XLSX格式测试文件样本，用于文件上传功能的格式验证测试"
+  usage: "测试文件上传接口对Excel文件类型的处理和过滤逻辑"
+  tags: "xlsx,excel,电子表格,格式测试,文件样本"
+- name: 1.zip
+  lines: 1
+  description: "ZIP压缩包测试文件样本，用于文件上传功能的格式验证测试"
+  usage: "测试文件上传接口对压缩包类型的处理，检测解压炸弹或路径遍历风险"
+  tags: "zip,archive,压缩包,格式测试,解压安全"
+- name: upload.html
+  lines: 8
+  description: "通用文件上传HTML表单 PoC，用于任意文件上传/getshell 测试"
+  usage: "当目标上传接口无前端页面时，用此表单快速构造任意文件上传 getshell 请求"
+  tags: "form,multipart,上传表单,PoC,poc,getshell,辅助工具"
+- name: upload2.html
+  lines: 4
+  description: "精简版 PHP 文件上传 HTML 表单 PoC，用于任意文件上传/getshell"
+  usage: "快速构造针对 PHP 上传接口的任意文件上传 getshell 请求"
+  tags: "form,php,multipart,上传表单,PoC,poc,getshell,辅助工具"

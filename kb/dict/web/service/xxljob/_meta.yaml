@@ -1,0 +1,10 @@
+category: web
+subcategory: service
+description: XXL-JOB任务调度平台路径字典
+tags: xxl-job,scheduler,任务调度,分布式调度,路径发现
+files:
+- name: xxl-path.txt
+  lines: 11
+  description: XXL-JOB管理平台常见部署路径
+  usage: XXL-JOB调度平台入口发现
+  tags: xxl-path,部署路径,管理入口,任务调度

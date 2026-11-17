@@ -1,0 +1,15 @@
+category: port
+subcategory: rdp
+description: RDP远程桌面服务默认凭据字典
+tags: rdp,remote-desktop,远程桌面,默认口令,服务爆破,3389
+files:
+- name: pass.txt
+  lines: 264
+  description: RDP远程桌面常见密码
+  usage: RDP远程桌面密码爆破
+  tags: password,密码,rdp-pass
+- name: user.txt
+  lines: 27
+  description: RDP远程桌面常见用户名
+  usage: RDP远程桌面用户名爆破
+  tags: username,用户名,rdp-user

@@ -1,0 +1,10 @@
+category: web
+subcategory: middleware
+description: Web中间件默认凭据和配置字典集合
+tags: middleware,中间件,默认口令,default-credential,web-server,应用服务器
+files:
+- name: middleware-pass.txt
+  lines: 24
+  description: 各类中间件的默认用户名密码对照表
+  usage: 快速查阅各中间件默认凭据
+  tags: default-password,默认密码,对照表,汇总

@@ -1,0 +1,40 @@
+category: auth
+subcategory: password
+description: 常见弱口令及按使用频率排序的密码字典集合
+tags: password,弱口令,爆破,brute-force,login,credential,密码,认证,wordlist
+files:
+- name: pass-admin.txt
+  lines: 586
+  description: 以admin为前缀的管理员常用密码组合
+  usage: 后台管理员账户密码爆破
+  tags: admin,管理员,admin-password,后台密码
+- name: password-top10.txt
+  lines: 10
+  description: 最常见的10个弱口令，覆盖常见密码与 rockyou 高频口令子集
+  usage: 快速验证默认密码、登录初筛
+  tags: top10,common,weak,极简弱口令,top,wordlist,password top,常见密码,rockyou
+- name: password-top100.txt
+  lines: 173
+  description: 最常见的约100个弱口令，覆盖常见密码与 rockyou 高频口令子集
+  usage: 登录爆破初筛、快速验证默认口令
+  tags: top100,common,weak,弱口令,top,wordlist,password top,常见密码,rockyou
+- name: password-top1000.txt
+  lines: 1888
+  description: 约1000个常见弱口令集合，覆盖常见密码与 rockyou 高频口令子集
+  usage: 中等规模登录爆破
+  tags: top1000,medium,弱口令,常用密码,top,wordlist,password top,常见密码,rockyou
+- name: password-top20000.txt
+  lines: 19315
+  description: 约20000个常用密码集合，可替代 rockyou 做常见密码爆破
+  usage: 大规模登录爆破、深度密码猜测
+  tags: top20000,large,弱口令,密码字典,top,wordlist,password top,常见密码,rockyou
+- name: password-top100000.txt
+  lines: 94123
+  description: 约100000个密码的超大字典，可替代 rockyou 常见密码字典
+  usage: 全面密码爆破、离线哈希碰撞
+  tags: top100000,exhaustive,密码字典,大字典,top,wordlist,password top,常见密码,rockyou
+- name: sql.txt
+  lines: 121
+  description: SQL注入认证绕过用的密码Payload
+  usage: 登录框SQL注入绕过测试
+  tags: sqli,injection,注入绕过,万能密码

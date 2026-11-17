@@ -1,0 +1,9 @@
+category: prompt-injection
+description: "AI/LLM提示词注入payload集合，包含各类绕过大模型安全限制的攻击提示词模板"
+tags: "prompt injection,提示词注入,AI安全,LLM,大模型,jailbreak,越狱,安全绕过"
+files:
+- name: prompt.md
+  lines: 639
+  description: "LLM提示词注入技巧参考文档，包含蒸馏攻击、语义相变、角色扮演、DAN越狱等多种绕过安全对齐的提示词模板"
+  usage: "测试AI/LLM应用的安全性时，参考这些提示词模板检测模型是否可被诱导输出违规内容"
+  tags: "reference,jailbreak,DAN,蒸馏攻击,角色扮演,安全对齐,越狱模板,参考文档"

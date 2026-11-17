@@ -1,0 +1,10 @@
+category: web
+subcategory: middleware
+description: Apache Shiro框架密钥字典
+tags: shiro,apache-shiro,key,密钥,反序列化,deserialization,rememberMe
+files:
+- name: key.txt
+  lines: 101148
+  description: Shiro RememberMe加密密钥（AES Key）大字典
+  usage: Shiro反序列化漏洞利用时的密钥爆破
+  tags: aes-key,shiro-key,rememberme,反序列化利用

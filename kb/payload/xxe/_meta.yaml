@@ -1,0 +1,14 @@
+category: xxe
+description: "XML外部实体注入(XXE)payload集合，包含各种DTD实体声明和利用技巧"
+tags: "xxe,XML external entity,XML外部实体,XXE注入,DTD,实体注入,文件读取,SSRF"
+files:
+- name: xml.txt
+  lines: 91
+  description: "XXE攻击payload集合，包含XPath注入、CDATA绕过、DOCTYPE实体声明读取系统文件等"
+  usage: "测试XML解析接口时，检测是否存在XXE漏洞可读取服务器文件或发起SSRF"
+  tags: "xpath,cdata,DOCTYPE,ENTITY,文件读取,passwd,系统文件,SSRF"
+- name: xxe.md
+  lines: 116
+  description: "XXE漏洞攻击技巧参考文档，涵盖基础实体、外部实体、Blind XXE、带外数据提取和各种利用场景"
+  usage: "作为XXE渗透测试的速查手册，快速查阅各种XXE攻击模式和利用方法"
+  tags: "reference,cheatsheet,参考文档,速查手册,Blind XXE,OOB,带外提取,利用技巧"

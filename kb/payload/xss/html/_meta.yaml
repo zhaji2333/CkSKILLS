@@ -1,0 +1,10 @@
+category: xss
+subcategory: html
+description: "XSS HTML文件载荷，用于通过上传HTML文件触发跨站脚本攻击"
+tags: "xss,html,cross-site scripting,跨站脚本,HTML文件,上传XSS,存储型"
+files:
+- name: 1.html
+  lines: 1
+  description: "含img onerror XSS payload的HTML文件，上传后触发JavaScript执行"
+  usage: "测试文件上传功能是否允许上传HTML文件并在浏览器中执行脚本"
+  tags: "img,onerror,上传XSS,存储型XSS,文件上传"

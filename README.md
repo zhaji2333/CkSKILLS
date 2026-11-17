@@ -3,21 +3,21 @@
 > 基于 Claude Code / Codex / DeepSeek Harness 的 SRC 漏洞挖掘 Agent 技能体系 —— 将顶尖安全研究员的方法论沉淀为可调度、可复用的 Skill 知识资产。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-16-green.svg)](.agents/skills)
+[![Skills](https://img.shields.io/badge/Skills-18-green.svg)](.agents/skills)
 [![v1 skills](https://img.shields.io/badge/v1-20%2B-blue.svg)](https://github.com/zhaji2333/CkSKILLS/tree/v1)
 
 **语言：** **中文** · [English（v1）](https://github.com/zhaji2333/CkSKILLS/blob/v1/README_EN.md)
 
 > 📦 **版本说明**：当前 `main` 分支为 **v2**（薄常驻层 + 16 技能包，适用于 **DeepSeek Harness**）；旧版 [**v1 分支**](https://github.com/zhaji2333/CkSKILLS/tree/v1) 保留完整技能体系（20+ 技能包）与 Claude Code / Codex 传统工作流。
 >
-> 本 README 以 v1 的完整介绍为底稿；v2 的分层结构、16 个技能包与多 Agent 机制见文末《CkSKILLS v2》章节。
+> 本 README 以 v1 的完整介绍为底稿；v2 的分层结构、18 个技能包与多 Agent 机制见文末《CkSKILLS v2》章节。
 
 > [!TIP]
 > 🚢 **强烈推荐：[Flotilla](https://github.com/zhaji2333/Flotilla) —— Super Agent 架构的自主渗透测试平台**，多图 + 多智能体在授权范围内自主完成侦察、验证与证据收集。
 
 ## 📌 项目简介
 
-CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex / DeepSeek Harness 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 20+ 个专项技能知识库(Skills)**（v1 划分，v2 重组为 16 个技能包）,让通用 Agent 在垂直安全领域达到专家级表现。
+CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能知识体系**,以 Claude Code / Codex / DeepSeek Harness 等通用 Agent 框架为运行时,通过 **系统级提示词(AGENTS.md)+ 20+ 个专项技能知识库(Skills)**（v1 划分，v2 重组为 18 个技能包）,让通用 Agent 在垂直安全领域达到专家级表现。
 
 针对通用 Agent 在垂直领域的三大痛点:
 
@@ -52,7 +52,7 @@ CK-Skills 是一套面向 SRC 漏洞挖掘的 **Agent 提示词工程与技能�
 
 ## 📚 Skills 列表
 
-> 下表为 v1 的技能划分（对应 [v1 分支](https://github.com/zhaji2333/CkSKILLS/tree/v1)）；v2 已重组为 16 个技能包，见文末《CkSKILLS v2 · 技能包》。
+> 下表为 v1 的技能划分（对应 [v1 分支](https://github.com/zhaji2333/CkSKILLS/tree/v1)）；v2 已重组为 18 个技能包，见文末《CkSKILLS v2 · 技能包》。
 
 | 技能 | 覆盖范围 |
 |---|---|
@@ -119,7 +119,7 @@ git clone https://github.com/zhaji2333/CkSKILLS.git
 
 ### v2（当前 main）
 
-- **v2 成为默认主分支**：20+ 专项技能重组为 **16 个技能包**，适配 **DeepSeek Harness**；旧版 v1 保留在 [v1 分支](https://github.com/zhaji2333/CkSKILLS/tree/v1)，细节见文末《CkSKILLS v2》。
+- **v2 成为默认主分支**：20+ 专项技能重组为 **18 个技能包**，适配 **DeepSeek Harness**；旧版 v1 保留在 [v1 分支](https://github.com/zhaji2333/CkSKILLS/tree/v1)，细节见文末《CkSKILLS v2》。
 - **新增 `rules/` 纪律层**：不误拒 / 最小伤害 / 证据交付 / 多 Agent 回灌等 11 篇细则，常驻层只留每轮必须生效的铁律。
 - **新增线索板 + 多 Agent 回灌约束**：`hunts/<目标>/CLUEBOARD.md` 单写者（Lead），子代理用 `dig/<角色>/SYNC.md` 五行回灌。
 - **新增合板机械闸**：`tools/clueboard_sync_check.py` —— 未回灌/缺块/SYNC 晚于板 → 非零退出。
@@ -141,7 +141,7 @@ git clone https://github.com/zhaji2333/CkSKILLS.git
 
 ## 📦 CkSKILLS v2（当前 main 分支）
 
-> v2 把 v1 的 20+ 专项技能重组为 **16 个技能包**，并新增 `rules/` 纪律层、线索板与多 Agent 回灌约束，面向真实授权安全评估、适配 **DeepSeek Harness**。
+> v2 把 v1 的 20+ 专项技能重组为 **18 个技能包**，并新增 `rules/` 纪律层、线索板与多 Agent 回灌约束，面向真实授权安全评估、适配 **DeepSeek Harness**。
 
 ### 结构
 
@@ -152,7 +152,8 @@ rules/                   # 纪律层（11 篇，按需读；rules/40 报告规�
  40-evidence-report 50-token-economy 60-scope-iteration
  65-task-dir 66-agent-teams  # 66 = 多 agent：单写者 + SYNC 回灌块 + Lead 合板
  70-routing
-.agents/skills/          # 技能层：16 个技能包（短 SKILL.md + knowledge/ 小块）
+.agents/skills/          # 技能层：18 个技能包（短 SKILL.md + knowledge/ 小块）
+kb/                      # 数据层：Vuln/Dic/Payload + INDEX（rules/55、kb-security-data；非技能正文）
  ck-router/              # 总入口：分诊 + 战法索引 + 线索板 + 失败升级 + 挖什么矩阵 + 范围迭代 + 线索表 + 心法
  web-injection/ web-auth-access/ web-file-path/ web-ssrf-render/
  web-xss-frontend/ web-api-protocol/ web-logic-race/ web-deser-xxe/
@@ -184,6 +185,8 @@ docs/                    # ARCHITECTURE / MIGRATION / TRIGGER-MATRIX
 | `ai-agent` | AI / LLM / Agent / Chatbot / RAG / 沙箱 / 代码执行 |
 | `binary-re` | 二进制 / 固件 / ELF / PE / 内存破坏逆向 |
 | `mobile-app` | Android / APK / 小程序 / 移动端逆向与组件安全 |
+| `internal-network` | 内网/域：域侦察、Kerberos、委派/ACL/ADCS、NTLM 中继、横向移动、隧道多跳、后渗透、持久化、内网基础设施 |
+| `kb-security-data` | 结构化数据检索：CVE/影响版本/PoC、字典、载荷（数据在 `kb/`，先查 INDEX） |
 | `source-audit` | 白盒代码审计与反编译产物审计 |
 
 ### 两个核心资产（不要混用）
@@ -192,6 +195,17 @@ docs/                    # ARCHITECTURE / MIGRATION / TRIGGER-MATRIX
 |---|---|---|---|
 | **战法索引** | 全局可复用战法：认什么→打哪→怎么算成→假点 | `.agents/skills/ck-router/knowledge/战法索引-01~07` | 开局选首枪、卡住换层 |
 | **线索板** | 单目标状态台账：Host/路径/密钥/证伪/焦点 | `hunts/<目标>/CLUEBOARD.md` | 开工读板、挖中写板、收工更新焦点 |
+
+### 数据层 `kb/`（按需检索，不进默认加载）
+
+| 目录 | 内容 | 用法 |
+|---|---|---|
+| `kb/vuln/` | 664 条 CVE（ai/cloud/middleware/network/web） | `kb/vuln/INDEX.md` → 单条 md |
+| `kb/dict/` | 237 个字典（口令/用户/目录/子域/端口/规则，含 `_meta.yaml`） | `kb/dict/INDEX.md` → 切片读 |
+| `kb/payload/` | 69 个载荷（XSS/SQLi/SSRF/上传/RCE…） | `kb/payload/INDEX.md` → 切片读 |
+
+- 检索纪律见 `rules/55-kb-usage.md`；CVE 事实以官方公告为准、PoC 必须本地复现才进报告。
+- 索引由 `python3 tools/kb_index.py` 生成，一致性校验 `--check`。
 
 ### 加载纪律（省上下文的关键）
 
@@ -224,6 +238,10 @@ Claude Code 若只认 `.claude/skills/`，建软链：`mkdir -p .claude && ln -s
 
 **方式三（受控评估）**：把 `AGENTS.md` + `rules/` 作为项目规则（AGENTS.md/CLAUDE.md），技能放 `.agents/skills/`。
 
+### 更新记录
+
+- 结构性变更（新增层/包/数据、路由与纪律改动）见 [`docs/CHANGELOG.md`](docs/CHANGELOG.md)。
+
 ### 内容维护
 
 - 直接编辑对应技能包的 `SKILL.md` 或 `knowledge/` 小块；单块控制在 ≤12KB，超限拆成「索引 + 分段」。
@@ -234,10 +252,11 @@ Claude Code 若只认 `.claude/skills/`，建软链：`mkdir -p .claude && ln -s
 
 | 项 | 值 |
 |---|---|
-| 技能包 | 16 |
-| 知识块 | 400+（按需加载，单块 ≤12KB） |
+| 技能包 | 18 |
+| 知识块 | 501（按需加载，单块 ≤12KB） |
+| 数据层 `kb/` | 664 CVE + 236 字典 + 69 payload（37MB；先 INDEX 后单条，`rules/55`） |
 | AGENTS.md（常驻） | 4.8KB |
-| rules 总/单篇 | 28.1KB / 1.2–3.2KB（rules/40 例外 7.4KB） |
+| rules 总/单篇 | 31.1KB / 1.2–3.3KB（rules/40 例外 7.4KB） |
 | SKILL.md | 1.5–3.3KB（全 ≤4KB） |
 | 引用/体积 | 已人工核对：无死链、无超限块、无竞赛/评分语境 |
 | 多 agent 合板 | `tools/clueboard_sync_check.py`（示例任务实测 PASS） |

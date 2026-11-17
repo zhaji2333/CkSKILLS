@@ -1,0 +1,55 @@
+category: web
+subcategory: http
+description: HTTP协议相关字典，含请求头、方法、User-Agent等
+tags: http,protocol,协议
+files:
+- name: header-auth.txt
+  lines: 8
+  description: 常见认证相关的HTTP请求头（Token、Authorization等）
+  usage: 认证头Fuzz、未授权访问测试
+  tags: header,请求头,auth-header,认证头,token,authorization
+- name: header-mimetypes.txt
+  lines: 1864
+  description: 完整的MIME类型（Content-Type）列表
+  usage: 文件上传Content-Type绕过、响应头分析
+  tags: header,请求头,mime,content-type,文件类型,上传绕过
+- name: header-redteam.txt
+  lines: 66
+  description: 红队工具和扫描器的User-Agent特征
+  usage: 识别常见安全工具的请求特征、WAF规则编写
+  tags: header,请求头,user-agent,指纹,redteam,scanner,扫描器特征,工具指纹
+- name: header-refer-ip.txt
+  lines: 7
+  description: IP伪造相关的HTTP请求头（X-Forwarded-For等）
+  usage: 源IP伪造绕过访问控制
+  tags: header,请求头,ip-spoof,xff,ip伪造,访问控制绕过
+- name: header-refer.txt
+  lines: 114
+  description: 常见HTTP请求头名称集合
+  usage: 请求头Fuzz、隐藏参数发现
+  tags: header,请求头,header-name,请求头名,fuzz,枚举
+- name: header-sessionid.txt
+  lines: 11
+  description: 常见Session ID的Cookie名称
+  usage: 会话标识识别、Session劫持测试
+  tags: header,请求头,session,sessionid,会话,cookie
+- name: header-spider.txt
+  lines: 25
+  description: 主流搜索引擎爬虫的User-Agent
+  usage: 伪装搜索引擎爬虫绕过访问限制
+  tags: header,请求头,user-agent,指纹,spider,爬虫,搜索引擎
+- name: methods.txt
+  lines: 32
+  description: HTTP请求方法集合（含标准和非标准方法）
+  usage: HTTP方法枚举、PUT/DELETE等危险方法检测
+  tags: method,请求方法,http-verb,危险方法
+- name: proxifier-filter.txt
+  lines: 176
+  description: Proxifier代理过滤规则域名列表
+  usage: 配置Proxifier代理工具的过滤规则
+  tags: proxifier,proxy,代理,过滤规则
+- name: top500-user-agent.txt
+  lines: 447
+  description: 最常见的500个User-Agent字符串
+  usage: User-Agent轮换、反爬虫绕过
+  tags: header,请求头,user-agent,指纹,ua,浏览器指纹,反爬绕过

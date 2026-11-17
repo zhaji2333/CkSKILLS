@@ -1,0 +1,55 @@
+category: auth
+subcategory: username
+description: 中文姓名拼音相关的用户名字典，适用于国内系统
+tags: pinyin,拼音,中文姓名,chinese-name,用户名,username,枚举
+files:
+- name: cn-firstname.txt
+  lines: 128
+  description: 中国常见名字（中文汉字）
+  usage: 生成中文姓名组合、社工字典基础数据
+  tags: firstname,名字,中文名,given-name
+- name: cn-surname.txt
+  lines: 117
+  description: 中国常见姓氏（中文汉字，含复姓）
+  usage: 生成中文姓名组合、社工字典基础数据
+  tags: surname,姓氏,百家姓,family-name
+- name: lastname.txt
+  lines: 189
+  description: 中国常见姓氏的拼音格式
+  usage: 拼音用户名枚举的姓氏部分
+  tags: lastname,姓氏拼音,surname-pinyin
+- name: cn-fullname-1k.txt
+  lines: 1068
+  description: 常见中文全名（汉字，约1000个）
+  usage: 国内系统以中文全名为用户名的枚举
+  tags: fullname,中文全名,汉字姓名,chinese-name
+- name: cn-fullname-14k.txt
+  lines: 14391
+  description: 大规模中文全名集合（汉字，约14000个）
+  usage: 大规模中文全名用户名枚举
+  tags: fullname,中文全名,大字典,large
+- name: pinyin-abbrev.txt
+  lines: 1443
+  description: 姓氏全拼+名字首字母缩写格式（如zhangj、caijh）
+  usage: 缩写格式用户名枚举
+  tags: abbreviation,缩写,姓全拼+名首字母
+- name: pinyin-firstname.txt
+  lines: 1402
+  description: 中文名字的拼音（如anqi、anyang）
+  usage: 拼音名字部分的用户名枚举
+  tags: firstname,名字拼音,given-name-pinyin
+- name: pinyin-dot-fullname.txt
+  lines: 1133
+  description: 点分全名拼音格式（如zhang.wei、w.zhang）
+  usage: 邮箱/企业系统常见的点分拼音用户名枚举
+  tags: dot-separated,点分格式,email-style,企业用户名
+- name: pinyin-fullname.txt
+  lines: 991
+  description: 中文姓名全拼连写格式（如anwenran、baihonglu）
+  usage: 全拼连写格式的用户名枚举
+  tags: pinyin,全拼连写,中文名,fullname
+- name: pinyin-initials.txt
+  lines: 217
+  description: 中文姓名首字母缩写格式（如cb、cf）
+  usage: 首字母缩写格式的用户名枚举
+  tags: initials,首字母,缩写,initials-only

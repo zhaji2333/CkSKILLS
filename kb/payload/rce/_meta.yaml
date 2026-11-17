@@ -1,0 +1,34 @@
+category: rce
+description: "远程代码/命令执行payload集合，覆盖Java/PHP/Unix/Windows/PowerShell多平台的命令注入和RCE利用"
+tags: "rce,remote code execution,远程代码执行,command injection,命令注入,命令执行,代码执行"
+files:
+- name: java.txt
+  lines: 2
+  description: "Java OGNL/EL表达式注入RCE payload，通过ScriptEngine执行系统命令"
+  usage: "测试Struts2/Spring等Java框架的表达式注入漏洞时使用"
+  tags: "java,OGNL,expression injection,Struts2,表达式注入,ScriptEngine"
+- name: php.txt
+  lines: 19
+  description: "PHP代码执行payload，包含system/exec/eval等函数调用和模板注入向量"
+  usage: "测试PHP应用的代码注入和模板注入漏洞时，检测是否可执行系统命令"
+  tags: "php,system,exec,eval,template injection,代码注入,模板注入,函数调用"
+- name: powershell.txt
+  lines: 164
+  description: "PowerShell命令/cmdlet名称字典，覆盖文件操作、系统管理、网络等常用cmdlet"
+  usage: "测试Windows系统命令注入时，枚举可用的PowerShell cmdlet构造利用链"
+  tags: "powershell,cmdlet,windows,命令字典,cmdlet枚举,系统管理"
+- name: rce.txt
+  lines: 39
+  description: "通用命令注入特殊字符和分隔符payload，包含管道符、重定向、命令连接符等"
+  usage: "快速测试输入点是否存在命令注入，通过各种shell特殊字符触发命令执行"
+  tags: "special chars,pipe,redirect,命令分隔符,特殊字符,shell元字符,命令连接"
+- name: unix.txt
+  lines: 569
+  description: "Unix/Linux系统命令名称大全，覆盖系统管理、网络、文件操作等常用命令"
+  usage: "命令注入利用阶段，枚举目标Linux系统上可用的命令，构造信息收集和提权利用链"
+  tags: "unix,linux,system commands,命令字典,系统命令,命令枚举,信息收集"
+- name: windows.txt
+  lines: 158
+  description: "Windows CMD命令名称字典，覆盖系统管理、网络、文件操作等常用命令"
+  usage: "命令注入利用阶段，枚举目标Windows系统上可用的CMD命令"
+  tags: "windows,cmd,system commands,命令字典,系统命令,命令枚举"

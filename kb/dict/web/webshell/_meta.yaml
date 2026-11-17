@@ -1,0 +1,15 @@
+category: web
+subcategory: webshell
+description: Webshell路径扫描和密码爆破字典
+tags: webshell,木马,后门,backdoor
+files:
+- name: dir.txt
+  lines: 52412
+  description: 常见Webshell文件路径大字典
+  usage: 服务器Webshell后门文件扫描
+  tags: webshell-path,路径扫描,后门路径,文件扫描,大字典
+- name: webshell-pass.txt
+  lines: 437951
+  description: Webshell连接密码超大字典
+  usage: 已知Webshell的连接密码爆破
+  tags: webshell-password,连接密码,超大字典,密码爆破

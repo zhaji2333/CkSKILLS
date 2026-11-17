@@ -1,0 +1,10 @@
+category: auth
+subcategory: flask
+description: Flask session 常见 SECRET_KEY 短字典，用于离线爆破 cookie 签名
+tags: flask,secret,wordlist,session,cookie,爆破,弱密钥
+files:
+- name: flask-secret-key.txt
+  lines: 12
+  description: 常见 Flask SECRET_KEY 示例（flask secret key wordlist）
+  usage: 使用 flask-unsign 或 hashcat 离线爆破 Flask session cookie 的 SECRET_KEY
+  tags: flask,flask secret key,flask secret key wordlist,secret_key,SECRET_KEY

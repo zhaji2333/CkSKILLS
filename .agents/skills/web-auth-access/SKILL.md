@@ -46,7 +46,7 @@ description: 认证/会话/JWT/验证码/越权(IDOR)/前端权限绕过专项�
 | `knowledge/auth-access-control-05-五、访问控制与越权.md` | 越权矩阵 | 0.7KB |
 | `knowledge/401-403-bypass.md` | 401/403 绕过（业务 API 现场打，不磨登录 HTML） | 0.6KB |
 
-其余 22 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
+其余 23 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
 
 ## 相关
 

@@ -1,0 +1,10 @@
+category: xss
+subcategory: pdf
+description: "XSS PDF文件载荷，用于通过上传含脚本的PDF文件触发跨站脚本攻击"
+tags: "xss,pdf,cross-site scripting,跨站脚本,PDF注入,上传XSS"
+files:
+- name: 1.pdf
+  lines: 428
+  description: "含JavaScript代码的恶意PDF文件样本，可在PDF阅读器或浏览器中触发脚本执行"
+  usage: "测试PDF上传和在线预览功能是否会执行PDF内嵌的JavaScript代码"
+  tags: "pdf javascript,PDF注入,在线预览,脚本执行,文件上传"

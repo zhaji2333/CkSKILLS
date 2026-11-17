@@ -1,0 +1,15 @@
+category: port
+subcategory: pop3
+description: POP3邮件服务默认凭据字典
+tags: pop3,email,邮件,默认口令,服务爆破,110
+files:
+- name: pass.txt
+  lines: 27
+  description: POP3邮件服务常见密码
+  usage: POP3邮件服务密码爆破
+  tags: password,密码,pop3-pass
+- name: user.txt
+  lines: 1502
+  description: POP3邮件服务用户名大字典
+  usage: POP3邮箱账户枚举与爆破
+  tags: username,用户名,pop3-user,邮箱账户

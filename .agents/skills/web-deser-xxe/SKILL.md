@@ -44,7 +44,7 @@ description: 反序列化/XXE/原型污染/JNDI/XSLT/EL/沙箱脚本注入专项
 | `knowledge/el-injection-test.md` | EL 表达式注入 | 7.2KB |
 | `knowledge/groovy-sandbox-exec-test.md` | Groovy 沙箱逃逸 | 2.2KB |
 
-其余 13 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
+其余 15 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
 
 ## 相关
 

@@ -1,0 +1,9 @@
+category: ssrf
+description: "服务端请求伪造(SSRF)payload集合，包含各种编码格式的localhost/内网地址绕过变体"
+tags: "ssrf,server-side request forgery,服务端请求伪造,内网探测,localhost,回环地址,IP绕过"
+files:
+- name: payload.txt
+  lines: 94
+  description: "SSRF地址绕过payload，包含127.0.0.1的十六进制/八进制/十进制/IPv6/URL编码等多种表示形式"
+  usage: "绕过SSRF防护的IP黑名单过滤时，用各种等价的localhost表示方式尝试访问内网服务"
+  tags: "bypass,localhost,127.0.0.1,IPv6,octal,hex,decimal,编码绕过,地址变体,黑名单绕过"

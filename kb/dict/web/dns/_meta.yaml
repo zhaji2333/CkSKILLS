@@ -1,0 +1,20 @@
+category: web
+subcategory: dns
+description: DNS子域名枚举和OOB平台字典
+tags: dns,信息收集
+files:
+- name: dns.txt
+  lines: 151548
+  description: 超大规模子域名前缀字典
+  usage: 全面子域名枚举爆破
+  tags: subdomain,子域名,域名枚举,子域名爆破,大字典,全面枚举
+- name: oob.txt
+  lines: 24
+  description: 常见OOB（带外数据）DNS平台域名
+  usage: 漏洞验证时选择可用的DNSLog/OOB平台
+  tags: oob,dnslog,带外,漏洞验证平台
+- name: top-dns.txt
+  lines: 177
+  description: 最常见的子域名前缀
+  usage: 子域名快速枚举
+  tags: subdomain,子域名,域名枚举,top,常见子域名,快速枚举,精简

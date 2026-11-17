@@ -1,0 +1,25 @@
+category: port
+subcategory: ssh
+description: SSH远程登录服务凭据字典
+tags: ssh,remote-login,远程登录,默认口令,服务爆破,22
+files:
+- name: pass-common.txt
+  lines: 107
+  description: SSH常见密码精简版
+  usage: SSH密码快速爆破
+  tags: password,密码,ssh-pass,精简
+- name: pass-extended.txt
+  lines: 300
+  description: SSH常见密码扩展版
+  usage: SSH密码中等规模爆破
+  tags: password,密码,ssh-pass,扩展
+- name: user-common.txt
+  lines: 6
+  description: SSH最常见默认用户名（精简版）
+  usage: SSH用户名快速验证
+  tags: username,用户名,ssh-user,精简
+- name: user-extended.txt
+  lines: 26
+  description: SSH常见用户名扩展版
+  usage: SSH用户名枚举
+  tags: username,用户名,ssh-user,扩展

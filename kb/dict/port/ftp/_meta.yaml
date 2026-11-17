@@ -1,0 +1,15 @@
+category: port
+subcategory: ftp
+description: FTP文件传输服务默认凭据字典
+tags: ftp,file-transfer,文件传输,默认口令,服务爆破
+files:
+- name: pass.txt
+  lines: 114
+  description: FTP服务常见密码
+  usage: FTP服务密码爆破
+  tags: password,密码,ftp-pass
+- name: user.txt
+  lines: 12
+  description: FTP服务常见用户名
+  usage: FTP服务用户名爆破
+  tags: username,用户名,ftp-user

@@ -1,0 +1,50 @@
+category: web
+subcategory: directory
+description: Web目录和路径扫描字典集合，按语言和用途分类
+tags: directory,目录扫描,path,paths,common paths,路径发现,dirsearch,gobuster,目录枚举,fuzz,wordlist,brute,content,discovery,爆破,字典,web content discovery
+files:
+- name: admin-dir.txt
+  lines: 2167
+  description: 后台管理目录路径集合
+  usage: 网站后台入口发现
+  tags: admin,后台,管理目录,admin-panel
+- name: api.txt
+  lines: 342
+  description: API接口路径和Spring Actuator端点
+  usage: API端点发现、Actuator未授权访问探测
+  tags: api,actuator,接口发现,endpoint,endpoints,controller,控制器,路径,字典,爆破,fuzz,api paths wordlist,paths,wordlist
+- name: common.txt
+  lines: 5379
+  description: 通用Web目录和文件路径
+  usage: 通用Web目录扫描
+  tags: common,通用,目录扫描,常见路径,common paths,paths,directory fuzz wordlist,fuzz,wordlist
+- name: login.txt
+  lines: 1443
+  description: 登录页面路径集合
+  usage: 登录入口发现
+  tags: login,登录页,认证入口,signin
+- name: payment-callback.txt
+  lines: 73
+  description: 微信支付、支付宝异步通知与支付回调路径
+  usage: 支付回调接口发现、微信/支付宝 notify 与 callback 枚举
+  tags: wechat,pay,alipay,notify,callback,微信支付,支付宝,支付回调,异步通知
+- name: main.txt
+  lines: 35004
+  description: 大规模综合目录扫描字典
+  usage: 全面目录扫描、深度路径发现
+  tags: main,comprehensive,大字典,全面扫描
+- name: redteam-config.txt
+  lines: 65
+  description: 红队常用的敏感配置文件路径（.aws、.git、.env等）
+  usage: 信息泄露检测、敏感配置文件发现
+  tags: redteam,config,配置泄露,敏感文件,信息泄露,sensitive,file,path
+- name: redteam-file-suffix.txt
+  lines: 38
+  description: 红队常用的敏感文件后缀名
+  usage: 配合文件名生成备份文件扫描路径
+  tags: suffix,后缀,backup,备份文件后缀
+- name: redteam-file.txt
+  lines: 251
+  description: 红队常用的敏感文件名（不含后缀）
+  usage: 配合后缀名生成敏感文件扫描路径
+  tags: redteam,filename,敏感文件名,信息收集,sensitive,file

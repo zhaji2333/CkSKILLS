@@ -1,0 +1,10 @@
+category: auth
+subcategory: jwt
+description: JWT HMAC 弱密钥字典，用于离线爆破 HS256/HS384/HS512
+tags: jwt,secret,wordlist,hmac,hs256,token,爆破,弱密钥
+files:
+- name: jwt-secret.txt
+  lines: 42
+  description: 常见默认 JWT HMAC 密钥（jwt secret wordlist）
+  usage: 使用 jwt_tool、hashcat 或 john 离线爆破 HS256/HS384/HS512 密钥
+  tags: jwt secret wordlist,jwt,secret,hmac,hs256

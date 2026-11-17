@@ -1,0 +1,15 @@
+category: web
+subcategory: service
+description: Druid数据库监控平台默认凭据字典
+tags: druid,alibaba,database-monitor,数据库监控,默认口令
+files:
+- name: pass.txt
+  lines: 4
+  description: Druid监控平台常见密码
+  usage: Druid监控平台密码爆破
+  tags: password,密码,druid-pass
+- name: user.txt
+  lines: 4
+  description: Druid监控平台常见用户名
+  usage: Druid监控平台用户名爆破
+  tags: username,用户名,druid-user

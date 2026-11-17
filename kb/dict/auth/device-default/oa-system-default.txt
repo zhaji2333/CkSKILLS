@@ -1,0 +1,5 @@
+system:system
+group-admin:123456
+admin1:123456
+audit-admin:123456
+sysadmin:1

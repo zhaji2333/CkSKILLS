@@ -1,6 +1,6 @@
 ---
 name: ck-router
-description: 安全测试/漏洞挖掘总入口与路由技能。凡涉及授权渗透测试、SRC、红队评估、漏洞挖掘、代码审计、二进制/移动/云/AI 安全评估任务，或需要战法索引、首枪选择、失败换层、线索板、报告规范时先调用本技能。
+description: 安全测试/漏洞挖掘总入口与路由技能。凡涉及授权渗透测试、SRC、红队评估、漏洞挖掘、代码审计、二进制/移动/云/AI/内网安全评估任务，或需要战法索引、首枪选择、失败换层、线索板、报告规范时先调用本技能。
 ---
 
 # ck-router — 安全任务总入口（路由 + 战法索引 + 线索板）
@@ -16,7 +16,9 @@ description: 安全测试/漏洞挖掘总入口与路由技能。凡涉及授权
 | APK/Android/小程序 | `mobile-app` |
 | 云/容器/面板/中间件 | `cloud-infra` |
 | AI/LLM/Agent/沙箱 | `ai-agent` |
-| Web/API/内网 | 继续看下表 |
+| 内网/域/横向/隧道/后渗透 | `internal-network` |
+| 要查 CVE/影响版本/PoC、字典、payload | `kb-security-data`（数据在 `../../../kb/`） |
+| Web/API | 继续看下表 |
 
 ## Web 分流（按入口形态）
 
@@ -39,7 +41,8 @@ description: 安全测试/漏洞挖掘总入口与路由技能。凡涉及授权
 2. 读对应 `knowledge/战法索引-0X-*.md` 的**前 5 行**当首枪；
 3. 加载 1 个主包 + 最多 1 个辅包；
 4. 同层反复无结果按 `knowledge/失败升级.md` 换层（不设固定次数）；
-5. 结果写线索板（`../../../rules/60-scope-iteration.md`，模板 `../../../templates/CLUEBOARD.template.md`）。
+5. 结果写线索板（`../../../rules/60-scope-iteration.md`，模板 `../../../templates/CLUEBOARD.template.md`）；
+6. 要写 CVE/版本/PoC 或取字典、payload → 先查 `kb/` 的 INDEX（`../../../rules/55-kb-usage.md`），不凭记忆写 CVE。
 
 ## 能力优先（挖什么 / 怎么排期 / 怎么沉淀）
 
@@ -63,14 +66,18 @@ description: 安全测试/漏洞挖掘总入口与路由技能。凡涉及授权
 | `knowledge/战法索引-05-客户端与前端.md` | 首枪：XSS/客户端/小程序（战法索引 05 · 客户端与前端） | 3.8KB |
 | `knowledge/战法索引-06-业务与逻辑.md` | 首枪：支付/券/竞态（战法索引 06 · 业务与逻辑） | 2.5KB |
 | `knowledge/战法索引-07-跨域-二进制移动AI.md` | 首枪：二进制/移动/AI（战法索引 07 · 跨域（二进制 / 移动 / AI）） | 5.0KB |
+| `knowledge/战法索引-08-内网与域.md` | 首枪：域侦察/Kerberos/委派/中继/横向/隧道（战法索引 08 · 内网与域） | 6.3KB |
 | `knowledge/参考-实战战法总表.md` | 行级细节总表（按需搜，禁通读）（参考 · 实战战法总表（行级细节，按需查）） | 0.3KB |
 | `knowledge/挖什么矩阵.md` | 真价值/力气分配/类型矩阵/参数不漏/自检（挖什么矩阵（价值导向 · 力气分配 · 类型扫全）） | 6.1KB |
 | `knowledge/范围与迭代-种子闭环.md` | 锁面/自由跳/一种子闭环/深挖优先/空转/续挖（范围与迭代（种子闭环 · 深挖优先 · 续挖）） | 5.6KB |
 | `knowledge/挖掘心法详解.md` | 漏洞嗅觉/开发者视角/脏收集/跨接口关联/可利用性六问（挖掘心法详解） | 5.4KB |
 | `knowledge/线索表与迭代落盘.md` | 索引维护：门槛/三问/假点/拆分/谁写（线索表与迭代落盘（战法索引怎么维护）） | 4.3KB |
 
+其余 9 个知识块（按标题搜，禁止通读）：`ls knowledge/`。
+
 ## 相关
 
 - `../../../rules/70-routing.md`：完整触发路由表
 - `../../../rules/60-scope-iteration.md`：线索板读写协议
-
+- `../../../rules/55-kb-usage.md`：kb/ 数据层检索与证据纪律
+- `internal-network`：内网/域（`../internal-network/SKILL.md`）；`cloud-infra`：云/容器（`../cloud-infra/SKILL.md`）

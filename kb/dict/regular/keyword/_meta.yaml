@@ -1,0 +1,10 @@
+category: regular
+subcategory: keyword
+description: 敏感关键词字典
+tags: keyword,关键词,sensitive,敏感信息,信息收集
+files:
+- name: keyword-common.txt
+  lines: 22
+  description: 配置文件中的敏感关键词（数据库连接、密码等）
+  usage: 代码审计和配置文件中的敏感信息搜索
+  tags: sensitive-keyword,敏感词,配置泄露,代码审计

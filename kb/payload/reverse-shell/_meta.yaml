@@ -1,0 +1,29 @@
+category: reverse-shell
+description: "反弹Shell/Bind Shell payload集合，覆盖Bash/Python/PowerShell/Perl/PHP/Ruby/Java等多语言，包含Shell升级和稳定化命令"
+tags: "reverse shell,反弹shell,回连,shell"
+files:
+- name: bash.txt
+  lines: 14
+  description: "Bash/sh反弹Shell一行命令，包含/dev/tcp、mkfifo+nc、ncat、ncat --ssl、socat等多种方式"
+  usage: "获取命令执行权限后，建立反弹Shell回连到攻击机，支持TCP和UDP"
+  tags: "bash,sh,/dev/tcp,mkfifo,nc,ncat,socat,tcp,udp,netcat"
+- name: python.txt
+  lines: 7
+  description: "Python反弹Shell一行命令，使用socket+subprocess或socket+pty实现，兼容Python2和Python3"
+  usage: "目标存在Python环境时，通过socket建立反弹Shell连接"
+  tags: "python,python3,socket,pty,subprocess,os.dup2"
+- name: powershell.txt
+  lines: 6
+  description: "PowerShell反弹Shell一行命令，使用TCPClient建立连接，支持Base64编码和下载执行方式"
+  usage: "Windows目标环境下，通过PowerShell建立反弹Shell，绕过cmd限制"
+  tags: "powershell,windows,TCPClient,base64,powercat,download cradle"
+- name: others.txt
+  lines: 15
+  description: "多语言反弹Shell payload，覆盖Perl/PHP/Ruby/Java/Lua/Go/OpenSSL/Awk/xterm"
+  usage: "根据目标可用的编程语言环境，选择对应的反弹Shell方式"
+  tags: "perl,php,ruby,java,lua,go,openssl,awk,xterm,多语言,nc,netcat,socat"
+- name: upgrade.txt
+  lines: 22
+  description: "Shell升级和稳定化命令，将简单反弹Shell提升为完整交互式TTY终端"
+  usage: "获取反弹Shell后，升级为完整PTY以支持Tab补全、Ctrl+C、vim等交互操作"
+  tags: "tty,pty,upgrade,stabilize,stty,交互式,终端升级,rlwrap,pwncat,shell升级,交互式shell"

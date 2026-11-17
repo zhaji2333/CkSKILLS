@@ -1,0 +1,20 @@
+category: web
+subcategory: ctf
+description: CTF竞赛常用Payload字典
+tags: ctf,竞赛,capture-the-flag,payload,绕过,bypass
+files:
+- name: param.txt
+  lines: 45
+  description: CTF常用的文件包含和命令执行Payload
+  usage: CTF Web题目中的文件读取和RCE利用
+  tags: payload,文件包含,命令执行,php-filter
+- name: sql.txt
+  lines: 95
+  description: CTF SQL注入常用数字和测试值
+  usage: CTF SQL注入题目的基础测试
+  tags: sqli,sql注入,数字,基础测试
+- name: uri.txt
+  lines: 223
+  description: CTF常用的备份文件和源码泄露路径
+  usage: CTF Web题目的源码泄露探测
+  tags: backup,源码泄露,备份文件,信息收集

@@ -17,6 +17,8 @@
 | 新目标/找接口/JS 分析/子域名/未授权路径/密钥还原 | `web-recon` | `web-auth-access` |
 | payload 被拦/403/WAF/过滤器/检测规避 | `web-waf-bypass` | 当前题型包 |
 | 云资产/对象存储/K8s/运维面板/中间件/CI-CD/供应链 | `cloud-infra` | `web-ssrf-render` |
+| 内网/域/AD/Kerberos/委派/ACL/ADCS/横向/隧道/后渗透 | `internal-network` | `web-auth-access` |
+| 查 CVE/影响版本/PoC、取字典、取 payload | `kb-security-data` | 当前题型包 |
 | LLM/Chatbot/RAG/AI 助手/Agent/代码解释器/沙箱逃逸/工具执行 | `ai-agent` | `web-auth-access` |
 | PE/ELF/固件/SO/驱动/二进制漏洞/逆向/内存破坏 | `binary-re` | `source-audit` |
 | APK/Android/预装应用/小程序/移动端逆向 | `mobile-app` | `binary-re` |
@@ -29,15 +31,15 @@
 | Web 鉴权/越权/未授权/凭证 | `.agents/skills/ck-router/knowledge/战法索引-01-鉴权与越权.md` |
 | 上传/存储/文件/分享/下载 | `.agents/skills/ck-router/knowledge/战法索引-02-存储与上传.md` |
 | 注入/SSRF/协议/Header/缓存 | `.agents/skills/ck-router/knowledge/战法索引-03-注入与协议.md` |
-| 云/内网/Agent/工具执行 | `.agents/skills/ck-router/knowledge/战法索引-04-云与内网.md` |
+| 云/元数据/面板/Agent/工具执行 | `.agents/skills/ck-router/knowledge/战法索引-04-云与内网.md` |
 | 客户端/小程序/前端/H5 | `.agents/skills/ck-router/knowledge/战法索引-05-客户端与前端.md` |
 | 业务逻辑/支付/竞态 | `.agents/skills/ck-router/knowledge/战法索引-06-业务与逻辑.md` |
 | 二进制/移动/逆向/AI 模型 | `.agents/skills/ck-router/knowledge/战法索引-07-跨域-二进制移动AI.md` |
+| 内网/域/横向/隧道/后渗透 | `.agents/skills/ck-router/knowledge/战法索引-08-内网与域.md` |
 
 ## 三、多域题
 
-主域包 + 辅域包（最多 2 个）；例如"AI 平台 + 文件读取" → `ai-agent` + `web-file-path`。
-跨域切换时把已得结论写入线索板再加载，不把两套正文同时留在上下文。
+主域 + 辅域（≤2 个）；切换前写线索板，不把两套正文同时留在上下文。
 
 ## 四、路由不命中
 

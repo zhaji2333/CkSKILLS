@@ -1,0 +1,20 @@
+category: web
+subcategory: middleware
+description: WebLogic应用服务器凭据和路径字典
+tags: weblogic,oracle,application-server,应用服务器,默认口令,console
+files:
+- name: pass.txt
+  lines: 44
+  description: WebLogic控制台常见密码
+  usage: WebLogic管理控制台密码爆破
+  tags: password,密码,weblogic-pass
+- name: user.txt
+  lines: 11
+  description: WebLogic控制台常见用户名
+  usage: WebLogic管理控制台用户名爆破
+  tags: username,用户名,weblogic-user
+- name: weblogic.txt
+  lines: 349
+  description: WebLogic敏感路径和管理接口集合
+  usage: WebLogic管理接口和敏感路径发现
+  tags: path,路径,管理接口,weblogic-path

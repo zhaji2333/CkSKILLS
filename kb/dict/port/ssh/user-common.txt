@@ -1,0 +1,6 @@
+root
+test
+oracle
+user1
+admin
+builder

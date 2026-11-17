@@ -42,7 +42,7 @@ description: 文件上传/下载/导入导出/预览/路径穿越/任意读写/�
 | `knowledge/path-traversal-lfi-test.md` | LFI/穿越实战大全 | 0.5KB |
 | `knowledge/file-upload-test.md` | 真实 SRC 上传/分享/下载战术 | 13.3KB |
 
-其余 8 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
+其余 9 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
 
 ## 相关
 

@@ -1,0 +1,15 @@
+category: web
+subcategory: middleware
+description: RabbitMQ消息队列服务默认凭据字典
+tags: rabbitmq,mq,message-queue,消息队列,默认口令,服务爆破
+files:
+- name: pass.txt
+  lines: 37
+  description: RabbitMQ常见密码
+  usage: RabbitMQ管理控制台密码爆破
+  tags: password,密码,rabbitmq-pass
+- name: user.txt
+  lines: 6
+  description: RabbitMQ常见用户名
+  usage: RabbitMQ管理控制台用户名爆破
+  tags: username,用户名,rabbitmq-user

@@ -1,0 +1,20 @@
+category: xss
+subcategory: svg
+description: "XSS SVG文件载荷集合，利用SVG矢量图中的script标签和事件属性执行JavaScript"
+tags: "xss,svg,cross-site scripting,跨站脚本,SVG注入,矢量图,上传XSS"
+files:
+- name: 1.svg
+  lines: 6
+  description: "含script标签的SVG文件，在正常SVG图片中嵌入JavaScript代码执行alert"
+  usage: "上传SVG文件测试服务器是否过滤SVG中的script标签，检测SVG XSS漏洞"
+  tags: "script,embedded,内嵌脚本,图片上传,script标签"
+- name: 2.svg
+  lines: 1
+  description: "使用onload事件的单行SVG XSS payload，最精简的SVG XSS向量"
+  usage: "快速验证SVG上传是否存在XSS，使用最简payload减少干扰因素"
+  tags: "onload,minimal,精简payload,事件触发,快速验证"
+- name: sanitised.svg
+  lines: 45
+  description: "经过清洗处理的合法SVG文件样本，不含恶意代码，作为对照基准"
+  usage: "作为安全SVG文件的对照样本，验证上传过滤是否能正确区分恶意和正常SVG"
+  tags: "sanitised,clean,safe,安全样本,对照基准,过滤验证"

@@ -1,0 +1,9 @@
+category: dic
+description: 渗透测试字典总集合，涵盖认证凭据、Web路径、端口服务、基础数据等各类字典
+tags: dictionary,字典,pentest,渗透测试,wordlist,爆破,fuzz,安全测试
+files:
+- name: readme.md
+  lines: 94
+  description: 字典目录结构和使用说明文档
+  usage: 了解字典分类结构和各目录用途
+  tags: documentation,说明文档,readme,目录说明

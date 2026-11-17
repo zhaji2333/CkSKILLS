@@ -10,7 +10,7 @@
 4. **真实语境强制**：示例与交付全部为真实业务（影响/证据/报告），校验器拦截竞赛/评分/凭据展示导向措辞。
 5. **可验证**：路由、引用、体积、frontmatter 全部脚本校验，防文档漂移与幻觉路径。
 
-## 2. 五层结构
+## 2. 六层结构
 
 | 层 | 文件 | 体积 | 是否常驻 | 职责 |
 |---|---|---|---|---|
@@ -18,7 +18,8 @@
 | L1 纪律 | `rules/00–70` + `15` + `65` + `66` | 11 篇（按需） | ❌ 按需 | 优先级/反误拒/最小伤害/心法/不空转/报告规范/节流/范围迭代/任务目录/路由/多 agent 回灌 |
 | L2 路由 | `.agents/skills/*/SKILL.md` | 1.5–3.3KB | ❌ 命中即加载 | 触发条件 + 30 秒分诊 + 首枪 + 知识库索引 |
 | L3 知识 | `*/knowledge/*.md` | ≤12KB/块 | ❌ 按需 | 方法论/实战战法/场景表/工具清单 |
-| L4 状态 | `hunts/<目标>/CLUEBOARD.md` | 增长 | ❌ 按需 | 单目标工作记忆（跨轮/跨压缩） |
+| L4 数据 | `kb/`（vuln/dict/payload + INDEX） | 37MB，按需切片 | ❌ 按需 | CVE/字典/载荷原料；先 INDEX 后单条（`rules/55`） |
+| L5 状态 | `hunts/<目标>/CLUEBOARD.md` | 增长 | ❌ 按需 | 单目标工作记忆（跨轮/跨压缩） |
 
 多 agent（Agent Teams）时另有两件：子代理回灌块 `dig/<角色>/SYNC.md`（只写判断+证据指针）与合板闸 `tools/clueboard_sync_check.py`。**板只由 Lead 写**，避免并发覆盖；协议见 `rules/66-agent-teams.md`。
 
@@ -40,7 +41,7 @@
 
 ## 4. 路由设计
 
-- **触发路由**：`rules/70-routing.md` 的"触发信号 → 主包/辅包"表，16 包全覆盖。
+- **触发路由**：`rules/70-routing.md` 的"触发信号 → 主包/辅包"表，18 包全覆盖。
 - **开局首读**：`rules/70` 第二节把题型映射到「先读哪张战法索引」。
 - **不确定**：`ck-router` 的 30 秒分诊 + `.agents/skills/ck-router/knowledge/进站决策.md`。
 - **跨域题**：主域包 + 辅域包（≤2），切换前先把结论写入线索板。
@@ -60,6 +61,7 @@
 | rules 单篇 | ≤3.3KB（`rules/40` 报告规范例外 ≤8KB） |
 | SKILL.md | ≤4.5KB（router ≤7KB） |
 | knowledge 单块 | ≤12KB（超限拆为「索引 + 分段」） |
+| `kb/INDEX*` | 与数据一致（`python3 tools/kb_index.py --check`） |
 | frontmatter | name=目录名；description 30–360 字符 |
 | 死链 | 相对 .md 引用必须存在（多基准解析） |
 | 线索板回灌 | CLUEBOARD mtime 晚于全部 `dig/*/SYNC.md`（`tools/clueboard_sync_check.py` 校验） |

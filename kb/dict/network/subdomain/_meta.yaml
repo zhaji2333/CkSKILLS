@@ -1,0 +1,10 @@
+category: network
+subcategory: subdomain
+description: 子域（subdomain）枚举常用字典，覆盖域名（domain）常见子域前缀、环境与业务关键字，用于授权范围内子域名爆破/枚举
+tags: subdomain,子域,子域名,domain,域名,wordlist,字典,dictionary,枚举,爆破,dns,子域名枚举,brute,content discovery
+files:
+- name: subdomain-common.txt
+  lines: 150
+  description: 常见子域名字典（业务/环境/基础设施关键字，如 api、admin、oa、vpn、mail、test、dev 等）
+  usage: 授权范围内子域名枚举、域名爆破、子域接管排查
+  tags: subdomain,子域,子域名,domain,域名,wordlist,字典,dictionary,枚举,爆破,dns,brute,content discovery,api,admin,oa,vpn,mail,test,dev

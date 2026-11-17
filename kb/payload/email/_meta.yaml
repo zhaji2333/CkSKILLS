@@ -1,0 +1,9 @@
+category: email
+description: "电子邮件格式Fuzz payload集合，包含XSS/SQLi/SMTP注入等各类邮箱地址变异"
+tags: "email,邮件,email injection,邮箱格式,SMTP注入,邮件Fuzz,input validation"
+files:
+- name: email.txt
+  lines: 12
+  description: "恶意构造的邮箱地址payload，涵盖XSS注入、SQL注入、模板注入、SMTP头注入和SSRF等多种攻击向量"
+  usage: "测试邮箱输入框的安全过滤时，用这些变异邮箱地址检测是否存在注入漏洞"
+  tags: "fuzz,xss,sqli,smtp injection,SSRF,模板注入,邮箱注入,输入验证"

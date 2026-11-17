@@ -1,0 +1,35 @@
+category: web
+subcategory: upload
+description: 文件上传漏洞绕过字典，按Web语言分类
+tags: upload,文件上传,bypass,绕过
+files:
+- name: asp.txt
+  lines: 30
+  description: ASP文件上传后缀绕过变体
+  usage: ASP环境下的文件上传黑名单绕过
+  tags: asp,后缀绕过,大小写,截断
+- name: content-type.txt
+  lines: 253
+  description: Content-Type MIME类型集合
+  usage: 文件上传Content-Type白名单绕过
+  tags: content-type,mime,白名单绕过
+- name: htaccess.txt
+  lines: 37
+  description: .htaccess文件名大小写变体
+  usage: Apache .htaccess上传绕过
+  tags: htaccess,apache,配置覆盖,大小写
+- name: jsp.txt
+  lines: 30
+  description: JSP文件上传后缀绕过变体
+  usage: JSP环境下的文件上传黑名单绕过
+  tags: jsp,后缀绕过,大小写,截断
+- name: php.txt
+  lines: 30
+  description: PHP文件上传后缀绕过变体
+  usage: PHP环境下的文件上传黑名单绕过
+  tags: php,后缀绕过,大小写,phtml
+- name: upload-suffix.txt
+  lines: 34
+  description: 通用文件上传后缀名集合
+  usage: 文件上传功能测试的后缀名枚举
+  tags: suffix,后缀,后缀名,黑名单,通用,文件类型

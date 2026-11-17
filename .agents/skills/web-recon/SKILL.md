@@ -42,7 +42,7 @@ description: 资产/JS/接口发现与未授权路径、密钥还原专项。当
 | `knowledge/insecure-scm-test.md` | 源码/备份泄露 | 5.2KB |
 | `knowledge/recon-js-analysis-04-四、高价值入口点定位.md` | 高价值入口点 | 0.4KB |
 
-其余 16 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
+其余 17 个知识块（按标题搜，禁止通读）：`ls knowledge/`；原始清单见 `../../../docs/MIGRATION.md`。
 
 ## 相关
 
