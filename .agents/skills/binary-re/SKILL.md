@@ -1,6 +1,6 @@
 ---
 name: binary-re
-description: 二进制/固件/ELF/PE/内存破坏逆向专项。当目标是 PE/ELF/SO/固件可执行文件、Windows 服务、TCP 二进制服务、需要逆向协议或挖内存破坏漏洞时调用。
+description: 二进制/固件/ELF/PE/内存破坏/桌面客户端逆向专项。当目标是 PE/ELF/SO/固件可执行文件、Windows 服务、TCP 二进制服务、桌面客户端（安装目录/自定义协议/本地回环端口/内嵌浏览器）、需要逆向协议或挖内存破坏漏洞时调用。
 ---
 
 # binary-re — 二进制/固件/ELF/PE/内存破坏逆向专项
@@ -12,6 +12,7 @@ description: 二进制/固件/ELF/PE/内存破坏逆向专项。当目标是 PE/
 - 内存破坏（溢出/UAF/格式化字符串/越界）
 - 逆向算法/授权/加密/口令
 - 驱动/内核组件
+- 桌面客户端：安装目录/自定义协议/本地回环端口/内嵌浏览器（CEF/Electron/WPF/QT/Tauri）
 
 ## 30 秒分诊
 
@@ -19,6 +20,7 @@ description: 二进制/固件/ELF/PE/内存破坏逆向专项。当目标是 PE/
 2. 服务型：nc 看 banner/HELP 摸命令集
 3. 下载型：拿二进制本地静态逆向；再找隐藏路由/表单
 4. 固件型：找口令常量/XOR 表/状态机/加密数据
+5. 客户端型：先框架特征（`app.asar`/`libcef.dll`/`*.exe.config`/`Qt5*.dll`）+ `netstat -ano` 回环端口，再挑一条打（`knowledge/desktop-client-hunting.md`）
 
 ## 首枪顺序
 
@@ -30,12 +32,14 @@ description: 二进制/固件/ELF/PE/内存破坏逆向专项。当目标是 PE/
 - 固件：rodata XOR 表、口令常量、状态转移表、TEA/RC4/PJW/FNV
 - Go stripped：pclntab 恢复符号；VM/decoy 识别
 - 真实环境：校验通过后读取本地授权文件/输出设备凭证；未公开表单/命令从二进制字符串抄
+- 桌面客户端：先测绘（安装目录框架/协议注册表/`netstat` 回环端口/asar/内核版本），再打 CDP、本地口功能面或下载落盘链（`knowledge/desktop-client-hunting.md`）
 
 ## 知识库索引（按需开小块，禁通读）
 
 | 文件 | 用途 | 大小 |
 |---|---|---|
 | `knowledge/二进制与固件逆向实战.md` | v2 实战：服务型/泄露/破坏/固件 | 4.0KB |
+| `knowledge/desktop-client-hunting.md` | 桌面客户端：攻击面测绘/协议/回环端口与 CDP/下载链/假点 | 9.3KB |
 | `knowledge/windows-reverse-engineering-05-五、缓冲区溢出专项挖掘.md` | 缓冲区溢出 | 1.3KB |
 | `knowledge/windows-reverse-engineering-11-十一、漏洞利用构造.md` | 漏洞利用构造 | 0.9KB |
 | `knowledge/windows-reverse-engineering-03-三、静态分析要点.md` | 静态分析要点 | 1.8KB |

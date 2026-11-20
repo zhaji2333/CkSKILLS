@@ -183,7 +183,7 @@ docs/                    # ARCHITECTURE / MIGRATION / TRIGGER-MATRIX
 | `web-waf-bypass` | WAF / 过滤 / 检测绕过与失败升级 |
 | `cloud-infra` | 云 / 容器 / 中间件 / 运维面板 / 供应链 |
 | `ai-agent` | AI / LLM / Agent / Chatbot / RAG / 沙箱 / 代码执行 |
-| `binary-re` | 二进制 / 固件 / ELF / PE / 内存破坏逆向 |
+| `binary-re` | 二进制 / 固件 / ELF / PE / 内存破坏逆向 / 桌面客户端（安装目录、协议、回环端口、CDP） |
 | `mobile-app` | Android / APK / 小程序 / 移动端逆向与组件安全 |
 | `internal-network` | 内网/域：域侦察、Kerberos、委派/ACL/ADCS、NTLM 中继、横向移动、隧道多跳、后渗透、持久化、内网基础设施 |
 | `kb-security-data` | 结构化数据检索：CVE/影响版本/PoC、字典、载荷（数据在 `kb/`，先查 INDEX） |

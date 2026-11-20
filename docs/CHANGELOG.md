@@ -5,6 +5,32 @@
 
 ---
 
+## v2.2 — 2026-11-20：桌面客户端攻击面接线
+
+### 一句话
+
+吸收外部 `client-side-hunting` 笔记中与本库不重叠的部分：新增 `binary-re` 桌面客户端知识块（攻击面测绘 / 自定义协议 / 回环端口与 CDP / 下载更新链 / 假点口径），`战法索引-05` 加 5 行，路由与决策树接线；顺手修掉 05 的 Electron 指针错误，并压掉 `rules/70` 里重复的目录前缀以守住 3.3KB 预算。
+
+### 1. 新增
+
+- `.agents/skills/binary-re/knowledge/desktop-client-hunting.md`（9.3KB，6 节）：Windows 桌面客户端攻击面测绘（进程/安装目录/框架/协议注册表/回环端口/版本/关键文件）、自定义协议（Deep Link）、回环端口功能面与 CDP、下载/更新落盘链与内嵌内核版本、假点清单与证明口径。
+- `binary-re` `SKILL.md`：description 与「何时调用 / 30 秒分诊 / 首枪顺序」补客户端分支，知识索引加 1 行。
+
+### 2. 路由接线
+
+- `rules/70-routing.md`、`docs/TRIGGER-MATRIX.md`：新增「桌面客户端/安装目录/自定义协议/本地回环端口/内嵌浏览器」→ `binary-re`（辅 `web-xss-frontend`），首读 `战法索引-05`。
+- `AGENTS.md` 10 秒决策：新增「桌面客户端/安装目录/自定义协议」分支。
+- `ck-router/knowledge/进站决策.md` §0：客户端安装包/安装目录 → 先跑攻击面测绘。
+- `战法索引-05-客户端与前端.md`：+5 行（回环端口功能面 / CDP / 下载穿越落盘 / 内嵌内核版本 / 特权域跨域验证），表头补客户端块指针。
+- `README.md` 技能包表：`binary-re` 覆盖范围补「桌面客户端」。
+
+### 3. 修复
+
+- `战法索引-05`:18 Electron/CEF 行指针由 `xss-frontend-security-08-八、Clickjacking-专项.md` 改为 `web-xss-frontend/knowledge/xss-test.md` §8（真实内容所在）。
+- `rules/70` §二 8 行索引路径改为「表头声明根目录 + 文件名」，腾出字节预算且不再重复同一前缀。
+
+---
+
 ## v2.1 — 2026-11-17：结构化数据层 + 内网/云扩包
 
 ### 一句话

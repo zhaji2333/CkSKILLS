@@ -19,6 +19,7 @@
 | 查 CVE/影响版本/PoC、取字典/payload | `kb-security-data` | 当前题型包 | — |
 | LLM/Chatbot/RAG/AI 助手/Agent/代码解释器/沙箱/工具执行 | `ai-agent` | `web-auth-access` | 07-跨域 |
 | PE/ELF/固件/SO/驱动/二进制漏洞/逆向/内存破坏 | `binary-re` | `source-audit` | 07-跨域 |
+| 桌面客户端/安装目录/自定义协议/本地回环端口/内嵌浏览器 | `binary-re` | `web-xss-frontend` | 05-客户端与前端 |
 | APK/Android/预装应用/小程序/移动端逆向 | `mobile-app` | `binary-re` | 07-跨域 |
 | 有源码/反编译产物/代码审计/白盒 | `source-audit` | 对应业务包 | — |
 

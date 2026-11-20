@@ -38,6 +38,7 @@
 新目标/新题
  ├─ 有源码/反编译产物 ──────────────→ skill(source-audit)
  ├─ 二进制/固件/PE/ELF/APK/小程序 ──→ skill(binary-re) / skill(mobile-app)
+ ├─ 桌面客户端/安装目录/协议 ───────→ skill(binary-re) → 客户端块
  ├─ 云/容器/对象存储/运维面板 ──────→ skill(cloud-infra)
  ├─ AI/LLM/Agent/沙箱/代码执行 ─────→ skill(ai-agent)
  ├─ 内网/域/Kerberos/横向/隧道 ─────→ skill(internal-network)

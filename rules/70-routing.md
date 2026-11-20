@@ -21,21 +21,24 @@
 | 查 CVE/影响版本/PoC、取字典、取 payload | `kb-security-data` | 当前题型包 |
 | LLM/Chatbot/RAG/AI 助手/Agent/代码解释器/沙箱逃逸/工具执行 | `ai-agent` | `web-auth-access` |
 | PE/ELF/固件/SO/驱动/二进制漏洞/逆向/内存破坏 | `binary-re` | `source-audit` |
+| 桌面客户端/安装目录/自定义协议/本地回环端口/内嵌浏览器（CEF/Electron/WPF/QT/Tauri） | `binary-re` | `web-xss-frontend` |
 | APK/Android/预装应用/小程序/移动端逆向 | `mobile-app` | `binary-re` |
 | 有源码/反编译产物/代码审计/白盒 | `source-audit` | 对应业务包 |
 
 ## 二、开局首读哪个战法索引
 
+> 均在 `.agents/skills/ck-router/knowledge/` 下。
+
 | 题型 | 先读 |
 |---|---|
-| Web 鉴权/越权/未授权/凭证 | `.agents/skills/ck-router/knowledge/战法索引-01-鉴权与越权.md` |
-| 上传/存储/文件/分享/下载 | `.agents/skills/ck-router/knowledge/战法索引-02-存储与上传.md` |
-| 注入/SSRF/协议/Header/缓存 | `.agents/skills/ck-router/knowledge/战法索引-03-注入与协议.md` |
-| 云/元数据/面板/Agent/工具执行 | `.agents/skills/ck-router/knowledge/战法索引-04-云与内网.md` |
-| 客户端/小程序/前端/H5 | `.agents/skills/ck-router/knowledge/战法索引-05-客户端与前端.md` |
-| 业务逻辑/支付/竞态 | `.agents/skills/ck-router/knowledge/战法索引-06-业务与逻辑.md` |
-| 二进制/移动/逆向/AI 模型 | `.agents/skills/ck-router/knowledge/战法索引-07-跨域-二进制移动AI.md` |
-| 内网/域/横向/隧道/后渗透 | `.agents/skills/ck-router/knowledge/战法索引-08-内网与域.md` |
+| Web 鉴权/越权/未授权/凭证 | `战法索引-01-鉴权与越权.md` |
+| 上传/存储/文件/分享/下载 | `战法索引-02-存储与上传.md` |
+| 注入/SSRF/协议/Header/缓存 | `战法索引-03-注入与协议.md` |
+| 云/元数据/面板/Agent/工具执行 | `战法索引-04-云与内网.md` |
+| 客户端/小程序/前端/H5 | `战法索引-05-客户端与前端.md` |
+| 业务逻辑/支付/竞态 | `战法索引-06-业务与逻辑.md` |
+| 二进制/移动/逆向/AI 模型 | `战法索引-07-跨域-二进制移动AI.md` |
+| 内网/域/横向/隧道/后渗透 | `战法索引-08-内网与域.md` |
 
 ## 三、多域题
 
